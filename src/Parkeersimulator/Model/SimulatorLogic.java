@@ -1,8 +1,10 @@
-package Parkeersimulator;
+package Parkeersimulator.Model;
+
+import Parkeersimulator.View.AbstractView;
 
 import java.util.Random;
 
-public class Simulator {
+public class SimulatorLogic extends AbstractModel implements Runnable{
 
 	private static final String AD_HOC = "1";
 	private static final String PASS = "2";
@@ -12,7 +14,8 @@ public class Simulator {
     private CarQueue entrancePassQueue;
     private CarQueue paymentCarQueue;
     private CarQueue exitCarQueue;
-    private SimulatorView simulatorView;
+    private ScreenLogic screenLogic;
+    private boolean run;
 
     private int day = 0;
     private int hour = 0;
@@ -29,26 +32,36 @@ public class Simulator {
     int paymentSpeed = 7; // number of cars that can pay per minute
     int exitSpeed = 5; // number of cars that can leave per minute
 
-    public static void main (String[] args){
-        Simulator simulator = new Simulator();
-    }
-
-    public Simulator() {
+    public SimulatorLogic() {
         entranceCarQueue = new CarQueue();
         entrancePassQueue = new CarQueue();
         paymentCarQueue = new CarQueue();
         exitCarQueue = new CarQueue();
-        simulatorView = new SimulatorView(3, 6, 30);
-        run();
+        screenLogic = new ScreenLogic(3, 6, 30);
     }
 
+    public void start(){
+        new Thread(this).start();
+    }
+
+    public void stop() {
+        run=false;
+    }
+
+    @Override
     public void run() {
-        for (int i = 0; i < 10000; i++) {
+        run=true;
+        for (int i = 0; i < 10000 && run; i++) {
             tick();
         }
+        run=false;
     }
 
-    private void tick() {
+    public ScreenLogic getScreenLogic() {
+        return screenLogic;
+    }
+
+    public void tick() {
     	advanceTime();
     	handleExit();
     	updateViews();
@@ -59,6 +72,14 @@ public class Simulator {
             e.printStackTrace();
         }
     	handleEntrance();
+    }
+
+    public void updateViews(){
+        screenLogic.tick();
+        // Update the car park view.
+        for (AbstractView v: views){
+            v.updateView();
+        }
     }
 
     private void advanceTime(){
@@ -90,12 +111,6 @@ public class Simulator {
         carsLeaving();
     }
     
-    private void updateViews(){
-    	simulatorView.tick();
-        // Update the car park view.
-        simulatorView.updateView();	
-    }
-    
     private void carsArriving(){
     	int numberOfCars=getNumberOfCars(weekDayArrivals, weekendArrivals);
         addArrivingCars(numberOfCars, AD_HOC);    	
@@ -107,18 +122,18 @@ public class Simulator {
         int i=0;
         // Remove car from the front of the queue and assign to a parking space.
     	while (queue.carsInQueue()>0 && 
-    			simulatorView.getNumberOfOpenSpots()>0 && 
+    			screenLogic.getNumberOfOpenSpots()>0 &&
     			i<enterSpeed) {
             Car car = queue.removeCar();
-            Location freeLocation = simulatorView.getFirstFreeLocation();
-            simulatorView.setCarAt(freeLocation, car);
+            Location freeLocation = screenLogic.getFirstFreeLocation();
+            screenLogic.setCarAt(freeLocation, car);
             i++;
         }
     }
     
     private void carsReadyToLeave(){
         // Add leaving cars to the payment queue.
-        Car car = simulatorView.getFirstLeavingCar();
+        Car car = screenLogic.getFirstLeavingCar();
         while (car!=null) {
         	if (car.getHasToPay()){
 	            car.setIsPaying(true);
@@ -127,7 +142,7 @@ public class Simulator {
         	else {
         		carLeavesSpot(car);
         	}
-            car = simulatorView.getFirstLeavingCar();
+            car = screenLogic.getFirstLeavingCar();
         }
     }
 
@@ -182,7 +197,7 @@ public class Simulator {
     }
     
     private void carLeavesSpot(Car car){
-    	simulatorView.removeCarAt(car.getLocation());
+    	screenLogic.removeCarAt(car.getLocation());
         exitCarQueue.addCar(car);
     }
 

@@ -1,4 +1,5 @@
-package Parkeersimulator;
+package Parkeersimulator.Model;
+
 import java.util.LinkedList;
 import java.util.Queue;
 
