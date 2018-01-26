@@ -18,15 +18,18 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     private boolean run;
 
     private int day = 0;
-    private int hour = 0;
+    private int hour = 8;
     private int minute = 0;
 
-    private int tickPause = 100;
+    private int tickPause = 2;
 
     int weekDayArrivals= 100; // average number of arriving cars per hour
     int weekendArrivals = 200; // average number of arriving cars per hour
-    int weekDayPassArrivals= 50; // average number of arriving cars per hour
+    int weekDayPassArrivals= 40; // average number of arriving cars per hour
     int weekendPassArrivals = 5; // average number of arriving cars per hour
+
+    private int[] hourlyArrivals = new int[60];
+    private int[] hourlyPassArrivals = new int[60];
 
     int enterSpeed = 3; // number of cars that can enter per minute
     int paymentSpeed = 7; // number of cars that can pay per minute
@@ -112,9 +115,9 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     }
     
     private void carsArriving(){
-    	int numberOfCars=getNumberOfCars(weekDayArrivals, weekendArrivals);
+    	int numberOfCars=getNumberOfCars(weekDayArrivals, weekendArrivals, hourlyArrivals);
         addArrivingCars(numberOfCars, AD_HOC);    	
-    	numberOfCars=getNumberOfCars(weekDayPassArrivals, weekendPassArrivals);
+    	numberOfCars=getNumberOfCars(weekDayPassArrivals, weekendPassArrivals, hourlyPassArrivals);
         addArrivingCars(numberOfCars, PASS);    	
     }
 
@@ -166,18 +169,59 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     	}	
     }
     
-    private int getNumberOfCars(int weekDay, int weekend){
+    private int getNumberOfCars(int weekDay, int weekend, int[] target){
+        if (minute == 1) {
+            Random random = new Random();
+
+            // Get the average number of cars that arrive per hour.
+            int averageNumberOfCarsPerHour = day < 5
+                    ? weekDay
+                    : weekend;
+
+            // Minder drukte in de nachturen
+            if (hour <= 6 || hour >= 19) { averageNumberOfCarsPerHour *= 0.4; }
+
+            // Extra autos voor de schouwburgvoorstellingen
+            if (day >= 4 && hour >= 18 && hour <= 19 && target == hourlyArrivals) { averageNumberOfCarsPerHour += 250; }
+
+            // Extra abbonementshouders in de ochtendspits
+            if ((day < 4) && (hour >= 7 && hour <= 10) && (target == hourlyPassArrivals)) { averageNumberOfCarsPerHour *= 2; }
+
+            // Calculate the number of cars that arrive this minute.
+            double standardDeviation = averageNumberOfCarsPerHour * 0.3;
+            double numberOfCarsPerHour = averageNumberOfCarsPerHour + random.nextGaussian() * standardDeviation;
+
+            // Minimum grootte voor de pushvalues voor de array
+            int minimumPush = (int)Math.ceil(numberOfCarsPerHour / 60);
+
+            // Voeg 60 waardes aan de array toe
+            for (int i=0; i<60; i++) {
+                if (numberOfCarsPerHour > 0) {
+                    int numberOfCarsThisMinute = random.nextInt(2) + minimumPush;
+                    target[i] = numberOfCarsThisMinute;
+                    numberOfCarsPerHour -= numberOfCarsThisMinute;
+                } else {
+                    target[i] = 0;
+                }
+            }
+
+            // Shuffle de nieuwe array
+            shuffleIntegerArray(target);
+        }
+        return target[minute];
+    }
+
+    private void shuffleIntegerArray(int[] arr) {
         Random random = new Random();
 
-        // Get the average number of cars that arrive per hour.
-        int averageNumberOfCarsPerHour = day < 5
-                ? weekDay
-                : weekend;
-
-        // Calculate the number of cars that arrive this minute.
-        double standardDeviation = averageNumberOfCarsPerHour * 0.3;
-        double numberOfCarsPerHour = averageNumberOfCarsPerHour + random.nextGaussian() * standardDeviation;
-        return (int)Math.round(numberOfCarsPerHour / 60);	
+        for (int i = arr.length - 1; i > 0; i--)
+        {
+            int index = random.nextInt(i + 1);
+            // Simple swap
+            int a = arr[index];
+            arr[index] = arr[i];
+            arr[i] = a;
+        }
     }
     
     private void addArrivingCars(int numberOfCars, String type){
