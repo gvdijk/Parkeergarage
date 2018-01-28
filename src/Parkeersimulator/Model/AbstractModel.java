@@ -16,5 +16,10 @@ public abstract class AbstractModel {
         views.add(view);
     }
 
-    public abstract void updateViews();
+    public void updateViews(){
+        // Update all views.
+        for (AbstractView v: views){
+            v.updateView();
+        }
+    }
 }

@@ -1,7 +1,5 @@
 package Parkeersimulator.Model;
 
-import Parkeersimulator.View.AbstractView;
-
 import java.util.Random;
 
 public class SimulatorLogic extends AbstractModel implements Runnable{
@@ -21,7 +19,9 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     private int hour = 8;
     private int minute = 0;
 
-    private int tickPause = 2;
+    private int tickPause = 1;
+    private int currentTick = 0;
+    private int maxTicks = 10000;
 
     int weekDayArrivals= 100; // average number of arriving cars per hour
     int weekendArrivals = 200; // average number of arriving cars per hour
@@ -47,41 +47,38 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
         new Thread(this).start();
     }
 
-    public void stop() {
+    public void pause() {
         run=false;
     }
 
     @Override
     public void run() {
         run=true;
-        for (int i = 0; i < 10000 && run; i++) {
-            tick();
+        while (currentTick < maxTicks && run){
+            tick (1);
         }
         run=false;
+        currentTick = 0;
     }
 
     public ScreenLogic getScreenLogic() {
         return screenLogic;
     }
 
-    public void tick() {
-    	advanceTime();
-    	handleExit();
-    	updateViews();
-    	// Pause.
-        try {
-            Thread.sleep(tickPause);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    	handleEntrance();
-    }
-
-    public void updateViews(){
-        screenLogic.tick();
-        // Update the car park view.
-        for (AbstractView v: views){
-            v.updateView();
+    public void tick(int times) {
+        for (int i = 0; i < times; i++){
+            advanceTime();
+            handleExit();
+            screenLogic.tick();
+            updateViews();
+            // Pause.
+            try {
+                Thread.sleep(tickPause);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            handleEntrance();
+            currentTick++;
         }
     }
 
