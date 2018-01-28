@@ -15,7 +15,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     private ScreenLogic screenLogic;
     private boolean run;
 
-    private int day = 0;
+    private int day = 1;
     private int hour = 8;
     private int minute = 0;
 
@@ -44,7 +44,10 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     }
 
     public void start(){
-        new Thread(this).start();
+        if (!run){
+            new Thread(this).start();
+            run=true;
+        }
     }
 
     public void pause() {
@@ -53,16 +56,9 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
 
     @Override
     public void run() {
-        run=true;
-        while (currentTick < maxTicks && run){
+        while (currentTick <= maxTicks && run){
             tick (1);
         }
-        run=false;
-        currentTick = 0;
-    }
-
-    public ScreenLogic getScreenLogic() {
-        return screenLogic;
     }
 
     public void tick(int times) {
@@ -79,8 +75,23 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
             }
             handleEntrance();
             currentTick++;
+            if (currentTick == maxTicks){
+                run=false;
+                currentTick = 0;
+            }
         }
     }
+
+    public ScreenLogic getScreenLogic() { return screenLogic; }
+
+    public int getCurrentTick(){ return currentTick; }
+
+
+    public int getMinute(){ return minute; }
+
+    public int getHour(){ return hour; }
+
+    public int getDay(){ return day; }
 
     private void advanceTime(){
         // Advance the time by one minute.
