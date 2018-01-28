@@ -2,6 +2,7 @@ package Parkeersimulator.View;
 
 import Parkeersimulator.Model.Car;
 import Parkeersimulator.Model.Location;
+import Parkeersimulator.Model.Reservation;
 import Parkeersimulator.Model.SimulatorLogic;
 
 import java.awt.*;
@@ -58,8 +59,14 @@ public class CarParkView extends AbstractView {
             for(int row = 0; row < simulatorLogic.getScreenLogic().getNumberOfRows(); row++) {
                 for(int place = 0; place < simulatorLogic.getScreenLogic().getNumberOfPlaces(); place++) {
                     Location location = new Location(floor, row, place);
+                    Reservation reservation = simulatorLogic.getScreenLogic().getReservationAt(location);
                     Car car = simulatorLogic.getScreenLogic().getCarAt(location);
-                    Color color = car == null ? Color.darkGray : car.getColor();
+                    Color color = Color.darkGray;
+                    if (car != null) {
+                        color = car.getColor();
+                    } else if (reservation != null) {
+                        color = reservation.getColor();
+                    }
                     drawPlace(graphics, location, color);
                 }
             }

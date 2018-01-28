@@ -6,6 +6,7 @@ public class ScreenLogic {
     private int numberOfPlaces;
     private int numberOfOpenSpots;
     private Car[][][] cars;
+    private Reservation[][][] reservations;
 
     public ScreenLogic(int numberOfFloors, int numberOfRows, int numberOfPlaces) {
         this.numberOfFloors = numberOfFloors;
@@ -13,6 +14,22 @@ public class ScreenLogic {
         this.numberOfPlaces = numberOfPlaces;
         this.numberOfOpenSpots =numberOfFloors*numberOfRows*numberOfPlaces;
         cars = new Car[numberOfFloors][numberOfRows][numberOfPlaces];
+        reservations = new Reservation[numberOfFloors][numberOfRows][numberOfPlaces];
+        setDefaultReservations(1,4, 30);
+    }
+
+    private void setDefaultReservations(int floors, int rows, int places) {
+        for (int floor = 0; floor < floors; floor++) {
+            for (int row = 0; row < rows; row++) {
+                for (int place = 0; place < places; place++) {
+                    Location location = new Location(floor, row, place);
+                    if (locationIsValid(location)) {
+                        Reservation reservation = new PassReservation(location);
+                        reservations[floor][row][place] = reservation;
+                    }
+                }
+            }
+        }
     }
     
 	public int getNumberOfFloors() {
@@ -37,6 +54,14 @@ public class ScreenLogic {
         }
         return cars[location.getFloor()][location.getRow()][location.getPlace()];
     }
+
+    public Reservation getReservationAt(Location location) {
+        if (!locationIsValid(location)) {
+            return null;
+        }
+        return reservations[location.getFloor()][location.getRow()][location.getPlace()];
+    }
+
 
     public boolean setCarAt(Location location, Car car) {
         if (!locationIsValid(location)) {
@@ -66,13 +91,17 @@ public class ScreenLogic {
         return car;
     }
 
-    public Location getFirstFreeLocation() {
+    public Location getFirstFreeLocation(boolean isPass) {
         for (int floor = 0; floor < getNumberOfFloors(); floor++) {
             for (int row = 0; row < getNumberOfRows(); row++) {
                 for (int place = 0; place < getNumberOfPlaces(); place++) {
                     Location location = new Location(floor, row, place);
                     if (getCarAt(location) == null) {
-                        return location;
+                        if (isPass) {
+                            return location;
+                        } else if (reservations[floor][row][place] == null){
+                            return location;
+                        }
                     }
                 }
             }

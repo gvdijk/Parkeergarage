@@ -19,7 +19,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     private int hour = 8;
     private int minute = 0;
 
-    private int tickPause = 1;
+    private int tickPause = 40;
     private int currentTick = 0;
     private int maxTicks = 10000;
 
@@ -120,12 +120,14 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
 
     private void carsEntering(CarQueue queue){
         int i=0;
+        boolean isPass = false;
+        if (queue == entrancePassQueue) {isPass = true;}
         // Remove car from the front of the queue and assign to a parking space.
     	while (queue.carsInQueue()>0 && 
     			screenLogic.getNumberOfOpenSpots()>0 &&
     			i<enterSpeed) {
             Car car = queue.removeCar();
-            Location freeLocation = screenLogic.getFirstFreeLocation();
+            Location freeLocation = screenLogic.getFirstFreeLocation(isPass);
             screenLogic.setCarAt(freeLocation, car);
             i++;
         }
