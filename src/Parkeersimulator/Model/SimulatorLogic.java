@@ -6,6 +6,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
 
 	private static final String AD_HOC = "1";
 	private static final String PASS = "2";
+    private static final String RES = "3";
 	
 	
 	private CarQueue entranceCarQueue;
@@ -19,7 +20,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     private int hour = 8;
     private int minute = 0;
 
-    private int tickPause = 40;
+    private int tickPause = 4;
     private int currentTick = 0;
     private int maxTicks = 10000;
 
@@ -27,9 +28,12 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     int weekendArrivals = 200; // average number of arriving cars per hour
     int weekDayPassArrivals= 40; // average number of arriving cars per hour
     int weekendPassArrivals = 5; // average number of arriving cars per hour
+    int weekDayReservations= 5; // average number of arriving cars per hour
+    int weekendReservations = 10; // average number of arriving cars per hour
 
     private int[] hourlyArrivals = new int[60];
     private int[] hourlyPassArrivals = new int[60];
+    private int[] hourlyReservations = new int[60];
 
     int enterSpeed = 3; // number of cars that can enter per minute
     int paymentSpeed = 7; // number of cars that can pay per minute
@@ -82,6 +86,10 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
         }
     }
 
+    public void addReservationCar(Car car) {
+        entranceCarQueue.addCar(car);
+    }
+
     private void advanceTime(){
         // Advance the time by one minute.
         minute++;
@@ -102,7 +110,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     private void handleEntrance(){
     	carsArriving();
     	carsEntering(entrancePassQueue);
-    	carsEntering(entranceCarQueue);  	
+    	carsEntering(entranceCarQueue);
     }
     
     private void handleExit(){
@@ -115,7 +123,9 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     	int numberOfCars=getNumberOfCars(weekDayArrivals, weekendArrivals, hourlyArrivals);
         addArrivingCars(numberOfCars, AD_HOC);    	
     	numberOfCars=getNumberOfCars(weekDayPassArrivals, weekendPassArrivals, hourlyPassArrivals);
-        addArrivingCars(numberOfCars, PASS);    	
+        addArrivingCars(numberOfCars, PASS);
+        numberOfCars=getNumberOfCars(weekDayReservations, weekendReservations, hourlyReservations);
+        addArrivingCars(numberOfCars, RES);
     }
 
     private void carsEntering(CarQueue queue){
@@ -127,8 +137,15 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     			screenLogic.getNumberOfOpenSpots()>0 &&
     			i<enterSpeed) {
             Car car = queue.removeCar();
-            Location freeLocation = screenLogic.getFirstFreeLocation(isPass);
-            screenLogic.setCarAt(freeLocation, car);
+            if (car instanceof ReservationCar) {
+                Location loc = ((ReservationCar) car).getReservedLocation();
+                screenLogic.setCarAt(loc, car);
+                screenLogic.removeReservationAt(loc);
+            } else {
+                Location freeLocation = screenLogic.getFirstFreeLocation(isPass);
+                // TODO: Handle no free location
+                screenLogic.setCarAt(freeLocation, car);
+            }
             i++;
         }
     }
@@ -235,8 +252,13 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
             for (int i = 0; i < numberOfCars; i++) {
             	entrancePassQueue.addCar(new ParkingPassCar());
             }
-            break;	            
-    	}
+            break;
+        case RES:
+            for (int i = 0; i < numberOfCars; i++) {
+                screenLogic.setReservation(this);
+            }
+            break;
+        }
     }
     
     private void carLeavesSpot(Car car){

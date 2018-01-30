@@ -24,7 +24,7 @@ public class ScreenLogic {
                 for (int place = 0; place < places; place++) {
                     Location location = new Location(floor, row, place);
                     if (locationIsValid(location)) {
-                        Reservation reservation = new PassReservation(location);
+                        PassReservation reservation = new PassReservation(location);
                         reservations[floor][row][place] = reservation;
                     }
                 }
@@ -55,11 +55,28 @@ public class ScreenLogic {
         return cars[location.getFloor()][location.getRow()][location.getPlace()];
     }
 
+    public void setReservation(SimulatorLogic simulator) {
+        Location loc = getFirstFreeLocation(false);
+        CarReservation reservation = new CarReservation(loc, simulator);
+        reservations[loc.getFloor()][loc.getRow()][loc.getPlace()] = reservation;
+    }
+
     public Reservation getReservationAt(Location location) {
         if (!locationIsValid(location)) {
             return null;
         }
         return reservations[location.getFloor()][location.getRow()][location.getPlace()];
+    }
+
+    public void removeReservationAt(Location location) {
+        if (locationIsValid(location)) {
+            Reservation reservation = getReservationAt(location);
+            if (reservation != null) {
+                reservations[location.getFloor()][location.getRow()][location.getPlace()] = null;
+                reservation.setLocation(null);
+                numberOfOpenSpots++;
+            }
+        }
     }
 
 
@@ -97,9 +114,14 @@ public class ScreenLogic {
                 for (int place = 0; place < getNumberOfPlaces(); place++) {
                     Location location = new Location(floor, row, place);
                     if (getCarAt(location) == null) {
-                        if (isPass) {
-                            return location;
-                        } else if (reservations[floor][row][place] == null){
+                        if (reservations[floor][row][place] != null) {
+                            if (reservations[floor][row][place] instanceof  PassReservation && isPass) {
+                                return location;
+                            }
+                            if (reservations[floor][row][place] instanceof CarReservation) {
+                                // Do nothing
+                            }
+                        } else {
                             return location;
                         }
                     }
@@ -130,8 +152,12 @@ public class ScreenLogic {
                 for (int place = 0; place < getNumberOfPlaces(); place++) {
                     Location location = new Location(floor, row, place);
                     Car car = getCarAt(location);
+                    Reservation reservation = getReservationAt(location);
                     if (car != null) {
                         car.tick();
+                    }
+                    if (reservation != null) {
+                        reservation.tick();
                     }
                 }
             }
