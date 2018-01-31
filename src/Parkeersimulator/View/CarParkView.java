@@ -1,20 +1,41 @@
 package Parkeersimulator.View;
 
 import Parkeersimulator.Model.Car;
+import Parkeersimulator.Model.CarQueue;
 import Parkeersimulator.Model.Location;
 import Parkeersimulator.Model.SimulatorLogic;
+
+import javax.swing.*;
 import java.awt.*;
 
 public class CarParkView extends AbstractView {
 
     private Dimension size;
     private Image carParkImage;
+    private JLabel entranceQueueSize;
+    private JLabel entrancePassQueue;
+    private JLabel paymentCarQueue;
+    private JLabel exitCarQueue;
+
 
     /**
      * Constructor for objects of class CarPark
      */
     public CarParkView(SimulatorLogic simulatorLogic) {
         super (simulatorLogic);
+
+        entranceQueueSize = new JLabel("Entrance queue: " + simulatorLogic.getEntranceCarQueue().carsInQueue());
+        add(entranceQueueSize);
+
+        entrancePassQueue = new JLabel("Pass entrance queue: " + simulatorLogic.getEntrancePassQueue().carsInQueue());
+        add(entrancePassQueue);
+
+        paymentCarQueue = new JLabel("Payment queue: " + simulatorLogic.getPaymentCarQueue().carsInQueue());
+        add(paymentCarQueue);
+
+        exitCarQueue = new JLabel("Exit queue: " + simulatorLogic.getExitCarQueue().carsInQueue());
+        add(exitCarQueue);
+
         size = new Dimension(0, 0);
     }
 
@@ -49,7 +70,7 @@ public class CarParkView extends AbstractView {
         }
     }
 
-    public void updateView() {
+     public void updateView() {
         // Create a new car park image if the size has changed.
         if (!size.equals(getSize())) {
             size = getSize();
@@ -66,7 +87,13 @@ public class CarParkView extends AbstractView {
                 }
             }
         }
+        entranceQueueSize.setText("entrance queue: " + simulatorLogic.getEntranceCarQueue().carsInQueue());
+        entrancePassQueue.setText("pass entrance queue: " + simulatorLogic.getEntrancePassQueue().carsInQueue());
+        paymentCarQueue.setText("payment queue: " + simulatorLogic.getPaymentCarQueue().carsInQueue());
+        exitCarQueue.setText("exit queue: " + simulatorLogic.getExitCarQueue().carsInQueue());
+
         repaint();
+
     }
 
     /**
@@ -80,4 +107,7 @@ public class CarParkView extends AbstractView {
                 20 - 1,
                 10 - 1); // TODO use dynamic size or constants
     }
+
+
+
 }

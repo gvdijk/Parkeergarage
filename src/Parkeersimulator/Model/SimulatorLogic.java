@@ -86,6 +86,13 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
 
     public int getCurrentTick(){ return currentTick; }
 
+    public CarQueue getEntranceCarQueue() { return entranceCarQueue;}
+
+    public CarQueue getEntrancePassQueue() { return entrancePassQueue;}
+
+    public CarQueue getPaymentCarQueue() { return paymentCarQueue;}
+
+    public CarQueue getExitCarQueue() { return exitCarQueue;}
 
     public int getMinute(){ return minute; }
 
