@@ -45,6 +45,7 @@ public class ScreenLogic {
     }
 
     public int getNumberOfOpenSpots(){
+        // TODO: numberOfOpenSpots is not correct or updating at the wrong moment
     	return numberOfOpenSpots;
     }
     
@@ -57,8 +58,13 @@ public class ScreenLogic {
 
     public void setReservation(SimulatorLogic simulator) {
         Location loc = getFirstFreeLocation(false);
-        CarReservation reservation = new CarReservation(loc, simulator);
-        reservations[loc.getFloor()][loc.getRow()][loc.getPlace()] = reservation;
+        if (loc != null) {
+            CarReservation reservation = new CarReservation(loc, simulator);
+            reservations[loc.getFloor()][loc.getRow()][loc.getPlace()] = reservation;
+            numberOfOpenSpots--;
+        } else {
+            // TODO: Handle no free location regarding queues & new customers
+        }
     }
 
     public Reservation getReservationAt(Location location) {

@@ -23,7 +23,7 @@ public class CarReservation extends Reservation {
     @Override
     public void tick() {
         minutesToGo--;
-        if (minutesToGo < 1) {
+        if (minutesToGo == 0) {
             Car car = new ReservationCar(getLocation());
             logic.addReservationCar(car);
         }
