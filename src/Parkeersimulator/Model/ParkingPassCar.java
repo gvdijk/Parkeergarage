@@ -1,7 +1,5 @@
 package Parkeersimulator.Model;
 
-import Parkeersimulator.Model.Car;
-
 import java.util.Random;
 import java.awt.*;
 
@@ -11,6 +9,7 @@ public class ParkingPassCar extends Car {
     public ParkingPassCar() {
     	Random random = new Random();
     	int stayMinutes = (int) (60 + random.nextFloat() * 7 * 60);
+        this.setStayMinutes(stayMinutes);
         this.setMinutesLeft(stayMinutes);
         this.setHasToPay(false);
     }
