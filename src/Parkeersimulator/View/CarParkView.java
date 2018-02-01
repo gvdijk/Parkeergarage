@@ -4,22 +4,24 @@ import Parkeersimulator.Model.Car;
 import Parkeersimulator.Model.Location;
 import Parkeersimulator.Model.Reservation;
 import Parkeersimulator.Model.SimulatorLogic;
-
 import java.awt.*;
 
 public class CarParkView extends AbstractView {
 
     private Dimension size;
     private Image carParkImage;
-    private SimulatorLogic simulatorLogic;
 
     /**
      * Constructor for objects of class CarPark
      */
     public CarParkView(SimulatorLogic simulatorLogic) {
-        this.simulatorLogic = simulatorLogic;
-        simulatorLogic.addView(this);
+        super (simulatorLogic);
         size = new Dimension(0, 0);
+    }
+
+    @Override
+    public String getName() {
+        return "CarParkView";
     }
 
     /**
@@ -30,7 +32,7 @@ public class CarParkView extends AbstractView {
     }
 
     /**
-     * Overriden. The car park view component needs to be redisplayed. Copy the
+     * Overridden. The car park view component needs to be redisplayed. Copy the
      * internal image to screen.
      */
     public void paintComponent(Graphics g) {

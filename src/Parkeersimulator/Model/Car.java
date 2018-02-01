@@ -5,6 +5,7 @@ import java.awt.*;
 public abstract class Car {
 
     private Location location;
+    private int stayMinutes;
     private int minutesLeft;
     private boolean isPaying;
     private boolean hasToPay;
@@ -31,6 +32,10 @@ public abstract class Car {
     public void setMinutesLeft(int minutesLeft) {
         this.minutesLeft = minutesLeft;
     }
+
+    public void setStayMinutes (int stayMinutes) { this.stayMinutes = stayMinutes; }
+
+    public int getStayMinutes () { return stayMinutes; }
     
     public boolean getIsPaying() {
         return isPaying;

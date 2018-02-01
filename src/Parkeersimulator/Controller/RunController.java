@@ -8,8 +8,9 @@ import java.awt.event.*;
 public class RunController extends AbstractController implements ActionListener{
     private JButton start;
     private JButton pause;
-    private JButton tick;
-    private JButton tick100;
+    private JButton minute;
+    private JButton hour;
+    private JButton day;
 
     public RunController(SimulatorLogic simulatorLogic){
         super(simulatorLogic);
@@ -20,16 +21,20 @@ public class RunController extends AbstractController implements ActionListener{
         pause = new JButton("Pause");
         pause.addActionListener(this);
 
-        tick = new JButton("1 step");
-        tick.addActionListener(this);
+        minute = new JButton("+1 minute");
+        minute.addActionListener(this);
 
-        tick100 = new JButton("100 steps");
-        tick100.addActionListener(this);
+        hour = new JButton("+1 hour");
+        hour.addActionListener(this);
+
+        day = new JButton("+1 day");
+        day.addActionListener(this);
 
         add(start);
         add(pause);
-        add(tick);
-        add(tick100);
+        add(minute);
+        add(hour);
+        add(day);
 
         setVisible(true);
     }
@@ -44,12 +49,16 @@ public class RunController extends AbstractController implements ActionListener{
             simulatorLogic.pause();
         }
 
-        if (e.getSource() == tick){
+        if (e.getSource() == minute){
             simulatorLogic.tick(1);
         }
 
-        if (e.getSource() == tick100){
-            simulatorLogic.tick(100);
+        if (e.getSource() == hour){
+            simulatorLogic.tick(60);
+        }
+
+        if (e.getSource() == day){
+            simulatorLogic.tick(1440);
         }
     }
 }

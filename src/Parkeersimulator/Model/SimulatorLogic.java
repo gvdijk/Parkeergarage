@@ -1,5 +1,6 @@
 package Parkeersimulator.Model;
 
+import java.util.HashMap;
 import java.util.Random;
 
 public class SimulatorLogic extends AbstractModel implements Runnable{
@@ -17,12 +18,17 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     private boolean run;
 
     private int day = 0;
-    private int hour = 8;
+    private int hour = 0;
     private int minute = 0;
 
     private int tickPause = 1;
     private int currentTick = 0;
-    private int maxTicks = 10000;
+    private int maxTicks = 10080;
+
+    private int parkingFee = 1;
+    private int totalEarnings = 0;
+    private int dayValue = 0;
+    private HashMap<Integer, Integer> dayEarnings;
 
     int weekDayArrivals= 100; // average number of arriving cars per hour
     int weekendArrivals = 200; // average number of arriving cars per hour
@@ -44,11 +50,18 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
         entrancePassQueue = new CarQueue();
         paymentCarQueue = new CarQueue();
         exitCarQueue = new CarQueue();
+        dayEarnings = new HashMap<>();
+        for (int i=0; i < 7; i++){
+            dayEarnings.put(i, 0);
+        }
         screenLogic = new ScreenLogic(3, 6, 30);
     }
 
     public void start(){
-        new Thread(this).start();
+        if (!run){
+            new Thread(this).start();
+            run=true;
+        }
     }
 
     public void pause() {
@@ -57,16 +70,9 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
 
     @Override
     public void run() {
-        run=true;
-        while (currentTick < maxTicks && run){
+        while (currentTick <= maxTicks && run){
             tick (1);
         }
-        run=false;
-        currentTick = 0;
-    }
-
-    public ScreenLogic getScreenLogic() {
-        return screenLogic;
     }
 
     public void tick(int times) {
@@ -74,6 +80,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
             advanceTime();
             handleExit();
             screenLogic.tick();
+            updateEarnings();
             updateViews();
             // Pause.
             try {
@@ -83,12 +90,26 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
             }
             handleEntrance();
             currentTick++;
+            if (currentTick == maxTicks){
+                run=false;
+                currentTick = 0;
+            }
         }
     }
 
-    public void addReservationCar(Car car) {
-        entranceCarQueue.addCar(car);
-    }
+    public ScreenLogic getScreenLogic() { return screenLogic; }
+
+    public int getCurrentTick(){ return currentTick; }
+
+    public int getMinute(){ return minute; }
+
+    public int getHour(){ return hour; }
+
+    public int getDay(){ return day; }
+
+    public int getTotalEarnings() { return totalEarnings; }
+
+    public HashMap<Integer, Integer> getDayEarnings() { return dayEarnings; }
 
     private void advanceTime(){
         // Advance the time by one minute.
@@ -107,6 +128,10 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
 
     }
 
+    public void addReservationCar(Car car) {
+        entranceCarQueue.addCar(car);
+    }
+
     private void handleEntrance(){
     	carsArriving();
     	carsEntering(entrancePassQueue);
@@ -117,6 +142,23 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
         carsReadyToLeave();
         carsPaying();
         carsLeaving();
+    }
+
+    private void handlePayment(Car car){
+        int feeTimes = (int) Math.floor(car.getStayMinutes() / 20);
+        if (car.getStayMinutes() % 20 > 0){ feeTimes++; }
+
+        int paymentAmount = feeTimes * parkingFee;
+
+        totalEarnings += paymentAmount;
+        dayValue += paymentAmount;
+    }
+
+    private void updateEarnings(){
+        if (hour == 23 && minute == 59) {
+            dayEarnings.put(day, dayValue);
+            dayValue = 0;
+        }
     }
     
     private void carsArriving(){
@@ -175,7 +217,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     	int i=0;
     	while (paymentCarQueue.carsInQueue()>0 && i < paymentSpeed){
             Car car = paymentCarQueue.removeCar();
-            // TODO Handle payment.
+            handlePayment(car);
             carLeavesSpot(car);
             i++;
     	}
