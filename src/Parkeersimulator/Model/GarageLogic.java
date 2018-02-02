@@ -1,6 +1,6 @@
 package Parkeersimulator.Model;
 
-public class ScreenLogic {
+public class GarageLogic {
     private int numberOfFloors;
     private int numberOfRows;
     private int numberOfPlaces;
@@ -8,7 +8,7 @@ public class ScreenLogic {
     private Car[][][] cars;
     private Reservation[][][] reservations;
 
-    public ScreenLogic(int numberOfFloors, int numberOfRows, int numberOfPlaces) {
+    public GarageLogic(int numberOfFloors, int numberOfRows, int numberOfPlaces) {
         this.numberOfFloors = numberOfFloors;
         this.numberOfRows = numberOfRows;
         this.numberOfPlaces = numberOfPlaces;

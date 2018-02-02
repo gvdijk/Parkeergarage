@@ -12,6 +12,7 @@ public class TextView extends AbstractView {
     private JLabel currentMinute;
     private JLabel totalEarnings;
     private JLabel dayEarnings;
+    private JLabel currentCars;
 
     public TextView (SimulatorLogic simulatorLogic) {
         super (simulatorLogic);
@@ -25,15 +26,10 @@ public class TextView extends AbstractView {
         dayEarnings = new JLabel("");
         setDayEarnings();
         totalEarnings = new JLabel("Total Earnings: €" + simulatorLogic.getTotalEarnings() +",-");
-
-        /*
-        currentTick.setAlignmentX(Component.CENTER_ALIGNMENT);
-        currentDay.setAlignmentX(Component.CENTER_ALIGNMENT);
-        currentHour.setAlignmentX(Component.CENTER_ALIGNMENT);
-        currentMinute.setAlignmentX(Component.CENTER_ALIGNMENT);
-        dayEarnings.setAlignmentX(Component.CENTER_ALIGNMENT);
-        totalEarnings.setAlignmentX(Component.CENTER_ALIGNMENT);
-        */
+        currentCars = new JLabel("<html>Current cars in the garage:<br/>" +
+                "<br/>Normal cars: " + simulatorLogic.getNormalCars() +
+                "<br/>Cars with a parking pass: " + simulatorLogic.getPassCars() +
+                "<br/>Cars that reserved a spot: " + simulatorLogic.getReservationCars());
 
         add(Box.createRigidArea(new Dimension(5, 50)));
         add(currentTick);
@@ -45,6 +41,8 @@ public class TextView extends AbstractView {
         add(dayEarnings);
         add(Box.createRigidArea(new Dimension(0, 10)));
         add(totalEarnings);
+        add(Box.createRigidArea(new Dimension(0, 40)));
+        add(currentCars);
 
         setVisible(false);
     }
@@ -57,6 +55,10 @@ public class TextView extends AbstractView {
         currentHour.setText("Current hour: " + simulatorLogic.getHour());
         setDayEarnings();
         totalEarnings.setText("Total Earnings: €" + simulatorLogic.getTotalEarnings()+",-");
+        currentCars.setText("<html><b>Current cars in the garage:</b><br/>" +
+                "<br/>Normal cars: " + simulatorLogic.getNormalCars() +
+                "<br/>Cars with a parking pass: " + simulatorLogic.getPassCars() +
+                "<br/>Cars that reserved a spot: " + simulatorLogic.getReservationCars());
     }
 
     @Override

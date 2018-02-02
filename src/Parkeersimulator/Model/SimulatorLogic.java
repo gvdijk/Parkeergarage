@@ -1,5 +1,6 @@
 package Parkeersimulator.Model;
 
+import javax.swing.*;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -14,21 +15,25 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     private CarQueue entrancePassQueue;
     private CarQueue paymentCarQueue;
     private CarQueue exitCarQueue;
-    private ScreenLogic screenLogic;
+    private GarageLogic garageLogic;
     private boolean run;
 
-    private int day = 0;
-    private int hour = 0;
-    private int minute = 0;
+    private int day;
+    private int hour;
+    private int minute;
 
-    private int tickPause = 1;
-    private int currentTick = 0;
+    private int currentTick;
+    private int tickPause;
     private int maxTicks = 10080;
 
-    private int parkingFee = 1;
-    private int totalEarnings = 0;
-    private int dayValue = 0;
+    private int totalEarnings;
+    private int dayValue;
     private HashMap<Integer, Integer> dayEarnings;
+    private int parkingFee;
+
+    private int normalCars;
+    private int passCars;
+    private int reservationCars;
 
     int weekDayArrivals= 100; // average number of arriving cars per hour
     int weekendArrivals = 200; // average number of arriving cars per hour
@@ -45,16 +50,14 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     int paymentSpeed = 7; // number of cars that can pay per minute
     int exitSpeed = 5; // number of cars that can leave per minute
 
-    public SimulatorLogic() {
+    public SimulatorLogic(JPanel init, JPanel simulator) {
+        super(init, simulator);
         entranceCarQueue = new CarQueue();
         entrancePassQueue = new CarQueue();
         paymentCarQueue = new CarQueue();
         exitCarQueue = new CarQueue();
         dayEarnings = new HashMap<>();
-        for (int i=0; i < 7; i++){
-            dayEarnings.put(i, 0);
-        }
-        screenLogic = new ScreenLogic(3, 6, 30);
+        reset();
     }
 
     public void start(){
@@ -68,25 +71,49 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
         run=false;
     }
 
+    public void reset() {
+        entranceCarQueue.clearQueue();
+        entrancePassQueue.clearQueue();
+        paymentCarQueue.clearQueue();
+        exitCarQueue.clearQueue();
+        currentTick = 0;
+        day = 0;
+        hour = 0;
+        minute = 0;
+        normalCars = 0;
+        passCars = 0;
+        reservationCars = 0;
+        resetEarnings();
+    }
+
+    public void initialize(int tickPause){
+        garageLogic = new GarageLogic(3, 6, 30);
+        this.tickPause = tickPause;
+        garageLogic.tick();
+        updateViews();
+    }
+
     @Override
     public void run() {
         while (currentTick <= maxTicks && run){
-            tick (1);
+            tick (true, 1);
         }
     }
 
-    public void tick(int times) {
+    public void tick(boolean pause, int times) {
         for (int i = 0; i < times; i++){
             advanceTime();
             handleExit();
-            screenLogic.tick();
+            garageLogic.tick();
             updateEarnings();
             updateViews();
             // Pause.
-            try {
-                Thread.sleep(tickPause);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            if (pause){
+                try {
+                    Thread.sleep(tickPause);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
             handleEntrance();
             currentTick++;
@@ -97,7 +124,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
         }
     }
 
-    public ScreenLogic getScreenLogic() { return screenLogic; }
+    public GarageLogic getGarageLogic() { return garageLogic; }
 
     public int getCurrentTick(){ return currentTick; }
 
@@ -106,6 +133,12 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     public int getHour(){ return hour; }
 
     public int getDay(){ return day; }
+
+    public int getNormalCars() { return normalCars; }
+
+    public int getPassCars() { return passCars; }
+
+    public int getReservationCars() { return reservationCars; }
 
     public int getTotalEarnings() { return totalEarnings; }
 
@@ -160,7 +193,32 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
             dayValue = 0;
         }
     }
-    
+
+    private void resetEarnings(){
+        for (int i=0; i < 7; i++){
+            dayEarnings.put(i, 0);
+        }
+        totalEarnings = 0;
+        dayValue = 0;
+    }
+
+    private void updateCarCount(boolean increment, Car car){
+        if (car instanceof AdHocCar){
+            if (increment){ normalCars++; }
+            else { normalCars--; }
+        }else if(car instanceof ParkingPassCar){
+            if (increment){ passCars++; }
+            else { passCars--; }
+        }else if (car instanceof ReservationCar){
+            if (increment){ reservationCars++; }
+            else { reservationCars--; }
+        }
+    }
+
+    private void resetCarCount(){
+
+    }
+
     private void carsArriving(){
     	int numberOfCars=getNumberOfCars(weekDayArrivals, weekendArrivals, hourlyArrivals);
         addArrivingCars(numberOfCars, AD_HOC);    	
@@ -177,19 +235,20 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
         // Remove car from the front of the queue and assign to a parking space.
 
     	while (queue.carsInQueue()>0 &&
-    			screenLogic.getNumberOfOpenSpots()>0 &&
+    			garageLogic.getNumberOfOpenSpots()>0 &&
     			i<enterSpeed) {
             Car car = queue.removeCar();
+            updateCarCount(true, car);
             if (car instanceof ReservationCar) {
                 Location loc = ((ReservationCar) car).getReservedLocation();
-                screenLogic.setCarAt(loc, car);
-                screenLogic.removeReservationAt(loc);
+                garageLogic.setCarAt(loc, car);
+                garageLogic.removeReservationAt(loc);
             } else {
-                Location freeLocation = screenLogic.getFirstFreeLocation(isPass);
+                Location freeLocation = garageLogic.getFirstFreeLocation(isPass);
                 if (freeLocation != null) {
-                    screenLogic.setCarAt(freeLocation, car);
+                    garageLogic.setCarAt(freeLocation, car);
                 } else {
-                    System.out.println("No free location, but screenLogic.getNumberOfOpenSpots() == " + screenLogic.getNumberOfOpenSpots());
+                    System.out.println("No free location, but garageLogic.getNumberOfOpenSpots() == " + garageLogic.getNumberOfOpenSpots());
                     // TODO: Handle no free space
                 }
             }
@@ -199,7 +258,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     
     private void carsReadyToLeave(){
         // Add leaving cars to the payment queue.
-        Car car = screenLogic.getFirstLeavingCar();
+        Car car = garageLogic.getFirstLeavingCar();
         while (car!=null) {
         	if (car.getHasToPay()){
 	            car.setIsPaying(true);
@@ -208,7 +267,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
         	else {
         		carLeavesSpot(car);
         	}
-            car = screenLogic.getFirstLeavingCar();
+            car = garageLogic.getFirstLeavingCar();
         }
     }
 
@@ -302,14 +361,15 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
             break;
         case RES:
             for (int i = 0; i < numberOfCars; i++) {
-                screenLogic.setReservation(this);
+                garageLogic.setReservation(this);
             }
             break;
         }
     }
     
     private void carLeavesSpot(Car car){
-    	screenLogic.removeCarAt(car.getLocation());
+    	garageLogic.removeCarAt(car.getLocation());
+    	updateCarCount(false, car);
         exitCarQueue.addCar(car);
     }
 

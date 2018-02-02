@@ -6,20 +6,17 @@ import javax.swing.*;
 import java.awt.event.*;
 
 public class RunController extends AbstractController implements ActionListener{
-    private JButton start;
-    private JButton pause;
+    private JButton run;
     private JButton minute;
     private JButton hour;
     private JButton day;
+    private JButton reset;
 
     public RunController(SimulatorLogic simulatorLogic){
         super(simulatorLogic);
 
-        start = new JButton("Start");
-        start.addActionListener(this);
-
-        pause = new JButton("Pause");
-        pause.addActionListener(this);
+        run = new JButton("Run");
+        run.addActionListener(this);
 
         minute = new JButton("+1 minute");
         minute.addActionListener(this);
@@ -30,35 +27,41 @@ public class RunController extends AbstractController implements ActionListener{
         day = new JButton("+1 day");
         day.addActionListener(this);
 
-        add(start);
-        add(pause);
+        reset = new JButton("Reset");
+        reset.addActionListener(this);
+
+        add(run);
         add(minute);
         add(hour);
         add(day);
+        add(reset);
 
         setVisible(true);
     }
 
     @Override
     public void actionPerformed (ActionEvent e) {
-        if (e.getSource() == start){
-            simulatorLogic.start();
+
+        if (e.getSource() == run){
+            if (run.getText().equals("Pause")) {
+                run.setText("Run");
+                simulatorLogic.pause();
+            }else{
+                run.setText("Pause");
+                simulatorLogic.start();
+            }
         }
 
-        if (e.getSource() == pause){
+        if (e.getSource() == minute){ simulatorLogic.tick(false, 1); }
+
+        if (e.getSource() == hour){ simulatorLogic.tick(false, 60); }
+
+        if (e.getSource() == day){ simulatorLogic.tick(false, 1440); }
+
+        if (e.getSource() == reset) {
             simulatorLogic.pause();
-        }
-
-        if (e.getSource() == minute){
-            simulatorLogic.tick(1);
-        }
-
-        if (e.getSource() == hour){
-            simulatorLogic.tick(60);
-        }
-
-        if (e.getSource() == day){
-            simulatorLogic.tick(1440);
+            simulatorLogic.reset();
+            simulatorLogic.showInitPanel(true);
         }
     }
 }
