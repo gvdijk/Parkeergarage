@@ -1,6 +1,8 @@
 package Parkeersimulator.Model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Random;
 
 public class SimulatorLogic extends AbstractModel implements Runnable{
@@ -8,7 +10,10 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
 	private static final String AD_HOC = "1";
 	private static final String PASS = "2";
     private static final String RES = "3";
-	
+
+    private ArrayList<CarReservation> carReservationList = new ArrayList<>();
+    private ArrayList<ReservationCar> reservationCarList = new ArrayList<>();
+    private ReservationQueue reservationQueue;
 	
 	private CarQueue entranceCarQueue;
     private CarQueue entrancePassQueue;
@@ -21,7 +26,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     private int hour = 0;
     private int minute = 0;
 
-    private int tickPause = 100;
+    private int tickPause = 1;
     private int currentTick = 0;
     private int maxTicks = 10080;
 
@@ -34,8 +39,8 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     int weekendArrivals = 200; // average number of arriving cars per hour
     int weekDayPassArrivals= 40; // average number of arriving cars per hour
     int weekendPassArrivals = 5; // average number of arriving cars per hour
-    int weekDayReservations= 5; // average number of arriving cars per hour
-    int weekendReservations = 10; // average number of arriving cars per hour
+    int weekDayReservations= 2; // average number of arriving cars per hour
+    int weekendReservations = 6; // average number of arriving cars per hour
 
     private int[] hourlyArrivals = new int[60];
     private int[] hourlyPassArrivals = new int[60];
@@ -88,6 +93,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            tickReservations();
             handleEntrance();
             currentTick++;
             if (currentTick == maxTicks){
@@ -128,7 +134,11 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
 
     }
 
-    public void addReservationCar(Car car) {
+    public void addReservationCarToList(ReservationCar car) {
+        reservationCarList.add(car);
+    }
+
+    public void addReservationCarToQueue(Car car) {
         entranceCarQueue.addCar(car);
     }
 
@@ -142,6 +152,35 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
         carsReadyToLeave();
         carsPaying();
         carsLeaving();
+    }
+
+    private void tickReservations() {
+        Iterator<CarReservation> resIt = carReservationList.iterator();
+        while (resIt.hasNext()) {
+            CarReservation reservation = resIt.next();
+            reservation.tick();
+            if (reservation.getMinutesToGo() < 15) {
+                if (screenLogic.setReservation(reservation, this)) {
+                    resIt.remove();
+                }
+            }
+        }
+        Iterator<ReservationCar> carIt = reservationCarList.iterator();
+        while (carIt.hasNext()) {
+            ReservationCar car = carIt.next();
+            car.tick();
+            if (car.getMinutesToGo() <= 0) {
+                Iterator<CarReservation> carResIt = carReservationList.iterator();
+                while (carResIt.hasNext()) {
+                    CarReservation reservation = carResIt.next();
+                    if (car.getReservation() == reservation) {
+                        carResIt.remove();
+                    }
+                }
+                addReservationCarToQueue(car);
+                carIt.remove();
+            }
+        }
     }
 
     private void handlePayment(Car car){
@@ -181,7 +220,8 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     			i<enterSpeed) {
             Car car = queue.removeCar();
             if (car instanceof ReservationCar) {
-                Location loc = ((ReservationCar) car).getReservedLocation();
+                ReservationCar resCar = (ReservationCar) car;
+                Location loc = resCar.getReservedLocation() != null ? resCar.getReservedLocation() : screenLogic.getFirstFreeLocation(isPass);
                 screenLogic.setCarAt(loc, car);
                 screenLogic.removeReservationAt(loc);
             } else {
@@ -237,10 +277,10 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
                     : weekend;
 
             // Minder drukte in de nachturen
-            if (hour <= 6 || hour >= 19) { averageNumberOfCarsPerHour *= 0.4; }
+            if (hour <= 6 || hour >= 19) { averageNumberOfCarsPerHour *= 0.3; }
 
             // Extra autos voor de schouwburgvoorstellingen
-            if (day >= 4 && hour >= 18 && hour <= 19 && target == hourlyArrivals) { averageNumberOfCarsPerHour += 250; }
+            if (day >= 4 && hour >= 18 && hour <= 19 && target == hourlyArrivals) { averageNumberOfCarsPerHour += 200; }
 
             // Extra abbonementshouders in de ochtendspits
             if ((day < 4) && (hour >= 7 && hour <= 10) && (target == hourlyPassArrivals)) { averageNumberOfCarsPerHour *= 2; }
@@ -297,7 +337,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
             break;
         case RES:
             for (int i = 0; i < numberOfCars; i++) {
-                screenLogic.setReservation(this);
+                carReservationList.add(new CarReservation(this));
             }
             break;
         }

@@ -6,7 +6,7 @@ public class PassReservation extends Reservation {
     private static final Color COLOR = new Color(120, 180, 250);
 
     public PassReservation(Location location) {
-        super(location, "Pass");
+        this.setLocation(location);
     }
 
     @Override

@@ -2,17 +2,22 @@ package Parkeersimulator.Model;
 
 import java.awt.*;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class CarReservation extends Reservation {
-    private static final Color COLOR = new Color(250, 230, 150);
+    private static final Color COLOR = new Color(150, 230, 150);
     private int minutesToGo;
     private SimulatorLogic logic;
 
-    public CarReservation(Location location, SimulatorLogic logic) {
-        super(location, "Car");
-        Random random = new Random();
-        minutesToGo = (int) (30 + random.nextFloat() * 4.5 * 60);
+    public CarReservation(SimulatorLogic logic) {
+        minutesToGo = (int) (60 + ThreadLocalRandom.current().nextFloat() * 4 * 60);
         this.logic = logic;
+        ReservationCar car = new ReservationCar(this);
+        logic.addReservationCarToList(car);
+    }
+
+    public int getMinutesToGo() {
+        return minutesToGo;
     }
 
     @Override
@@ -23,9 +28,9 @@ public class CarReservation extends Reservation {
     @Override
     public void tick() {
         minutesToGo--;
-        if (minutesToGo == 0) {
-            Car car = new ReservationCar(getLocation());
-            logic.addReservationCar(car);
+        if (minutesToGo == -30) {
+            logic.getScreenLogic().removeReservationAt(getLocation());
+            this.setLocation(null);
         }
     }
 }

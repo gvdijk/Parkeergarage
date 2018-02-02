@@ -58,14 +58,15 @@ public class ScreenLogic {
         return cars[location.getFloor()][location.getRow()][location.getPlace()];
     }
 
-    public void setReservation(SimulatorLogic simulator) {
+    public boolean setReservation(CarReservation reservation, SimulatorLogic simulator) {
         Location loc = getFirstFreeLocation(false);
         if (loc != null) {
-            CarReservation reservation = new CarReservation(loc, simulator);
+            reservation.setLocation(loc);
             reservations[loc.getFloor()][loc.getRow()][loc.getPlace()] = reservation;
             numberOfOpenSpots--;
+            return true;
         } else {
-            // TODO: Handle no free location regarding queues & new customers
+            return false;
         }
     }
 
