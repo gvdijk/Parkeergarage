@@ -3,6 +3,7 @@ package Parkeersimulator.View;
 import Parkeersimulator.Model.*;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class CarParkView extends AbstractView {
 
@@ -55,6 +56,8 @@ public class CarParkView extends AbstractView {
             carParkImage = createImage(size.width, size.height);
         }
         Graphics graphics = carParkImage.getGraphics();
+        graphics.clearRect(0,0, getPreferredSize().width, getPreferredSize().height);
+        ArrayList<DoubledCar> doubledCars = new ArrayList<>();
         for(int floor = 0; floor < simulatorLogic.getScreenLogic().getNumberOfFloors(); floor++) {
             for(int row = 0; row < simulatorLogic.getScreenLogic().getNumberOfRows(); row++) {
                 for(int place = 0; place < simulatorLogic.getScreenLogic().getNumberOfPlaces(); place++) {
@@ -64,9 +67,8 @@ public class CarParkView extends AbstractView {
                     Color color = Color.darkGray;
                     if (car != null) {
                         color = car.getColor();
-                        // TODO: Not override the color, but draw something on top to indicate double parking
-                        if (car instanceof DoubledCar || car.getBadAtParking() == true) {
-                            color = new Color(200, 40, 200);
+                        if (car instanceof DoubledCar) {
+                            doubledCars.add((DoubledCar) car);
                         }
                     } else if (reservation != null) {
                         color = reservation.getColor();
@@ -75,7 +77,22 @@ public class CarParkView extends AbstractView {
                 }
             }
         }
+        drawDoubledPark(graphics,doubledCars);
         repaint();
+    }
+
+    private void drawDoubledPark(Graphics graphics, ArrayList<DoubledCar> doubledCars) {
+        for (DoubledCar car : doubledCars) {
+            Location locationSecondary = car.getLocation();
+            Location locationPrimary = car.getCoupledCar().getLocation();
+            Location location = locationPrimary.getPlace() > locationSecondary.getPlace() ? locationSecondary : locationPrimary;
+            graphics.setColor(Color.black);
+            graphics.fillRect(
+                    location.getFloor() * 260 + (1 + (int)Math.floor(location.getRow() * 0.5)) * 75 + (location.getRow() % 2) * 20 + 8,
+                    60 + location.getPlace() * 10 + 3,
+                    4,
+                    14);
+        }
     }
 
     /**
