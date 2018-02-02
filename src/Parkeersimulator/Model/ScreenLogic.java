@@ -1,5 +1,7 @@
 package Parkeersimulator.Model;
 
+import java.util.Random;
+
 public class ScreenLogic {
     private int numberOfFloors;
     private int numberOfRows;
@@ -92,6 +94,30 @@ public class ScreenLogic {
         }
         Car oldCar = getCarAt(location);
         if (oldCar == null) {
+            Random random = new Random();
+            boolean isBadAtParking = (random.nextDouble() > 0.99);
+            if (isBadAtParking && location.getPlace() > 0 && location.getPlace() < numberOfPlaces - 1) {
+                Location prevSpot = new Location(location.getFloor(), location.getRow(), location.getPlace() - 1);
+                Location nextSpot = new Location(location.getFloor(), location.getRow(), location.getPlace() + 1);
+                Car occupyingCar = getCarAt(prevSpot);
+                System.out.println("This guy has potential");
+                if (occupyingCar == null) {
+                    car.setBadAtParking(true);
+                    DoubledCar doubledCar = new DoubledCar(car.getStayMinutes(), prevSpot, car.getColor(), car);
+                    cars[prevSpot.getFloor()][prevSpot.getRow()][prevSpot.getPlace()] = doubledCar;
+                    doubledCar.setLocation(prevSpot);
+                    System.out.println("This guy used his potential downward");
+                } else {
+                    occupyingCar = getCarAt(nextSpot);
+                    if (occupyingCar == null) {
+                        car.setBadAtParking(true);
+                        DoubledCar doubledCar = new DoubledCar(car.getStayMinutes(), nextSpot, car.getColor(), car);
+                        cars[nextSpot.getFloor()][nextSpot.getRow()][nextSpot.getPlace()] = doubledCar;
+                        doubledCar.setLocation(nextSpot);
+                        System.out.println("This guy used his potential upward");
+                    }
+                }
+            }
             cars[location.getFloor()][location.getRow()][location.getPlace()] = car;
             car.setLocation(location);
             numberOfOpenSpots--;
@@ -144,7 +170,11 @@ public class ScreenLogic {
                     Location location = new Location(floor, row, place);
                     Car car = getCarAt(location);
                     if (car != null && car.getMinutesLeft() <= 0 && !car.getIsPaying()) {
-                        return car;
+                        if (car instanceof DoubledCar) {
+                            removeCarAt(car.getLocation());
+                        } else {
+                            return car;
+                        }
                     }
                 }
             }

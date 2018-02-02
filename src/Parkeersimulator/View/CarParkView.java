@@ -1,9 +1,7 @@
 package Parkeersimulator.View;
 
-import Parkeersimulator.Model.Car;
-import Parkeersimulator.Model.Location;
-import Parkeersimulator.Model.Reservation;
-import Parkeersimulator.Model.SimulatorLogic;
+import Parkeersimulator.Model.*;
+
 import java.awt.*;
 
 public class CarParkView extends AbstractView {
@@ -66,6 +64,10 @@ public class CarParkView extends AbstractView {
                     Color color = Color.darkGray;
                     if (car != null) {
                         color = car.getColor();
+                        // TODO: Not override the color, but draw something on top to indicate double parking
+                        if (car instanceof DoubledCar || car.getBadAtParking() == true) {
+                            color = new Color(200, 40, 200);
+                        }
                     } else if (reservation != null) {
                         color = reservation.getColor();
                     }
