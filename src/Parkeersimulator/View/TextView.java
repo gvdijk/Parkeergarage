@@ -16,20 +16,28 @@ public class TextView extends AbstractView {
     public TextView (SimulatorLogic simulatorLogic) {
         super (simulatorLogic);
 
+        this.setBackground(new Color(51, 51, 51));
+
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         currentTick = new JLabel("Current tick: " + simulatorLogic.getCurrentTick());
+        currentTick.setForeground(Color.lightGray);
         currentTime = new JLabel("<html>Current day: " + convertDay(simulatorLogic.getDay()) +
                 "<br/>Current hour: " + simulatorLogic.getHour() +
                 "<br/>Current minute: " + simulatorLogic.getMinute());
+        currentTime.setForeground(Color.lightGray);
         dayEarnings = new JLabel("");
+        dayEarnings.setForeground(Color.lightGray);
         setDayEarnings();
         dueEarnings = new JLabel("Money due from parked cars: €" + simulatorLogic.getMoneyDue() + ",-");
+        dueEarnings.setForeground(Color.lightGray);
         totalEarnings = new JLabel("Total Earnings: €" + simulatorLogic.getTotalEarnings() +",-");
+        totalEarnings.setForeground(Color.lightGray);
         currentCars = new JLabel("<html>Current cars in the garage:<br/>" +
                 "<br/>Normal cars: " + simulatorLogic.getNormalCars() +
                 "<br/>Cars with a parking pass: " + simulatorLogic.getPassCars() +
                 "<br/>Cars that reserved a spot: " + simulatorLogic.getReservationCars());
+        currentCars.setForeground(Color.lightGray);
 
         add(Box.createRigidArea(new Dimension(5, 50)));
         add(currentTick);

@@ -17,14 +17,25 @@ public class InitController extends AbstractController implements ActionListener
     public InitController(SimulatorLogic simulatorLogic) {
         super(simulatorLogic);
 
+        this.setBackground(new Color(51, 51, 51));
+
         setLayout(new FlowLayout(FlowLayout.CENTER, 10,50));
 
         tickPause = new JSpinner(new SpinnerNumberModel(100, 1, 200, 1));
+        tickPause.getEditor().getComponent(0).setBackground(new Color(51, 51, 51));
+        tickPause.getEditor().getComponent(0).setForeground(Color.lightGray);
         JLabel tickPauseLabel = new JLabel("Pause per tick (ms): ");
+        tickPauseLabel.setForeground(Color.lightGray);
 
         garageFloors = new JSpinner(new SpinnerNumberModel(3, 1, 4, 1));
+        garageFloors.getEditor().getComponent(0).setBackground(new Color(51, 51, 51));
+        garageFloors.getEditor().getComponent(0).setForeground(Color.lightGray);
         garageRows = new JSpinner(new SpinnerNumberModel(6, 1, 8, 1));
+        garageRows.getEditor().getComponent(0).setBackground(new Color(51, 51, 51));
+        garageRows.getEditor().getComponent(0).setForeground(Color.lightGray);
         garagePlaces = new JSpinner(new SpinnerNumberModel(30, 1, 40, 1));
+        garagePlaces.getEditor().getComponent(0).setBackground(new Color(51, 51, 51));
+        garagePlaces.getEditor().getComponent(0).setForeground(Color.lightGray);
 
         JPanel garageSpinnerPanel = new JPanel();
         garageSpinnerPanel.setLayout(new BoxLayout(garageSpinnerPanel, BoxLayout.Y_AXIS));
@@ -33,10 +44,14 @@ public class InitController extends AbstractController implements ActionListener
         garageSpinnerPanel.add(garagePlaces);
 
         JLabel floorLabel = new JLabel("Garage floors: ");
+        floorLabel.setForeground(Color.lightGray);
         JLabel rowLabel = new JLabel("Garage rows: ");
+        rowLabel.setForeground(Color.lightGray);
         JLabel placesLabel = new JLabel("Garage places: ");
+        placesLabel.setForeground(Color.lightGray);
 
         JPanel garageLabelPanel = new JPanel();
+        garageLabelPanel.setBackground(new Color(51, 51, 51));
         garageLabelPanel.setLayout(new BoxLayout(garageLabelPanel, BoxLayout.Y_AXIS));
         garageLabelPanel.add(floorLabel);
         garageLabelPanel.add(Box.createRigidArea(new Dimension(0, 5)));

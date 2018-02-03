@@ -43,6 +43,7 @@ public class Simulator {
         simulatorPanel.setLayout(new BorderLayout());
 
         initPanel.add(initController);
+        initPanel.setBackground(new Color(51, 51, 51));
 
         simulatorPanel.add(carParkView, BorderLayout.CENTER);
         simulatorPanel.add(runController, BorderLayout.SOUTH);

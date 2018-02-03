@@ -19,8 +19,7 @@ public class GarageLogic {
         this.numberOfPlaces = numberOfPlaces;
         cars = new Car[numberOfFloors][numberOfRows][numberOfPlaces];
         reservations = new Reservation[numberOfFloors][numberOfRows][numberOfPlaces];
-        //TODO fix defaultReservations going out of bounds
-        //setDefaultReservations(1,4, numberOfPlaces);
+        setPassReservations(1,4, numberOfPlaces);
     }
 
     /**
