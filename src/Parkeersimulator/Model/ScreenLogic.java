@@ -187,11 +187,11 @@ public class ScreenLogic {
                     Location location = new Location(floor, row, place);
                     Car car = getCarAt(location);
                     Reservation reservation = getReservationAt(location);
-                    if (car != null) {
-                        car.tick();
-                    }
-                    if (reservation != null) {
-                        reservation.tick();
+                    if (car != null) { car.tick(); }
+                    if (reservation != null && reservation instanceof CarReservation) {
+                        CarReservation res =  (CarReservation) reservation;
+                        res.tick();
+                        if (res.getMinutesToGo() < -30) { removeReservationAt(res.getLocation()); }
                     }
                 }
             }

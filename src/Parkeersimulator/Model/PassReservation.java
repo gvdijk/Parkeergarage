@@ -19,9 +19,4 @@ public class PassReservation extends Reservation {
     public Color getColor() {
         return COLOR;
     }
-
-    /**
-     * Vorder de tijd van deze PassReservation. Momenteel niet van toepassing voor PassReservation.
-     */
-    public void tick() {}
 }

@@ -171,14 +171,6 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     }
 
     /**
-     * Voeg een ReservationCar toe aan de lijst met ReservationCars
-     * @param car de toe te voegen ReservationCar
-     */
-    public void addReservationCarToList(ReservationCar car) {
-        reservationCarList.add(car);
-    }
-
-    /**
      * Voeg een Car toe aan de entranceCarQueue.
      * @param car de toe te voegen Car
      */
@@ -427,7 +419,10 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
             break;
         case RES:
             for (int i = 0; i < numberOfCars; i++) {
-                carReservationList.add(new CarReservation(this));
+                CarReservation reservation = new CarReservation();
+                ReservationCar car = new ReservationCar(reservation);
+                carReservationList.add(reservation);
+                reservationCarList.add(car);
             }
             break;
         }

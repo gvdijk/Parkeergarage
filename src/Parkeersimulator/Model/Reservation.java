@@ -28,9 +28,4 @@ public abstract class Reservation {
      * @return de Color van deze Reservation.
      */
     public abstract Color getColor();
-
-    /**
-     * Vorder de tijd voor deze Reservation.
-     */
-    public abstract void tick();
 }

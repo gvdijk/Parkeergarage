@@ -15,11 +15,8 @@ public class CarReservation extends Reservation {
      * Maakt een ReservationCar aan die correspondeert met deze CarReservation.
      * Voegt deze ReservationCar toe aan de lijst in SimulatorLogic.
      */
-    public CarReservation(SimulatorLogic logic) {
+    public CarReservation() {
         minutesToGo = (int) (60 + ThreadLocalRandom.current().nextFloat() * 4 * 60);
-        this.logic = logic;
-        ReservationCar car = new ReservationCar(this);
-        logic.addReservationCarToList(car);
     }
 
     /**
@@ -38,9 +35,5 @@ public class CarReservation extends Reservation {
      */
     public void tick() {
         minutesToGo--;
-        if (minutesToGo == -30) {
-            logic.getScreenLogic().removeReservationAt(getLocation());
-            this.setLocation(null);
-        }
     }
 }
