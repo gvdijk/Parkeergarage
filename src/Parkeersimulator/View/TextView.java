@@ -22,6 +22,7 @@ public class TextView extends AbstractView {
 
         currentTick = new JLabel("Current tick: " + simulatorLogic.getCurrentTick());
         currentTick.setForeground(Color.lightGray);
+        currentTick.setBackground(Color.red);
         currentTime = new JLabel("<html>Current day: " + convertDay(simulatorLogic.getDay()) +
                 "<br/>Current hour: " + simulatorLogic.getHour() +
                 "<br/>Current minute: " + simulatorLogic.getMinute());

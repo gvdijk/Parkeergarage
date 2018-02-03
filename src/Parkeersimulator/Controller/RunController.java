@@ -44,7 +44,6 @@ public class RunController extends AbstractController implements ActionListener{
 
     @Override
     public void actionPerformed (ActionEvent e) {
-
         if (e.getSource() == run){
             if (run.getText().equals("Pause")) {
                 run.setText("Run");
