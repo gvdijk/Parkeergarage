@@ -19,13 +19,13 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     private int hour = 8;
     private int minute = 0;
 
-    private int tickPause = 1;
+    private int tickPause = 100;
     private int currentTick = 0;
     private int maxTicks = 10000;
 
-    int weekDayArrivals= 100; // average number of arriving cars per hour
+    int weekDayArrivals= 1000; // average number of arriving cars per hour
     int weekendArrivals = 200; // average number of arriving cars per hour
-    int weekDayPassArrivals= 40; // average number of arriving cars per hour
+    int weekDayPassArrivals= 1000; // average number of arriving cars per hour
     int weekendPassArrivals = 5; // average number of arriving cars per hour
 
     private int[] hourlyArrivals = new int[60];
@@ -85,6 +85,12 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     public ScreenLogic getScreenLogic() { return screenLogic; }
 
     public int getCurrentTick(){ return currentTick; }
+
+    public int getMaxTicks(){ return maxTicks; }
+
+    public int getTickPause() {
+        return tickPause;
+    }
 
     public CarQueue getEntranceCarQueue() { return entranceCarQueue;}
 

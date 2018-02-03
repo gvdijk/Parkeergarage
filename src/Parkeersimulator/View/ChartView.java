@@ -1,39 +1,55 @@
 package Parkeersimulator.View;
 
 import Parkeersimulator.Model.SimulatorLogic;
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.embed.swing.JFXPanel;
+import javafx.geometry.Side;
 import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 
 public class ChartView extends AbstractView {
+    private PieChartPanel pieChartPanel;
 
     public ChartView(SimulatorLogic simulatorLogic){
         super (simulatorLogic);
-        PieChart pieChart = new PieChart();
-        Stage primaryStage = new Stage();
+        pieChartPanel = new PieChartPanel();
+        add(pieChartPanel);
+        setVisible(false);
+    }
 
-        PieChart.Data slice1 = new PieChart.Data("Entrance car queue", simulatorLogic.getEntranceCarQueue().carsInQueue());
-        PieChart.Data slice2 = new PieChart.Data("Entrance pass queue"  , simulatorLogic.getEntrancePassQueue().carsInQueue());
+    private class PieChartPanel extends JFXPanel {
+        private ObservableList<PieChart.Data> data = FXCollections.observableArrayList();
+        private PieChart pieChart;
 
-        pieChart.getData().add(slice1);
-        pieChart.getData().add(slice2);
+        public PieChartPanel() {
+            data.add(0, new PieChart.Data("Entrance car queue", simulatorLogic.getEntranceCarQueue().carsInQueue()));
+            data.add(1, new PieChart.Data("Entrance pass queue" , simulatorLogic.getEntrancePassQueue().carsInQueue()));
+            pieChart = new PieChart();
+            pieChart.setData(data);
+            pieChart.setAnimated(false);
+            pieChart.setTitle("Queues");
+            pieChart.setLegendSide(Side.RIGHT);
+            pieChart.setLabelsVisible(true);
 
-        VBox vbox = new VBox(pieChart);
+            setScene(new Scene(pieChart));
+        }
 
-        Scene scene = new Scene(vbox, 400, 200);
+        private void updateData() {
+            data.set(0, new PieChart.Data("Entrance car queue", simulatorLogic.getEntranceCarQueue().carsInQueue()));
+            data.set(1, new PieChart.Data("Entrance pass queue" , simulatorLogic.getEntrancePassQueue().carsInQueue()));
+        }
 
-        primaryStage.setScene(scene);
-        primaryStage.setHeight(300);
-        primaryStage.setWidth(1200);
-
-        primaryStage.show();
+        public void update() {
+            Platform.runLater(() -> updateData());
+        }
     }
 
     @Override
     public void updateView(){
-
+        pieChartPanel.update();
     }
 
     @Override
