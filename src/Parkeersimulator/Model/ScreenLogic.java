@@ -3,24 +3,44 @@ package Parkeersimulator.Model;
 import java.util.Random;
 
 public class ScreenLogic {
-    private int numberOfFloors;
-    private int numberOfRows;
-    private int numberOfPlaces;
-    private int numberOfOpenSpots;
-    private Car[][][] cars;
-    private Reservation[][][] reservations;
+    private int numberOfFloors;     // hoeveelheid verdiepingen in de parkeergarage
+    private int numberOfRows;       // hoeveelheid rijen per verdieping
+    private int numberOfPlaces;     // hoeveelheid plaatsen per rij
 
+    private Car[][][] cars;                 // array met Cars met locaties als indices
+    private Reservation[][][] reservations; // array met Reservations met locaties als indices
+
+    /**
+     * Constructor voor objecten van klasse ScreenLogic.
+     */
     public ScreenLogic(int numberOfFloors, int numberOfRows, int numberOfPlaces) {
         this.numberOfFloors = numberOfFloors;
         this.numberOfRows = numberOfRows;
         this.numberOfPlaces = numberOfPlaces;
-        this.numberOfOpenSpots =numberOfFloors*numberOfRows*numberOfPlaces;
         cars = new Car[numberOfFloors][numberOfRows][numberOfPlaces];
         reservations = new Reservation[numberOfFloors][numberOfRows][numberOfPlaces];
-        setDefaultReservations(1,4, 30);
+        setPassReservations(1,4, 30);
     }
 
-    private void setDefaultReservations(int floors, int rows, int places) {
+    /**
+     * Zet alle gereserveerde plekken voor pashouders.
+     */
+    private void setPassReservations(int floors, int rows, int places) {
+        // Zorg ervoor dat de ingevoerde waardes kleiner of gelijk zijn aan de groottes van de parkeergarage
+        floors = floors > numberOfFloors ? numberOfFloors : floors;
+        rows = rows > numberOfRows ? numberOfRows : rows;
+        places = places > numberOfPlaces ? numberOfPlaces : places;
+
+        // Verwijder alle oude gereserveerde plekken
+        for (int floor = 0; floor < numberOfFloors; floor++) {
+            for (int row = 0; row < numberOfRows; row++) {
+                for (int place = 0; place < numberOfPlaces; place++) {
+                    reservations[floor][row][place] = null;
+                }
+            }
+        }
+
+        // Plaats de nieuwe reserveringen
         for (int floor = 0; floor < floors; floor++) {
             for (int row = 0; row < rows; row++) {
                 for (int place = 0; place < places; place++) {
@@ -33,66 +53,86 @@ public class ScreenLogic {
             }
         }
     }
-    
+
+    /**
+     * @return een integer met de hoeveelheid verdiepingen in de parkeergarage.
+     */
 	public int getNumberOfFloors() {
         return numberOfFloors;
     }
 
+    /**
+     * @return een integer met de hoeveelheid rijen per verdieping.
+     */
     public int getNumberOfRows() {
         return numberOfRows;
     }
 
+    /**
+     * @return een integer met de hoeveelheid plaatsen per rij.
+     */
     public int getNumberOfPlaces() {
         return numberOfPlaces;
     }
 
-    public int getNumberOfOpenSpots(){
-        // TODO: numberOfOpenSpots is not correct or updating at the wrong moment
-    	return numberOfOpenSpots;
-    }
-    
+    /**
+     * Verkrijg een Car die op de meegegeven Location staat, indien deze geldig is en er een Car staat.
+     * @param location een Location om te controleren.
+     * @return een Car op de meegegeven Location.
+     */
     public Car getCarAt(Location location) {
-        if (!locationIsValid(location)) {
-            return null;
-        }
+        if (!locationIsValid(location)) { return null; }
         return cars[location.getFloor()][location.getRow()][location.getPlace()];
     }
 
-    public boolean setReservation(CarReservation reservation, SimulatorLogic simulator) {
+    /**
+     * Plaats een CarReservation op de eerste beschikbare Location.
+     * @param reservation een CarReservation die op de eerste beschikbare Location geplaatst moet worden.
+     * @return een boolean of de actie succesvol is afgerond
+     */
+    public boolean setReservation(CarReservation reservation) {
         Location loc = getFirstFreeLocation(false);
         if (loc != null) {
             reservation.setLocation(loc);
             reservations[loc.getFloor()][loc.getRow()][loc.getPlace()] = reservation;
-            numberOfOpenSpots--;
             return true;
         } else {
             return false;
         }
     }
 
+    /**
+     * Verkrijg een Reservation die op de meegegeven Location staat, indien deze geldig is en er een Reservation staat.
+     * @param location een Location om te controleren.
+     * @return een Reservation op de meegegeven Location.
+     */
     public Reservation getReservationAt(Location location) {
-        if (!locationIsValid(location)) {
-            return null;
-        }
+        if (!locationIsValid(location)) { return null; }
         return reservations[location.getFloor()][location.getRow()][location.getPlace()];
     }
 
+    /**
+     * Verwijder een Reservation op de meegegeven Location.
+     * @param location een Location waar de Reservation verwijderd moet worden.
+     */
     public void removeReservationAt(Location location) {
         if (locationIsValid(location)) {
             Reservation reservation = getReservationAt(location);
             if (reservation != null) {
                 reservations[location.getFloor()][location.getRow()][location.getPlace()] = null;
                 reservation.setLocation(null);
-                numberOfOpenSpots++;
             }
         }
     }
 
-
+    /**
+     * Plaats een Car op de meegegeven Location.
+     * @param location een Location waar de Car geplaatst moet worden.
+     * @param car een Car die op de Location geplaatst moet worden.
+     * @return een boolean of de actie succesvol is afgerond
+     */
     public boolean setCarAt(Location location, Car car) {
-        if (!locationIsValid(location)) {
-            return false;
-        }
+        if (!locationIsValid(location)) { return false; }
         Car oldCar = getCarAt(location);
         if (oldCar == null) {
             Random random = new Random();
@@ -118,26 +158,30 @@ public class ScreenLogic {
             }
             cars[location.getFloor()][location.getRow()][location.getPlace()] = car;
             car.setLocation(location);
-            numberOfOpenSpots--;
             return true;
         }
         return false;
     }
 
+    /**
+     * Verwijder een Car op de meegegeven Location.
+     * @param location een Location waar de Car verwijderd moet worden.
+     * @return een Car als deze succesvol verwijderd is.
+     */
     public Car removeCarAt(Location location) {
-        if (!locationIsValid(location)) {
-            return null;
-        }
+        if (!locationIsValid(location)) { return null; }
         Car car = getCarAt(location);
-        if (car == null) {
-            return null;
-        }
+        if (car == null) { return null; }
         cars[location.getFloor()][location.getRow()][location.getPlace()] = null;
         car.setLocation(null);
-        numberOfOpenSpots++;
         return car;
     }
 
+    /**
+     * Controlleer of de meegegeven Location geldig is binnen de huidige parkeergarage.
+     * @param isPass een boolean of de Location voor pashouders kan zijn.
+     * @return de eerste beschikbare Location in de parkeergarage.
+     */
     public Location getFirstFreeLocation(boolean isPass) {
         for (int floor = 0; floor < getNumberOfFloors(); floor++) {
             for (int row = 0; row < getNumberOfRows(); row++) {
@@ -161,10 +205,14 @@ public class ScreenLogic {
         return null;
     }
 
+    /**
+     * Vind de eerste vertrekkende Car in de parkeergarage.
+     * @return de eerste vertrekkende Car in de parkeergarage.
+     */
     public Car getFirstLeavingCar() {
-        for (int floor = 0; floor < getNumberOfFloors(); floor++) {
-            for (int row = 0; row < getNumberOfRows(); row++) {
-                for (int place = 0; place < getNumberOfPlaces(); place++) {
+        for (int floor = 0; floor < numberOfFloors; floor++) {
+            for (int row = 0; row < numberOfRows; row++) {
+                for (int place = 0; place < numberOfPlaces; place++) {
                     Location location = new Location(floor, row, place);
                     Car car = getCarAt(location);
                     if (car != null && car.getMinutesLeft() <= 0 && !car.getIsPaying()) {
@@ -180,10 +228,14 @@ public class ScreenLogic {
         return null;
     }
 
+    /**
+     * Tick alle Cars en CarReservations die op het moment in de parkeergarage zijn.
+     * Als een CarReservation zijn tijd voorbij is, verwijder deze uit de parkeergarage.
+     */
     public void tick() {
-        for (int floor = 0; floor < getNumberOfFloors(); floor++) {
-            for (int row = 0; row < getNumberOfRows(); row++) {
-                for (int place = 0; place < getNumberOfPlaces(); place++) {
+        for (int floor = 0; floor < numberOfFloors; floor++) {
+            for (int row = 0; row < numberOfRows; row++) {
+                for (int place = 0; place < numberOfPlaces; place++) {
                     Location location = new Location(floor, row, place);
                     Car car = getCarAt(location);
                     Reservation reservation = getReservationAt(location);
@@ -198,6 +250,11 @@ public class ScreenLogic {
         }
     }
 
+    /**
+     * Controlleer of de meegegeven Location geldig is binnen de huidige parkeergarage.
+     * @param location een Location om te controleren.
+     * @return of de Location geldig is.
+     */
     private boolean locationIsValid(Location location) {
         int floor = location.getFloor();
         int row = location.getRow();

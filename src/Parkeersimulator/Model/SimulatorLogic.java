@@ -174,7 +174,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
      * Voeg een Car toe aan de entranceCarQueue.
      * @param car de toe te voegen Car
      */
-    public void addCarToQueue(Car car) {
+    private void addCarToQueue(Car car) {
         entranceCarQueue.addCar(car);
     }
 
@@ -209,7 +209,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
             CarReservation reservation = resIt.next();
             reservation.tick();
             if (reservation.getMinutesToGo() < 15) {
-                if (screenLogic.setReservation(reservation, this)) {
+                if (screenLogic.setReservation(reservation)) {
                     resIt.remove();
                 }
             }
@@ -219,13 +219,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
             ReservationCar car = carIt.next();
             car.tick();
             if (car.getMinutesToGo() <= 0) {
-                Iterator<CarReservation> carResIt = carReservationList.iterator();
-                while (carResIt.hasNext()) {
-                    CarReservation reservation = carResIt.next();
-                    if (car.getReservation() == reservation) {
-                        carResIt.remove();
-                    }
-                }
+                carReservationList.removeIf(reservation -> car.getReservation() == reservation);
                 addCarToQueue(car);
                 carIt.remove();
             }
