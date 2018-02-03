@@ -11,7 +11,7 @@ public class ViewController extends AbstractController implements ActionListener
     private JButton carParkView;
     private JButton textView;
     private JButton view3;
-    private JButton view4;
+    private JButton graphView;
 
     public ViewController (SimulatorLogic simulatorLogic){
         super(simulatorLogic);
@@ -25,13 +25,13 @@ public class ViewController extends AbstractController implements ActionListener
         view3 = new JButton("View 3");
         view3.addActionListener(this);
 
-        view4 = new JButton("View 4");
-        view4.addActionListener(this);
+        graphView = new JButton("GraphView");
+        graphView.addActionListener(this);
 
         add(carParkView);
         add(textView);
         add(view3);
-        add(view4);
+        add(graphView);
 
         this.setBackground(new Color(59, 69, 89));
 
@@ -52,8 +52,8 @@ public class ViewController extends AbstractController implements ActionListener
             //TODO implement view 3
         }
 
-        if (e.getSource() == view4){
-            //TODO implement view 4
+        if (e.getSource() == graphView){
+            simulatorLogic.setVisibleView("GraphView");
         }
     }
 }

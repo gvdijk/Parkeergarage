@@ -5,6 +5,7 @@ import Parkeersimulator.Controller.RunController;
 import Parkeersimulator.Controller.ViewController;
 import Parkeersimulator.Model.SimulatorLogic;
 import Parkeersimulator.View.CarParkView;
+import Parkeersimulator.View.GraphView;
 import Parkeersimulator.View.TextView;
 
 import javax.swing.*;
@@ -18,6 +19,7 @@ public class Simulator {
     private SimulatorLogic simulatorLogic;
     private CarParkView carParkView;
     private TextView textView;
+    private GraphView graphView;
     private RunController runController;
     private ViewController viewController;
     private InitController initController;
@@ -29,6 +31,7 @@ public class Simulator {
         simulatorLogic = new SimulatorLogic(initPanel, simulatorPanel);
         carParkView = new CarParkView(simulatorLogic);
         textView = new TextView(simulatorLogic);
+        graphView = new GraphView(simulatorLogic);
         runController = new RunController(simulatorLogic);
         viewController = new ViewController(simulatorLogic);
         initController = new InitController(simulatorLogic);
@@ -58,6 +61,7 @@ public class Simulator {
         contentPane.add(initPanel);
 
         simulatorPanel.add(textView, BorderLayout.CENTER);
+        simulatorPanel.add(graphView, BorderLayout.CENTER);
 
         simulatorLogic.showInitPanel(true);
 
