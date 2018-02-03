@@ -28,7 +28,7 @@ public class CarParkView extends AbstractView {
      * Overridden. Tell the GUI manager how big we would like to be.
      */
     public Dimension getPreferredSize() {
-        return new Dimension(800, 500);
+        return new Dimension(1250, 500);
     }
 
     /**
@@ -58,6 +58,7 @@ public class CarParkView extends AbstractView {
             carParkImage = createImage(size.width, size.height);
         }
         Graphics graphics = carParkImage.getGraphics();
+        graphics.clearRect(0,0, getPreferredSize().width, getPreferredSize().height);
         for(int floor = 0; floor < simulatorLogic.getGarageLogic().getNumberOfFloors(); floor++) {
             for(int row = 0; row < simulatorLogic.getGarageLogic().getNumberOfRows(); row++) {
                 for(int place = 0; place < simulatorLogic.getGarageLogic().getNumberOfPlaces(); place++) {

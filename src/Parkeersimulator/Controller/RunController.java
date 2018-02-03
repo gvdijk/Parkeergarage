@@ -60,6 +60,7 @@ public class RunController extends AbstractController implements ActionListener{
 
         if (e.getSource() == reset) {
             simulatorLogic.pause();
+            run.setText("Run");
             simulatorLogic.reset();
             simulatorLogic.showInitPanel(true);
         }

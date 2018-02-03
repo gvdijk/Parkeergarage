@@ -29,7 +29,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     private int totalEarnings;
     private int dayValue;
     private HashMap<Integer, Integer> dayEarnings;
-    private int parkingFee;
+    private int parkingFee = 1;
 
     private int normalCars;
     private int passCars;
@@ -80,14 +80,12 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
         day = 0;
         hour = 0;
         minute = 0;
-        normalCars = 0;
-        passCars = 0;
-        reservationCars = 0;
+        resetCarCount();
         resetEarnings();
     }
 
-    public void initialize(int tickPause){
-        garageLogic = new GarageLogic(3, 6, 30);
+    public void initialize(int tickPause, int[] garage){
+        garageLogic = new GarageLogic(garage[0], garage[1], garage[2]);
         this.tickPause = tickPause;
         garageLogic.tick();
         updateViews();
@@ -216,7 +214,9 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     }
 
     private void resetCarCount(){
-
+        normalCars = 0;
+        passCars = 0;
+        reservationCars = 0;
     }
 
     private void carsArriving(){
