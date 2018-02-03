@@ -9,6 +9,9 @@ public class GraphView extends AbstractView {
 
     private JLabel test;
 
+    /**
+     * Constructor voor objecten van klasse GraphView.
+     */
     public GraphView (SimulatorLogic simulatorLogic) {
         super(simulatorLogic);
 
