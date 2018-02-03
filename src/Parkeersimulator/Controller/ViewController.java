@@ -2,6 +2,7 @@ package Parkeersimulator.Controller;
 
 import Parkeersimulator.Model.SimulatorLogic;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -31,6 +32,8 @@ public class ViewController extends AbstractController implements ActionListener
         add(textView);
         add(view3);
         add(view4);
+
+        this.setBackground(new Color(59, 69, 89));
 
         setVisible(true);
     }

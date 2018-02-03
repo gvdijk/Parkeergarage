@@ -3,19 +3,25 @@ package Parkeersimulator.Model;
 import java.awt.*;
 
 public class PassReservation extends Reservation {
-    private static final Color COLOR = new Color(120, 180, 250);
+    private static final Color COLOR = new Color(14, 97, 137);
 
+    /**
+     * Constructor voor objecten van klasse PassReservation.
+     * @param location de Location voor deze PassReservation.
+     */
     public PassReservation(Location location) {
         this.setLocation(location);
     }
 
-    @Override
+    /**
+     * @return de Color van deze PassReservation.
+     */
     public Color getColor() {
         return COLOR;
     }
 
-    @Override
-    public void tick() {
-        // Nothing here yet
-    }
+    /**
+     * Vorder de tijd van deze PassReservation. Momenteel niet van toepassing voor PassReservation.
+     */
+    public void tick() {}
 }

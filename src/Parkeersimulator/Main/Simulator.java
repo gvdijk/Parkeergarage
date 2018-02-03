@@ -32,6 +32,7 @@ public class Simulator {
         contentPane.add(carParkView, BorderLayout.CENTER);
         contentPane.add(runController, BorderLayout.SOUTH);
         contentPane.add(viewController, BorderLayout.NORTH);
+        screen.setBackground(new Color(51, 51, 51));
         screen.pack();
 
         contentPane.add(textView, BorderLayout.CENTER);

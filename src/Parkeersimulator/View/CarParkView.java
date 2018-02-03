@@ -64,7 +64,7 @@ public class CarParkView extends AbstractView {
                     Location location = new Location(floor, row, place);
                     Reservation reservation = simulatorLogic.getScreenLogic().getReservationAt(location);
                     Car car = simulatorLogic.getScreenLogic().getCarAt(location);
-                    Color color = Color.darkGray;
+                    Color color = new Color(112, 112, 112);
                     if (car != null) {
                         color = car.getColor();
                         if (car instanceof DoubledCar) {
@@ -81,12 +81,15 @@ public class CarParkView extends AbstractView {
         repaint();
     }
 
+    /**
+     * Paint a line over two places to indicate a double parked car.
+     */
     private void drawDoubledPark(Graphics graphics, ArrayList<DoubledCar> doubledCars) {
         for (DoubledCar car : doubledCars) {
             Location locationSecondary = car.getLocation();
             Location locationPrimary = car.getCoupledCar().getLocation();
             Location location = locationPrimary.getPlace() > locationSecondary.getPlace() ? locationSecondary : locationPrimary;
-            graphics.setColor(Color.black);
+            graphics.setColor(new Color(229, 229, 229));
             graphics.fillRect(
                     location.getFloor() * 260 + (1 + (int)Math.floor(location.getRow() * 0.5)) * 75 + (location.getRow() % 2) * 20 + 8,
                     60 + location.getPlace() * 10 + 3,

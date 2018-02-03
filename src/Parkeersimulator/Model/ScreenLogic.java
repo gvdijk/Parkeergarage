@@ -103,14 +103,14 @@ public class ScreenLogic {
                 Car occupyingCar = getCarAt(prevSpot);
                 if (occupyingCar == null) {
                     car.setBadAtParking(true);
-                    DoubledCar doubledCar = new DoubledCar(car.getStayMinutes(), prevSpot, car.getColor(), car);
+                    DoubledCar doubledCar = new DoubledCar(prevSpot, car);
                     cars[prevSpot.getFloor()][prevSpot.getRow()][prevSpot.getPlace()] = doubledCar;
                     doubledCar.setLocation(prevSpot);
                 } else {
                     occupyingCar = getCarAt(nextSpot);
                     if (occupyingCar == null) {
                         car.setBadAtParking(true);
-                        DoubledCar doubledCar = new DoubledCar(car.getStayMinutes(), nextSpot, car.getColor(), car);
+                        DoubledCar doubledCar = new DoubledCar(nextSpot, car);
                         cars[nextSpot.getFloor()][nextSpot.getRow()][nextSpot.getPlace()] = doubledCar;
                         doubledCar.setLocation(nextSpot);
                     }

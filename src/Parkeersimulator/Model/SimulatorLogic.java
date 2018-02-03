@@ -13,7 +13,6 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
 
     private ArrayList<CarReservation> carReservationList = new ArrayList<>();
     private ArrayList<ReservationCar> reservationCarList = new ArrayList<>();
-    private ReservationQueue reservationQueue;
 	
 	private CarQueue entranceCarQueue;
     private CarQueue entrancePassQueue;
@@ -26,7 +25,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     private int hour = 0;
     private int minute = 0;
 
-    private int tickPause = 1;
+    private int tickPause = 10;
     private int currentTick = 0;
     private int maxTicks = 10080;
 
@@ -35,12 +34,12 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     private int dayValue = 0;
     private HashMap<Integer, Integer> dayEarnings;
 
-    int weekDayArrivals= 100; // average number of arriving cars per hour
-    int weekendArrivals = 200; // average number of arriving cars per hour
-    int weekDayPassArrivals= 40; // average number of arriving cars per hour
+    int weekDayArrivals= 80; // average number of arriving cars per hour
+    int weekendArrivals = 160; // average number of arriving cars per hour
+    int weekDayPassArrivals= 30; // average number of arriving cars per hour
     int weekendPassArrivals = 5; // average number of arriving cars per hour
     int weekDayReservations= 2; // average number of arriving cars per hour
-    int weekendReservations = 6; // average number of arriving cars per hour
+    int weekendReservations = 8; // average number of arriving cars per hour
 
     private int[] hourlyArrivals = new int[60];
     private int[] hourlyPassArrivals = new int[60];
@@ -134,11 +133,19 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
 
     }
 
+    /**
+     * Voeg een ReservationCar toe aan de lijst met ReservationCars
+     * @param car de toe te voegen ReservationCar
+     */
     public void addReservationCarToList(ReservationCar car) {
         reservationCarList.add(car);
     }
 
-    public void addReservationCarToQueue(Car car) {
+    /**
+     * Voeg een Car toe aan de entranceCarQueue.
+     * @param car de toe te voegen Car
+     */
+    public void addCarToQueue(Car car) {
         entranceCarQueue.addCar(car);
     }
 
@@ -154,6 +161,9 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
         carsLeaving();
     }
 
+    /**
+     *
+     */
     private void tickReservations() {
         Iterator<CarReservation> resIt = carReservationList.iterator();
         while (resIt.hasNext()) {
@@ -177,7 +187,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
                         carResIt.remove();
                     }
                 }
-                addReservationCarToQueue(car);
+                addCarToQueue(car);
                 carIt.remove();
             }
         }

@@ -3,6 +3,7 @@ package Parkeersimulator.Controller;
 import Parkeersimulator.Model.SimulatorLogic;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 
 public class RunController extends AbstractController implements ActionListener{
@@ -35,6 +36,8 @@ public class RunController extends AbstractController implements ActionListener{
         add(minute);
         add(hour);
         add(day);
+
+        this.setBackground(new Color(59, 69, 89));
 
         setVisible(true);
     }

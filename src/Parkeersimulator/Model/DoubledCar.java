@@ -1,30 +1,33 @@
 package Parkeersimulator.Model;
 
 import java.awt.*;
-import java.util.Random;
 
 public class DoubledCar extends Car {
     private Color color;
     private Car coupledCar;
 
-    public DoubledCar(int stayMinutes, Location location, Color color, Car coupledCar) {
-        this.setStayMinutes(stayMinutes);
-        this.setMinutesLeft(stayMinutes);
+    /**
+     * Constructor voor objecten van klasse AdHocCar.
+     * Neemt alle relevante waardes van gekoppelde Car over.
+     * @param location de Location waar deze DoubledCar zich moet gaan bevinden.
+     * @param coupledCar de Car waar deze DoubledCar een aanduidende plekvuller is.
+     */
+    public DoubledCar(Location location, Car coupledCar) {
+        this.setStayMinutes(coupledCar.getStayMinutes());
+        this.setMinutesLeft(coupledCar.getStayMinutes());
         this.setHasToPay(false);
-        this.color = color;
+        this.color = coupledCar.getColor();
         this.setLocation(location);
         this.coupledCar = coupledCar;
     }
 
-    public Color getColor(){
-        return color;
-    }
+    /**
+     * @return de Color van deze DoubledCar.
+     */
+    public Color getColor(){ return color; }
 
-    public Car getCoupledCar() {
-        return coupledCar;
-    }
-
-    public void setCoupledCar(Car coupledCar) {
-        this.coupledCar = coupledCar;
-    }
+    /**
+     * @return de Car waar deze DoubledCar een aanduidende plekvuller is.
+     */
+    public Car getCoupledCar() { return coupledCar; }
 }
