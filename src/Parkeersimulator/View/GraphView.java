@@ -19,6 +19,9 @@ public class GraphView extends AbstractView {
     private CarsPieChartPanel carsPieChartPanel;
     private EarningsLineChartPanel earningsLineChartPanel;
 
+    /**
+     * Constructor voor objecten van klasse GraphView.
+     */
     public GraphView (SimulatorLogic simulatorLogic) {
         super (simulatorLogic);
         this.setBackground(new Color(51, 51, 51));
