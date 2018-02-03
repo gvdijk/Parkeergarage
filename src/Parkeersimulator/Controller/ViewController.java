@@ -9,7 +9,7 @@ public class ViewController extends AbstractController implements ActionListener
 
     private JButton carParkView;
     private JButton textView;
-    private JButton view3;
+    private JButton chartView;
     private JButton view4;
 
     public ViewController (SimulatorLogic simulatorLogic){
@@ -21,15 +21,15 @@ public class ViewController extends AbstractController implements ActionListener
         textView = new JButton("TextView");
         textView.addActionListener(this);
 
-        view3 = new JButton("View 3");
-        view3.addActionListener(this);
+        chartView = new JButton("ChartView");
+        chartView.addActionListener(this);
 
         view4 = new JButton("View 4");
         view4.addActionListener(this);
 
         add(carParkView);
         add(textView);
-        add(view3);
+        add(chartView);
         add(view4);
 
         setVisible(true);
@@ -45,8 +45,8 @@ public class ViewController extends AbstractController implements ActionListener
             simulatorLogic.setVisible("TextView");
         }
 
-        if (e.getSource() == view3){
-            //TODO implement view 3
+        if (e.getSource() == chartView){
+            simulatorLogic.setVisible("ChartView");
         }
 
         if (e.getSource() == view4){
