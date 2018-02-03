@@ -2,7 +2,7 @@ package Parkeersimulator.Model;
 
 import java.util.Random;
 
-public class ScreenLogic {
+public class GarageLogic {
     private int numberOfFloors;     // hoeveelheid verdiepingen in de parkeergarage
     private int numberOfRows;       // hoeveelheid rijen per verdieping
     private int numberOfPlaces;     // hoeveelheid plaatsen per rij
@@ -11,9 +11,9 @@ public class ScreenLogic {
     private Reservation[][][] reservations; // array met Reservations met locaties als indices
 
     /**
-     * Constructor voor objecten van klasse ScreenLogic.
+     * Constructor voor objecten van klasse GarageLogic.
      */
-    public ScreenLogic(int numberOfFloors, int numberOfRows, int numberOfPlaces) {
+    public GarageLogic(int numberOfFloors, int numberOfRows, int numberOfPlaces) {
         this.numberOfFloors = numberOfFloors;
         this.numberOfRows = numberOfRows;
         this.numberOfPlaces = numberOfPlaces;
