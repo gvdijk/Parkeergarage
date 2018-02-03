@@ -180,4 +180,23 @@ public class GarageLogic {
         }
         return true;
     }
+
+    public int getMoneyDue(){
+        int money = 0;
+        for (int floor = 0; floor < numberOfFloors; floor++) {
+            for (int row = 0; row < numberOfRows; row++) {
+                for (int place = 0; place < numberOfPlaces; place++) {
+                    Location location = new Location(floor, row, place);
+                    Car car = getCarAt(location);
+                    if (car != null && car.getHasToPay()) {
+                        int feeTimes = (int) Math.floor(car.getStayMinutes() / 20);
+                        if (car.getStayMinutes() % 20 > 0){ feeTimes++; }
+                        money += feeTimes;
+                    }
+                }
+            }
+        }
+        return money;
+    }
 }
+
