@@ -18,7 +18,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     private CarQueue entrancePassQueue;
     private CarQueue paymentCarQueue;
     private CarQueue exitCarQueue;
-    private GarageLogic garageLogic;
+    private ScreenLogic screenLogic;
 
     private boolean run; // of de simulatie momenteel draait
 
@@ -62,7 +62,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
         for (int i=0; i < 7; i++){
             dayEarnings.put(i, 0);
         }
-        garageLogic = new GarageLogic(3, 6, 30);
+        screenLogic = new ScreenLogic(3, 6, 30);
     }
 
     /**
@@ -102,7 +102,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
         for (int i = 0; i < times; i++){
             advanceTime();
             handleExit();
-            garageLogic.tick();
+            screenLogic.tick();
             updateEarnings();
             updateViews();
             // Pause.
@@ -124,7 +124,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     /**
      * @return de GarageLogic die de meeste logistieke logica regelt.
      */
-    public GarageLogic getGarageLogic() { return garageLogic; }
+    public ScreenLogic getScreenLogic() { return screenLogic; }
 
     /**
      * @return de huidige tick van de simulatie, in minuten vanaf het begin.
@@ -209,7 +209,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
             CarReservation reservation = resIt.next();
             reservation.tick();
             if (reservation.getMinutesToGo() < 15) {
-                if (garageLogic.setReservation(reservation)) {
+                if (screenLogic.setReservation(reservation)) {
                     resIt.remove();
                 }
             }
@@ -267,17 +267,17 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
         // Remove car from the front of the queue and assign to a parking space.
 
     	while (queue.carsInQueue()>0 &&
-                garageLogic.getFirstFreeLocation(isPass) != null &&
+                screenLogic.getFirstFreeLocation(isPass) != null &&
     			i<enterSpeed) {
             Car car = queue.removeCar();
             if (car instanceof ReservationCar) {
                 ReservationCar resCar = (ReservationCar) car;
-                Location loc = resCar.getReservedLocation() != null ? resCar.getReservedLocation() : garageLogic.getFirstFreeLocation(isPass);
-                garageLogic.setCarAt(loc, car);
-                garageLogic.removeReservationAt(loc);
+                Location loc = resCar.getReservedLocation() != null ? resCar.getReservedLocation() : screenLogic.getFirstFreeLocation(isPass);
+                screenLogic.setCarAt(loc, car);
+                screenLogic.removeReservationAt(loc);
             } else {
-                Location freeLocation = garageLogic.getFirstFreeLocation(isPass);
-                garageLogic.setCarAt(freeLocation, car);
+                Location freeLocation = screenLogic.getFirstFreeLocation(isPass);
+                screenLogic.setCarAt(freeLocation, car);
             }
             i++;
         }
@@ -289,7 +289,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
      */
     private void carsReadyToLeave(){
         // Add leaving cars to the payment queue.
-        Car car = garageLogic.getFirstLeavingCar();
+        Car car = screenLogic.getFirstLeavingCar();
         while (car!=null) {
         	if (car.getHasToPay()){
 	            car.setIsPaying(true);
@@ -298,7 +298,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
         	else {
         		carLeavesSpot(car);
         	}
-            car = garageLogic.getFirstLeavingCar();
+            car = screenLogic.getFirstLeavingCar();
         }
     }
 
@@ -426,7 +426,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
      * Verwijder een Car uit de parkeergarage, en voeg deze toe aan de uitgangswachtrij.
      */
     private void carLeavesSpot(Car car){
-    	garageLogic.removeCarAt(car.getLocation());
+    	screenLogic.removeCarAt(car.getLocation());
         exitCarQueue.addCar(car);
     }
 
