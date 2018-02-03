@@ -7,11 +7,11 @@ import java.awt.*;
 public class TextView extends AbstractView {
 
     private JLabel currentTick;
-    private JLabel currentDay;
-    private JLabel currentHour;
-    private JLabel currentMinute;
+    private JLabel currentTime;
     private JLabel totalEarnings;
     private JLabel dayEarnings;
+    private JLabel dueEarnings;
+    private JLabel currentCars;
 
     public TextView (SimulatorLogic simulatorLogic) {
         super (simulatorLogic);
@@ -19,32 +19,30 @@ public class TextView extends AbstractView {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         currentTick = new JLabel("Current tick: " + simulatorLogic.getCurrentTick());
-        currentDay = new JLabel("Current day: " + convertDay(simulatorLogic.getDay()));
-        currentHour = new JLabel("Current hour: " + simulatorLogic.getHour());
-        currentMinute = new JLabel("Current minute: " + simulatorLogic.getMinute());
+        currentTime = new JLabel("<html>Current day: " + convertDay(simulatorLogic.getDay()) +
+                "<br/>Current hour: " + simulatorLogic.getHour() +
+                "<br/>Current minute: " + simulatorLogic.getMinute());
         dayEarnings = new JLabel("");
         setDayEarnings();
+        dueEarnings = new JLabel("Money due from parked cars: €" + simulatorLogic.getMoneyDue() + ",-");
         totalEarnings = new JLabel("Total Earnings: €" + simulatorLogic.getTotalEarnings() +",-");
-
-        /*
-        currentTick.setAlignmentX(Component.CENTER_ALIGNMENT);
-        currentDay.setAlignmentX(Component.CENTER_ALIGNMENT);
-        currentHour.setAlignmentX(Component.CENTER_ALIGNMENT);
-        currentMinute.setAlignmentX(Component.CENTER_ALIGNMENT);
-        dayEarnings.setAlignmentX(Component.CENTER_ALIGNMENT);
-        totalEarnings.setAlignmentX(Component.CENTER_ALIGNMENT);
-        */
+        currentCars = new JLabel("<html>Current cars in the garage:<br/>" +
+                "<br/>Normal cars: " + simulatorLogic.getNormalCars() +
+                "<br/>Cars with a parking pass: " + simulatorLogic.getPassCars() +
+                "<br/>Cars that reserved a spot: " + simulatorLogic.getReservationCars());
 
         add(Box.createRigidArea(new Dimension(5, 50)));
         add(currentTick);
         add(Box.createRigidArea(new Dimension(0, 10)));
-        add(currentDay);
-        add(currentHour);
-        add(currentMinute);
+        add(currentTime);
         add(Box.createRigidArea(new Dimension(0, 40)));
         add(dayEarnings);
         add(Box.createRigidArea(new Dimension(0, 10)));
         add(totalEarnings);
+        add(Box.createRigidArea(new Dimension(0, 10)));
+        add(dueEarnings);
+        add(Box.createRigidArea(new Dimension(0, 40)));
+        add(currentCars);
 
         setVisible(false);
     }
@@ -52,11 +50,16 @@ public class TextView extends AbstractView {
     @Override
     public void updateView() {
         currentTick.setText("Current tick: " + simulatorLogic.getCurrentTick());
-        currentDay.setText("Current day: " + convertDay(simulatorLogic.getDay()));
-        currentMinute.setText("Current minute: " + simulatorLogic.getMinute());
-        currentHour.setText("Current hour: " + simulatorLogic.getHour());
+        currentTime.setText("<html>Current day: " + convertDay(simulatorLogic.getDay()) +
+                "<br/>Current hour: " + simulatorLogic.getHour() +
+                "<br/>Current minute: " + simulatorLogic.getMinute());
         setDayEarnings();
+        dueEarnings.setText("Money due from parked cars: €" + simulatorLogic.getMoneyDue() + ",-");
         totalEarnings.setText("Total Earnings: €" + simulatorLogic.getTotalEarnings()+",-");
+        currentCars.setText("<html><b>Current cars in the garage:</b><br/>" +
+                "<br/>Normal cars: " + simulatorLogic.getNormalCars() +
+                "<br/>Cars with a parking pass: " + simulatorLogic.getPassCars() +
+                "<br/>Cars that reserved a spot: " + simulatorLogic.getReservationCars());
     }
 
     @Override

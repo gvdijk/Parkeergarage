@@ -2,7 +2,7 @@ package Parkeersimulator.Model;
 
 import java.util.Random;
 
-public class ScreenLogic {
+public class GarageLogic {
     private int numberOfFloors;     // hoeveelheid verdiepingen in de parkeergarage
     private int numberOfRows;       // hoeveelheid rijen per verdieping
     private int numberOfPlaces;     // hoeveelheid plaatsen per rij
@@ -13,13 +13,14 @@ public class ScreenLogic {
     /**
      * Constructor voor objecten van klasse ScreenLogic.
      */
-    public ScreenLogic(int numberOfFloors, int numberOfRows, int numberOfPlaces) {
+    public GarageLogic(int numberOfFloors, int numberOfRows, int numberOfPlaces) {
         this.numberOfFloors = numberOfFloors;
         this.numberOfRows = numberOfRows;
         this.numberOfPlaces = numberOfPlaces;
         cars = new Car[numberOfFloors][numberOfRows][numberOfPlaces];
         reservations = new Reservation[numberOfFloors][numberOfRows][numberOfPlaces];
-        setPassReservations(1,4, 30);
+        //TODO fix defaultReservations going out of bounds
+        //setDefaultReservations(1,4, numberOfPlaces);
     }
 
     /**
@@ -264,4 +265,23 @@ public class ScreenLogic {
         }
         return true;
     }
+
+    public int getMoneyDue(){
+        int money = 0;
+        for (int floor = 0; floor < numberOfFloors; floor++) {
+            for (int row = 0; row < numberOfRows; row++) {
+                for (int place = 0; place < numberOfPlaces; place++) {
+                    Location location = new Location(floor, row, place);
+                    Car car = getCarAt(location);
+                    if (car != null && car.getHasToPay()) {
+                        int feeTimes = (int) Math.floor(car.getStayMinutes() / 20);
+                        if (car.getStayMinutes() % 20 > 0){ feeTimes++; }
+                        money += feeTimes;
+                    }
+                }
+            }
+        }
+        return money;
+    }
 }
+

@@ -27,7 +27,7 @@ public class CarParkView extends AbstractView {
      * Overridden. Tell the GUI manager how big we would like to be.
      */
     public Dimension getPreferredSize() {
-        return new Dimension(800, 500);
+        return new Dimension(1250, 500);
     }
 
     /**
@@ -49,6 +49,7 @@ public class CarParkView extends AbstractView {
         }
     }
 
+    @Override
     public void updateView() {
         // Create a new car park image if the size has changed.
         if (!size.equals(getSize())) {
@@ -57,13 +58,14 @@ public class CarParkView extends AbstractView {
         }
         Graphics graphics = carParkImage.getGraphics();
         graphics.clearRect(0,0, getPreferredSize().width, getPreferredSize().height);
+
         ArrayList<DoubledCar> doubledCars = new ArrayList<>();
-        for(int floor = 0; floor < simulatorLogic.getScreenLogic().getNumberOfFloors(); floor++) {
-            for(int row = 0; row < simulatorLogic.getScreenLogic().getNumberOfRows(); row++) {
-                for(int place = 0; place < simulatorLogic.getScreenLogic().getNumberOfPlaces(); place++) {
+        for(int floor = 0; floor < simulatorLogic.getGarageLogic().getNumberOfFloors(); floor++) {
+            for(int row = 0; row < simulatorLogic.getGarageLogic().getNumberOfRows(); row++) {
+                for(int place = 0; place < simulatorLogic.getGarageLogic().getNumberOfPlaces(); place++) {
                     Location location = new Location(floor, row, place);
-                    Reservation reservation = simulatorLogic.getScreenLogic().getReservationAt(location);
-                    Car car = simulatorLogic.getScreenLogic().getCarAt(location);
+                    Reservation reservation = simulatorLogic.getGarageLogic().getReservationAt(location);
+                    Car car = simulatorLogic.getGarageLogic().getCarAt(location);
                     Color color = new Color(112, 112, 112);
                     if (car != null) {
                         color = car.getColor();

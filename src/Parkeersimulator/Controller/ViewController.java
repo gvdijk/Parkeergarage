@@ -41,11 +41,11 @@ public class ViewController extends AbstractController implements ActionListener
     @Override
     public void actionPerformed (ActionEvent e) {
         if (e.getSource() == carParkView){
-            simulatorLogic.setVisible("CarParkView");
+            simulatorLogic.setVisibleView("CarParkView");
         }
 
         if (e.getSource() == textView){
-            simulatorLogic.setVisible("TextView");
+            simulatorLogic.setVisibleView("TextView");
         }
 
         if (e.getSource() == view3){

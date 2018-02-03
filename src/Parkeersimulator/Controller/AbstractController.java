@@ -1,7 +1,6 @@
 package Parkeersimulator.Controller;
 
 import Parkeersimulator.Model.SimulatorLogic;
-
 import javax.swing.*;
 
 public abstract class AbstractController extends JPanel{
