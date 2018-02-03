@@ -1,5 +1,6 @@
 package Parkeersimulator.Model;
 
+import Parkeersimulator.Main.Simulator;
 import Parkeersimulator.View.AbstractView;
 
 import javax.swing.*;
@@ -10,11 +11,12 @@ public abstract class AbstractModel {
     private List<AbstractView> views;
     private JPanel initPanel;
     private JPanel simulatorPanel;
+    protected Simulator simulator;
 
-    public AbstractModel (JPanel init, JPanel simulator){
+    public AbstractModel (JPanel init, JPanel sim){
         views = new ArrayList<>();
         initPanel = init;
-        simulatorPanel = simulator;
+        simulatorPanel = sim;
     }
 
     public void addView (AbstractView view){

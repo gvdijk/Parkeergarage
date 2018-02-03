@@ -6,23 +6,19 @@ import java.awt.*;
 
 public class TextView extends AbstractView {
 
-    private JLabel currentTick;
     private JLabel currentTime;
-    private JLabel totalEarnings;
     private JLabel dayEarnings;
-    private JLabel dueEarnings;
+    private JLabel earnings;
     private JLabel currentCars;
+    private JLabel currentCarPercentages;
 
     public TextView (SimulatorLogic simulatorLogic) {
         super (simulatorLogic);
 
         this.setBackground(new Color(51, 51, 51));
 
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        //setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        currentTick = new JLabel("Current tick: " + simulatorLogic.getCurrentTick());
-        currentTick.setForeground(Color.lightGray);
-        currentTick.setBackground(Color.red);
         currentTime = new JLabel("<html>Current day: " + convertDay(simulatorLogic.getDay()) +
                 "<br/>Current hour: " + simulatorLogic.getHour() +
                 "<br/>Current minute: " + simulatorLogic.getMinute());
@@ -30,45 +26,45 @@ public class TextView extends AbstractView {
         dayEarnings = new JLabel("");
         dayEarnings.setForeground(Color.lightGray);
         setDayEarnings();
-        dueEarnings = new JLabel("Money due from parked cars: €" + simulatorLogic.getMoneyDue() + ",-");
-        dueEarnings.setForeground(Color.lightGray);
-        totalEarnings = new JLabel("Total Earnings: €" + simulatorLogic.getTotalEarnings() +",-");
-        totalEarnings.setForeground(Color.lightGray);
+        earnings = new JLabel("<html>Money due from parked cars: €" + simulatorLogic.getMoneyDue() + ",-<br/>" +
+                "<br/>Total Earnings: €" + simulatorLogic.getTotalEarnings() + ",-");
+        earnings.setForeground(Color.lightGray);
         currentCars = new JLabel("<html>Current cars in the garage:<br/>" +
                 "<br/>Normal cars: " + simulatorLogic.getNormalCars() +
                 "<br/>Cars with a parking pass: " + simulatorLogic.getPassCars() +
                 "<br/>Cars that reserved a spot: " + simulatorLogic.getReservationCars());
         currentCars.setForeground(Color.lightGray);
+        currentCarPercentages = new JLabel();
+        currentCarPercentages.setForeground(Color.lightGray);
 
-        add(Box.createRigidArea(new Dimension(5, 50)));
-        add(currentTick);
-        add(Box.createRigidArea(new Dimension(0, 10)));
         add(currentTime);
         add(Box.createRigidArea(new Dimension(0, 40)));
         add(dayEarnings);
         add(Box.createRigidArea(new Dimension(0, 10)));
-        add(totalEarnings);
-        add(Box.createRigidArea(new Dimension(0, 10)));
-        add(dueEarnings);
+        add(earnings);
         add(Box.createRigidArea(new Dimension(0, 40)));
         add(currentCars);
-
+        add(Box.createRigidArea(new Dimension(0, 40)));
+        add(currentCarPercentages);
         setVisible(false);
     }
 
     @Override
     public void updateView() {
-        currentTick.setText("Current tick: " + simulatorLogic.getCurrentTick());
         currentTime.setText("<html>Current day: " + convertDay(simulatorLogic.getDay()) +
                 "<br/>Current hour: " + simulatorLogic.getHour() +
                 "<br/>Current minute: " + simulatorLogic.getMinute());
         setDayEarnings();
-        dueEarnings.setText("Money due from parked cars: €" + simulatorLogic.getMoneyDue() + ",-");
-        totalEarnings.setText("Total Earnings: €" + simulatorLogic.getTotalEarnings()+",-");
+        earnings.setText("<html>Money due from parked cars: €" + simulatorLogic.getMoneyDue() + ",-<br/>" +
+                "<br/>Total Earnings: €" + simulatorLogic.getTotalEarnings() + ",-");
         currentCars.setText("<html><b>Current cars in the garage:</b><br/>" +
                 "<br/>Normal cars: " + simulatorLogic.getNormalCars() +
                 "<br/>Cars with a parking pass: " + simulatorLogic.getPassCars() +
                 "<br/>Cars that reserved a spot: " + simulatorLogic.getReservationCars());
+        currentCarPercentages.setText("<html>Current distribution of cars (%):<br/>" +
+                "<br/>Normal cars: " + simulatorLogic.getCarPercentages()[0] + "%" +
+                "<br/>Parking pass cars: " + simulatorLogic.getCarPercentages()[1] + "%" +
+                "<br/>Reserved spot cars: " + simulatorLogic.getCarPercentages()[2] + "%");
     }
 
     @Override

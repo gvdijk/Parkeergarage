@@ -1,5 +1,7 @@
 package Parkeersimulator.Model;
 
+import Parkeersimulator.Main.Simulator;
+
 import java.util.ArrayList;
 import javax.swing.*;
 import java.util.HashMap;
@@ -41,6 +43,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     private int normalCars;
     private int passCars;
     private int reservationCars;
+    private int[] carPercentages;
 
     int weekDayArrivals= 80;        // gemiddelde hoeveelheid AdHocCars die doordeweeks arriveren per uur
     int weekendArrivals = 160;      // gemiddelde hoeveelheid AdHocCars die in het weekend arriveren per uur
@@ -61,13 +64,14 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     /**
      * Constructor voor objecten van klasse SimulatorLogic.
      */
-    public SimulatorLogic(JPanel init, JPanel simulator) {
-        super(init, simulator);
+    public SimulatorLogic(JPanel init, JPanel sim) {
+        super(init, sim);
         entranceCarQueue = new CarQueue();
         entrancePassQueue = new CarQueue();
         paymentCarQueue = new CarQueue();
         exitCarQueue = new CarQueue();
         dayEarnings = new HashMap<>();
+        carPercentages = new int[3];
         reset();
     }
 
@@ -99,6 +103,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
         minute = 0;
         resetCarCount();
         resetEarnings();
+        resetCarPercentages();
     }
 
     public void initialize(int tickPause, int[] garage){
@@ -131,6 +136,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
             handleExit();
             garageLogic.tick();
             updateEarnings();
+            updateCarPercentages();
             moneyDue = garageLogic.getMoneyDue();
             updateViews();
             // Pause.
@@ -158,11 +164,6 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     public GarageLogic getGarageLogic() { return garageLogic; }
 
     /**
-     * @return de huidige tick van de simulatie, in minuten vanaf het begin.
-     */
-    public int getCurrentTick(){ return currentTick; }
-
-    /**
      * @return de huidige minuut van dit uur.
      */
     public int getMinute(){ return minute; }
@@ -183,11 +184,15 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
 
     public int getReservationCars() { return reservationCars; }
 
+    public int[] getCarPercentages() { return carPercentages; }
+
     public int getTotalEarnings() { return totalEarnings; }
 
     public int getMoneyDue() { return moneyDue; }
 
     public HashMap<Integer, Integer> getDayEarnings() { return dayEarnings; }
+
+    public Simulator getSimulator() { return simulator; }
 
     /**
      * Vorder de tijd van de simulatie met 1 minuut
@@ -291,9 +296,6 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
         moneyDue = 0;
     }
 
-    /**
-     * Laat de hoeveelheid Cars per categorie berekenen, en voeg deze toe.
-     */
     private void updateCarCount(boolean increment, Car car){
         if (car instanceof AdHocCar){
             if (increment){ normalCars++; }
@@ -307,12 +309,34 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
         }
     }
 
+    private void updateCarPercentages(){
+        int totalCars = normalCars + passCars + reservationCars;
+
+        if (totalCars != 0) {
+            int normalPercent = Math.round((normalCars * 100) / totalCars);
+            carPercentages[0] = normalPercent;
+            int passPercent = Math.round((passCars * 100) / totalCars);
+            carPercentages[1] = passPercent;
+            int reservationPercent = Math.round((reservationCars * 100) / totalCars);
+            carPercentages[2] = reservationPercent;
+        }
+    }
+
+    private void resetCarPercentages(){
+        for (int i=0; i < 3; i++){
+            carPercentages[i] = 0;
+        }
+    }
+
     private void resetCarCount(){
         normalCars = 0;
         passCars = 0;
         reservationCars = 0;
     }
 
+    /**
+     * Laat de hoeveelheid Cars per categorie berekenen, en voeg deze toe.
+     */
     private void carsArriving(){
     	int numberOfCars=getNumberOfCars(weekDayArrivals, weekendArrivals, hourlyArrivals);
         addArrivingCars(numberOfCars, AD_HOC);    	

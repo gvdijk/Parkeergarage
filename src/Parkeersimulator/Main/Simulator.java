@@ -2,9 +2,9 @@ package Parkeersimulator.Main;
 
 import Parkeersimulator.Controller.InitController;
 import Parkeersimulator.Controller.RunController;
-import Parkeersimulator.Controller.ViewController;
 import Parkeersimulator.Model.SimulatorLogic;
 import Parkeersimulator.View.CarParkView;
+import Parkeersimulator.View.GraphView;
 import Parkeersimulator.View.TextView;
 
 import javax.swing.*;
@@ -14,23 +14,27 @@ public class Simulator {
 
     private JPanel initPanel;
     private JPanel simulatorPanel;
+    private JTabbedPane tabbedPane;
+
     private JFrame screen;
     private SimulatorLogic simulatorLogic;
     private CarParkView carParkView;
     private TextView textView;
+    private GraphView graphView;
     private RunController runController;
-    private ViewController viewController;
     private InitController initController;
 
     public Simulator (){
         screen=new JFrame("Parkeergarage");
+        screen.setBackground(new Color(51, 51, 51));
         simulatorPanel = new JPanel();
         initPanel = new JPanel();
+        tabbedPane = new JTabbedPane();
         simulatorLogic = new SimulatorLogic(initPanel, simulatorPanel);
         carParkView = new CarParkView(simulatorLogic);
         textView = new TextView(simulatorLogic);
+        graphView = new GraphView(simulatorLogic);
         runController = new RunController(simulatorLogic);
-        viewController = new ViewController(simulatorLogic);
         initController = new InitController(simulatorLogic);
 
         createFrame();
@@ -38,26 +42,26 @@ public class Simulator {
 
     private void createFrame(){
         screen.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        screen.setResizable(false);
+        screen.setResizable(true);
         Container contentPane = screen.getContentPane();
         simulatorPanel.setLayout(new BorderLayout());
 
         initPanel.add(initController);
         initPanel.setBackground(new Color(51, 51, 51));
 
-        simulatorPanel.add(carParkView, BorderLayout.CENTER);
+        tabbedPane.addTab("Cark Park View", carParkView);
+        tabbedPane.addTab("View 2", null);
+        tabbedPane.addTab("Text View", textView);
+        tabbedPane.addTab("Graph View", graphView);
+
+        simulatorPanel.add(tabbedPane, BorderLayout.CENTER);
         simulatorPanel.add(runController, BorderLayout.SOUTH);
-        simulatorPanel.add(viewController, BorderLayout.NORTH);
 
         contentPane.add(simulatorPanel);
-
-        screen.setBackground(new Color(51, 51, 51));
 
         screen.pack();
 
         contentPane.add(initPanel);
-
-        simulatorPanel.add(textView, BorderLayout.CENTER);
 
         simulatorLogic.showInitPanel(true);
 
