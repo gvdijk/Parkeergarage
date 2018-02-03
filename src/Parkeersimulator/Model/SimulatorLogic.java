@@ -7,48 +7,52 @@ import java.util.Random;
 
 public class SimulatorLogic extends AbstractModel implements Runnable{
 
-	private static final String AD_HOC = "1";
-	private static final String PASS = "2";
-    private static final String RES = "3";
+	private static final String AD_HOC = "1";   // identificatie voor AdHocCars
+	private static final String PASS = "2";     // identificatie voor ParkingPassCars
+    private static final String RES = "3";      // identificatie voor CarReservations
 
-    private ArrayList<CarReservation> carReservationList = new ArrayList<>();
-    private ArrayList<ReservationCar> reservationCarList = new ArrayList<>();
+    private ArrayList<CarReservation> carReservationList = new ArrayList<>(); // lijst met opkomende CarReservations
+    private ArrayList<ReservationCar> reservationCarList = new ArrayList<>(); // lijst met opkomende ReservationCars
 	
 	private CarQueue entranceCarQueue;
     private CarQueue entrancePassQueue;
     private CarQueue paymentCarQueue;
     private CarQueue exitCarQueue;
     private ScreenLogic screenLogic;
-    private boolean run;
 
-    private int day = 0;
-    private int hour = 0;
-    private int minute = 0;
+    private boolean run; // of de simulatie momenteel draait
 
-    private int tickPause = 10;
-    private int currentTick = 0;
-    private int maxTicks = 10080;
+    private int day = 0;    // huidige dag in de week
+    private int hour = 0;   // huidige uur op de dag
+    private int minute = 0; // huidige minuut in het uur
+
+    private int tickPause = 10;     // pauze tussen ticks in milliseconden
+    private int currentTick = 0;    // huidige tick
+    private int maxTicks = 10080;   // maximale hoeveelheid ticks
 
     private int parkingFee = 1;
     private int totalEarnings = 0;
     private int dayValue = 0;
     private HashMap<Integer, Integer> dayEarnings;
 
-    int weekDayArrivals= 80; // average number of arriving cars per hour
-    int weekendArrivals = 160; // average number of arriving cars per hour
-    int weekDayPassArrivals= 30; // average number of arriving cars per hour
-    int weekendPassArrivals = 5; // average number of arriving cars per hour
-    int weekDayReservations= 2; // average number of arriving cars per hour
-    int weekendReservations = 8; // average number of arriving cars per hour
+    int weekDayArrivals= 80;        // gemiddelde hoeveelheid AdHocCars die doordeweeks arriveren per uur
+    int weekendArrivals = 160;      // gemiddelde hoeveelheid AdHocCars die in het weekend arriveren per uur
+    int weekDayPassArrivals= 30;    // gemiddelde hoeveelheid ParkingPassCars die doordeweeks arriveren per uur
+    int weekendPassArrivals = 5;    // gemiddelde hoeveelheid ParkingPassCars die in het weekend arriveren per uur
+    int weekDayReservations= 2;     // gemiddelde hoeveelheid CarReservations die doordeweeks gemaakt worden per uur
+    int weekendReservations = 8;    // gemiddelde hoeveelheid CarReservations die in het weekend gemaakt worden per uur
 
-    private int[] hourlyArrivals = new int[60];
-    private int[] hourlyPassArrivals = new int[60];
-    private int[] hourlyReservations = new int[60];
+    private int[] hourlyArrivals = new int[60];     // de kwantiteit van aankomende AdHocCars voor dit uur
+    private int[] hourlyPassArrivals = new int[60]; // de kwantiteit van aankomende ParkingPassCars voor dit uur
+    private int[] hourlyReservations = new int[60]; // de kwantiteit van toegevoegde CarReservations voor dit uur
 
-    int enterSpeed = 3; // number of cars that can enter per minute
-    int paymentSpeed = 7; // number of cars that can pay per minute
-    int exitSpeed = 5; // number of cars that can leave per minute
+    int enterSpeed = 3;     // de hoeveelheid Cars die naar binnen kunned per minuut per ingang
+    int paymentSpeed = 7;   // de hoeveelheid Cars die kunnen betalen per minuut
+    int exitSpeed = 5;      // de hoeveelheid Cars die naar buiten kunned per minuut per uitgang
 
+    /**
+     * Constructor voor objecten van klasse SimulatorLogic.
+     */
     public SimulatorLogic() {
         entranceCarQueue = new CarQueue();
         entrancePassQueue = new CarQueue();
@@ -61,6 +65,9 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
         screenLogic = new ScreenLogic(3, 6, 30);
     }
 
+    /**
+     * Start of hervat de simulatie.
+     */
     public void start(){
         if (!run){
             new Thread(this).start();
@@ -68,10 +75,17 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
         }
     }
 
+    /**
+     * Pauseert de simulatie.
+     */
     public void pause() {
         run=false;
     }
 
+    /**
+     * Overridden van Runnable
+     * Laat de simulatie doorspelen zolang deze gestart is.
+     */
     @Override
     public void run() {
         while (currentTick <= maxTicks && run){
@@ -79,6 +93,11 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
         }
     }
 
+    /**
+     * Zet de simulatie 1 tick (oftewel, 1 minuut) vooruit.
+     * Pauseer de simulatie voor een kort ogenblik.
+     * @param times een integer voor hoevaak de simulatie moet ticken.
+     */
     public void tick(int times) {
         for (int i = 0; i < times; i++){
             advanceTime();
@@ -102,20 +121,38 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
         }
     }
 
+    /**
+     * @return de GarageLogic die de meeste logistieke logica regelt.
+     */
     public ScreenLogic getScreenLogic() { return screenLogic; }
 
+    /**
+     * @return de huidige tick van de simulatie, in minuten vanaf het begin.
+     */
     public int getCurrentTick(){ return currentTick; }
 
+    /**
+     * @return de huidige minuut van dit uur.
+     */
     public int getMinute(){ return minute; }
 
+    /**
+     * @return het huidige uur van deze dag.
+     */
     public int getHour(){ return hour; }
 
+    /**
+     * @return de huidige dag van deze week.
+     */
     public int getDay(){ return day; }
 
     public int getTotalEarnings() { return totalEarnings; }
 
     public HashMap<Integer, Integer> getDayEarnings() { return dayEarnings; }
 
+    /**
+     * Vorder de tijd van de simulatie met 1 minuut
+     */
     private void advanceTime(){
         // Advance the time by one minute.
         minute++;
@@ -149,12 +186,18 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
         entranceCarQueue.addCar(car);
     }
 
+    /**
+     * Hanteer alle methodes met invloed op inkomende Cars
+     */
     private void handleEntrance(){
     	carsArriving();
     	carsEntering(entrancePassQueue);
     	carsEntering(entranceCarQueue);
     }
-    
+
+    /**
+     * Hanteer alle methodes met invloed op uitgaande Cars
+     */
     private void handleExit(){
         carsReadyToLeave();
         carsPaying();
@@ -162,7 +205,11 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     }
 
     /**
-     *
+     * Vorder de tijd voor alle CarReservation in carReservationList.
+     * Voeg de CarReservation toe aan de parkeergarage als er 15 minuten resterend zijn.
+     * Vorder de tijd voor alle ReservationCar in reservationCarList.
+     * Voeg de ReservationCar toe aan de ingangswachtrij wanneer zijn interne timer op 0 staat.
+     * Verwijder een CarReservation als de bijbehorende ReservationCar te vroeg aankomt.
      */
     private void tickReservations() {
         Iterator<CarReservation> resIt = carReservationList.iterator();
@@ -209,7 +256,10 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
             dayValue = 0;
         }
     }
-    
+
+    /**
+     * Laat de hoeveelheid Cars per categorie berekenen, en voeg deze toe.
+     */
     private void carsArriving(){
     	int numberOfCars=getNumberOfCars(weekDayArrivals, weekendArrivals, hourlyArrivals);
         addArrivingCars(numberOfCars, AD_HOC);    	
@@ -219,6 +269,11 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
         addArrivingCars(numberOfCars, RES);
     }
 
+    /**
+     * Laat Cars de parkeergarage betreden, en stuur ze naar de eerste vrije Location.
+     * Bij een ReservationCar, probeer deze naar zijn toegekende plek te sturen, en verwijder de Reservation.
+     * Als de ReservationCar nog geen toegekende plek heeft, stuur deze naar de eerste vrije Location.
+     */
     private void carsEntering(CarQueue queue){
         int i=0;
         boolean isPass = false;
@@ -241,7 +296,11 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
             i++;
         }
     }
-    
+
+    /**
+     * Voeg Cars toe aan de betalingswachtrij, indien deze moeten betalen.
+     * Als dit niet het geval is, kunnen de Cars hun plek verlaten.
+     */
     private void carsReadyToLeave(){
         // Add leaving cars to the payment queue.
         Car car = screenLogic.getFirstLeavingCar();
@@ -257,6 +316,9 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
         }
     }
 
+    /**
+     * Laat Cars betalen, en voeg deze toe aan de uitgangswachtrij.
+     */
     private void carsPaying(){
         // Let cars pay.
     	int i=0;
@@ -267,16 +329,25 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
             i++;
     	}
     }
-    
+
+    /**
+     * Laat Cars de parkeergarage verlaten.
+     */
     private void carsLeaving(){
-        // Let cars leave.
     	int i=0;
     	while (exitCarQueue.carsInQueue()>0 && i < exitSpeed){
             exitCarQueue.removeCar();
             i++;
     	}	
     }
-    
+
+    /**
+     * Berekent de hoeveelheid Cars of Reeservations dat aankomt per uur, en returned deze per minuut
+     * @param weekDay een integer met de hoeveelheid Cars of Reservations dat doordeweeks gemiddeld aankomt.
+     * @param weekend een integer met de hoeveelheid Cars of Reservations dat in het weekend gemiddeld aankomt.
+     * @param target een integer array waar de waardes per uur worden geupdate, en gereturned.
+     * @return een integer voor de hoeveelheid Cars of Reservations dat deze minuut aankomt.
+     */
     private int getNumberOfCars(int weekDay, int weekend, int[] target){
         if (minute == 1) {
             Random random = new Random();
@@ -319,6 +390,10 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
         return target[minute];
     }
 
+    /**
+     * Schud een array met integers door elke waarde om te wisselen met een willekeurige andere plek in de array.
+     * @param arr een array met integers.
+     */
     private void shuffleIntegerArray(int[] arr) {
         Random random = new Random();
 
@@ -331,7 +406,12 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
             arr[i] = a;
         }
     }
-    
+
+    /**
+     * Voeg Cars toe aan wachtrijen.
+     * @param numberOfCars een integer met de hoeveelheid Cars die moeten worden toegevoegd.
+     * @param type een String met het type Car, of Reservation, dat moet worden toegevoegd.
+     */
     private void addArrivingCars(int numberOfCars, String type){
         // Add the cars to the back of the queue.
     	switch(type) {
@@ -352,7 +432,10 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
             break;
         }
     }
-    
+
+    /**
+     * Verwijder een Car uit de parkeergarage, en voeg deze toe aan de uitgangswachtrij.
+     */
     private void carLeavesSpot(Car car){
     	screenLogic.removeCarAt(car.getLocation());
         exitCarQueue.addCar(car);
