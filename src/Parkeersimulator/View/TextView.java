@@ -3,6 +3,7 @@ package Parkeersimulator.View;
 import Parkeersimulator.Model.SimulatorLogic;
 import javax.swing.*;
 import java.awt.*;
+import java.text.DecimalFormat;
 
 public class TextView extends AbstractView {
 
@@ -11,6 +12,7 @@ public class TextView extends AbstractView {
     private JLabel earnings;
     private JLabel currentCars;
     private JLabel currentCarPercentages;
+    private DecimalFormat f;
 
     public TextView (SimulatorLogic simulatorLogic) {
         super (simulatorLogic);
@@ -19,6 +21,7 @@ public class TextView extends AbstractView {
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
+        f = new DecimalFormat("#.##");
         currentTime = new JLabel();
         currentTime.setForeground(Color.lightGray);
         dayEarnings = new JLabel();
@@ -48,8 +51,8 @@ public class TextView extends AbstractView {
                 "<br/>Current hour: " + simulatorLogic.getHour() +
                 "<br/>Current minute: " + simulatorLogic.getMinute());
         setDayEarnings();
-        earnings.setText("<html>Money due from parked cars: €" + simulatorLogic.getMoneyDue() + ",-<br/>" +
-                "<br/>Total Earnings: €" + simulatorLogic.getTotalEarnings() + ",-");
+        earnings.setText("<html>Money due from parked cars: €" + f.format(simulatorLogic.getMoneyDue()) + "-<br/>" +
+                "<br/>Total Earnings: €" + f.format(simulatorLogic.getTotalEarnings()) + "-");
         currentCars.setText("<html><b>Current cars in the garage:</b><br/>" +
                 "<br/>Normal cars: " + simulatorLogic.getNormalCars() +
                 "<br/>Cars with a parking pass: " + simulatorLogic.getPassCars() +
@@ -88,12 +91,12 @@ public class TextView extends AbstractView {
 
     private void setDayEarnings(){
         dayEarnings.setText ("<html>Earnings per day:<br/>" +
-                "<br/>Monday: €" + simulatorLogic.getDayEarnings()[0] + ",-" +
-                "<br/>Tuesday: €" + simulatorLogic.getDayEarnings()[1] + ",-" +
-                "<br/>Wednesday: €" + simulatorLogic.getDayEarnings()[2] + ",-" +
-                "<br/>Thursday: €" + simulatorLogic.getDayEarnings()[3] + ",-" +
-                "<br/>Friday: €" + simulatorLogic.getDayEarnings()[4] + ",-" +
-                "<br/>Saturday: €" + simulatorLogic.getDayEarnings()[5] + ",-" +
-                "<br/>Sunday: €" + simulatorLogic.getDayEarnings()[6] + ",-</html>");
+                "<br/>Monday: €" + f.format(simulatorLogic.getDayEarnings()[0]) + "-" +
+                "<br/>Tuesday: €" + f.format(simulatorLogic.getDayEarnings()[1]) + "-" +
+                "<br/>Wednesday: €" + f.format(simulatorLogic.getDayEarnings()[2]) + "-" +
+                "<br/>Thursday: €" + f.format(simulatorLogic.getDayEarnings()[3]) + "-" +
+                "<br/>Friday: €" + f.format(simulatorLogic.getDayEarnings()[4]) + "-" +
+                "<br/>Saturday: €" + f.format(simulatorLogic.getDayEarnings()[5]) + "-" +
+                "<br/>Sunday: €" + f.format(simulatorLogic.getDayEarnings()[6]) + "-</html>");
     }
 }

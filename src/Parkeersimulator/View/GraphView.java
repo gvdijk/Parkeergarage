@@ -112,7 +112,7 @@ public class GraphView extends AbstractView {
             }
             if(simulatorLogic.getMinute() == 0) {
                 int hour = simulatorLogic.getHour() + simulatorLogic.getDay() * 24;
-                int total = simulatorLogic.getTotalEarnings();
+                double total = simulatorLogic.getTotalEarnings();
                 series.getData().add(new XYChart.Data(hour, total));
             }
         }
