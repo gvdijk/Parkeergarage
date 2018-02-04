@@ -84,7 +84,7 @@ public class ReservationView extends AbstractView {
             xAxis.setLabel("Tijd in uren");
             yAxis = new NumberAxis();
             series = new XYChart.Series();
-            series.setName("Totale Inkomsten");
+            series.setName("Reserveringen per uur");
 
             series.getData().add(new XYChart.Data(0, 0));
 
