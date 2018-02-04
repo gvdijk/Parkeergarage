@@ -53,6 +53,7 @@ public class Simulator {
         tabbedPane.addTab("View 2", null);
         tabbedPane.addTab("Text View", textView);
         tabbedPane.addTab("Graph View", graphView);
+        tabbedPane.addTab("Queue Information", null);
 
         simulatorPanel.add(tabbedPane, BorderLayout.CENTER);
         simulatorPanel.add(runController, BorderLayout.SOUTH);

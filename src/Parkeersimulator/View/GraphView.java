@@ -9,7 +9,6 @@ import javafx.geometry.Side;
 import javafx.scene.Scene;
 import javafx.scene.chart.*;
 
-import javax.swing.*;
 import java.awt.*;
 
 public class GraphView extends AbstractView {

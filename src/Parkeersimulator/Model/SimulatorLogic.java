@@ -41,6 +41,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     private int normalCars;         // Aantal normale auto's in de parkeergarage
     private int passCars;           // Aantal pashouders in de parkeergarage
     private int reservationCars;    // Aantal auto's met een reservatie
+    private int[] carCounts;        // Totaal aantal auto's van elk soort tijdens de simulator
     private int[] carPercentages;   // Array met de percentageverdeling van de auto's
 
     int weekDayArrivals= 80;        // gemiddelde hoeveelheid AdHocCars die doordeweeks arriveren per uur
@@ -71,6 +72,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
         exitCarQueue = new CarQueue();
         dayEarnings = new HashMap<>();
         carPercentages = new int[3];
+        carCounts = new int[3];
         reset();
     }
 
@@ -232,6 +234,11 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     public HashMap<Integer, Integer> getDayEarnings() { return dayEarnings; }
 
     /**
+     * @return De totale telling van de auto's in de garage tijdens de simulatie
+     */
+    public int[] getCarCounts() { return carCounts; }
+
+    /**
      * Vorder de tijd van de simulatie met 1 minuut
      */
     private void advanceTime(){
@@ -344,14 +351,17 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
      */
     private void updateCarCount(boolean increment, Car car){
         if (car instanceof AdHocCar){
+            carCounts[0]++;
             if (increment){ normalCars++; }
             else { normalCars--; }
         }else if(car instanceof ParkingPassCar){
             if (increment){ passCars++; }
             else { passCars--; }
+            carCounts[1]++;
         }else if (car instanceof ReservationCar){
             if (increment){ reservationCars++; }
             else { reservationCars--; }
+            carCounts[2]++;
         }
     }
 
@@ -387,6 +397,9 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
         normalCars = 0;
         passCars = 0;
         reservationCars = 0;
+        for (int i=0; i < 3; i++){
+            carCounts[i] = 0;
+        }
     }
 
     /**
