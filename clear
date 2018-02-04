@@ -1,0 +1,55 @@
+[33mcommit 4db002bca236ad046e61e0ee0c4feb8c437dc594[m[33m ([m[1;36mHEAD -> [m[1;32mVisual-View[m[33m)[m
+Author: Roy Scholing <royscholing@outlook.com>
+Date:   Wed Jan 31 15:26:28 2018 +0100
+
+    'Test'
+
+[33mcommit 38726c8c838f0bdbab412810bd2d7fcc5d3e7c17[m[33m ([m[1;31morigin/Visual-View[m[33m, [m[1;31morigin/ManagementText-View[m[33m, [m[1;32mManagementText-View[m[33m)[m
+Author: Justin Zuidgeest <justinzuidgeest@gmail.com>
+Date:   Sun Jan 28 21:15:14 2018 +0100
+
+    ViewSwitcher en basis GUI in textview
+    
+    Verbeteringen voor de RunController zodat je nu minuten, uren en dagen erbij op kan tellen en implementatie van een screenswitcher met een basis tekstview. In de tekstview staat momenteel niks anders dan de huidige ticks en de tijd.
+
+[33mcommit aa7602c3d3c2ec32fe750e892e65e7323b10a6ba[m
+Author: Justin Zuidgeest <justinzuidgeest@gmail.com>
+Date:   Sun Jan 28 17:00:03 2018 +0100
+
+    Simpele GUI buttons
+    
+    Een knop om de simulatie te starten, te pauseren en om de simulatie 1 tick en 100 ticks te verplaatsen.
+
+[33mcommit f9dcb732e2ce1da5d6d69dd56391b5a9e7aa8e7c[m
+Author: Gerard van Dijk <gerardvandijk2@gmail.com>
+Date:   Fri Jan 26 19:19:23 2018 +0100
+
+    Algemene verbetering simulatie
+    
+    Toestroom autos omgezet naar berekening per uur i.pv. per minuut.
+    Dag/nacht cyclus toegevoegd.
+    Schouwburg factor toegevoegd.
+    Ochtendspits factor toegevoegd.
+    Abbonemnthouders verblijfstijd verhoogd.
+
+[33mcommit aa8b6be7b95e1466fc78f3b7fc12940fcd7331cc[m
+Author: Justin Zuidgeest <justinzuidgeest@gmail.com>
+Date:   Thu Jan 25 22:24:09 2018 +0100
+
+    Project converted to MVC
+    
+    Project staat nu in de MVC vorm op dezeflde manier zoals het life voorbeeldproject
+
+[33mcommit 82d64a2f8125b99aeaf47bf97a9162727627cea2[m
+Author: Justin Zuidgeest <justinzuidgeest@gmail.com>
+Date:   Mon Jan 22 18:18:06 2018 +0100
+
+    Source code met main methode
+    
+    De volledige sourcecode van Blackboard in een IntelliJ project formaat met toevoeging van de main methode zodat het project uitgevoerd kan worden. Klik op het groene pijltje naast main in Simulator.java om het project uit te voeren.
+
+[33mcommit e1b7aef657ecb8cc2dae29b5a5acc1655f39a275[m
+Author: Gerard van Dijk <gerardvandijk2@gmail.com>
+Date:   Wed Jan 17 22:37:02 2018 +0100
+
+    Initial commit
