@@ -23,7 +23,8 @@ public class InitController extends AbstractController implements ActionListener
     private JPanel garageSpinnerPanel;
     private JPanel garageLabelPanel;
     private JPanel garageSettings;
-    
+    private JPanel parkingFeePanel;
+
     private JButton start;
 
     /**
@@ -79,6 +80,15 @@ public class InitController extends AbstractController implements ActionListener
         //Invoerveld voor de prijs van het parkeren
         parkingFee = new JSpinner();
 
+        //Text voor de prijs van het parkeren
+        JLabel parkingFeeLabel = new JLabel("Prijs per 20 minuten parkeren: ");
+        parkingFeeLabel.setForeground(Color.lightGray);
+
+        //JPanel die de labels en spinner voor de parkeer prijs rangschikt
+        parkingFeePanel = new JPanel();
+        parkingFeePanel.add(parkingFeeLabel);
+        parkingFeePanel.add(parkingFee);
+
         //Textvak dat een errorbericht laat zien als de ingevoerde waardes niet kloppen
         errorMessage = new JLabel();
         errorMessage.setForeground(Color.red);
@@ -98,7 +108,7 @@ public class InitController extends AbstractController implements ActionListener
         add(Box.createRigidArea(new Dimension(0, 40)));
         add(garageSettings);
         add(Box.createRigidArea(new Dimension(0, 40)));
-        add(parkingFee);
+        add(parkingFeePanel);
         add(Box.createRigidArea(new Dimension(0, 40)));
         add(errorMessage);
         add(Box.createRigidArea(new Dimension(0, 40)));
@@ -146,9 +156,16 @@ public class InitController extends AbstractController implements ActionListener
         garageSettings.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         SpinnerNumberModel s = new SpinnerNumberModel();
-        s.setValue(1.0);
-        s.setStepSize(0.1);
+        s.setValue(1.00);
+        s.setStepSize(0.10);
         parkingFee.setModel(s);
+        parkingFee.getEditor().getComponent(0).setBackground(new Color(51, 51, 51));
+        parkingFee.getEditor().getComponent(0).setForeground(Color.lightGray);
+        Dimension d = parkingFee.getPreferredSize();
+        d.width = 50;
+        parkingFee.setPreferredSize(d);
+
+        parkingFeePanel.setBackground(new Color(51, 51, 51));
     }
 
     /**

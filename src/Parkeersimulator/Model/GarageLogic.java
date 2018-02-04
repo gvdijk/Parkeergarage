@@ -10,10 +10,13 @@ public class GarageLogic {
     private Car[][][] cars;                 // array met Cars met locaties als indices
     private Reservation[][][] reservations; // array met Reservations met locaties als indices
 
+    private double parkingFee;
+
     /**
      * Constructor voor objecten van klasse ScreenLogic.
      */
-    public GarageLogic(int numberOfFloors, int numberOfRows, int numberOfPlaces) {
+    public GarageLogic(int numberOfFloors, int numberOfRows, int numberOfPlaces, double parkingFee) {
+        this.parkingFee = parkingFee;
         this.numberOfFloors = numberOfFloors;
         this.numberOfRows = numberOfRows;
         this.numberOfPlaces = numberOfPlaces;
@@ -259,8 +262,8 @@ public class GarageLogic {
         return floor >= 0 && floor < numberOfFloors && row >= 0 && row <= numberOfRows && place >= 0 && place <= numberOfPlaces;
     }
 
-    public int getMoneyDue(){
-        int money = 0;
+    public double getMoneyDue(){
+        double money = 0;
         for (int floor = 0; floor < numberOfFloors; floor++) {
             for (int row = 0; row < numberOfRows; row++) {
                 for (int place = 0; place < numberOfPlaces; place++) {
@@ -269,7 +272,7 @@ public class GarageLogic {
                     if (car != null && car.getHasToPay()) {
                         int feeTimes = (int) Math.floor(car.getStayMinutes() / 20);
                         if (car.getStayMinutes() % 20 > 0){ feeTimes++; }
-                        money += feeTimes;
+                        money += feeTimes * parkingFee;
                     }
                 }
             }

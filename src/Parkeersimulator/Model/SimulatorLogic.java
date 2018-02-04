@@ -118,7 +118,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
      * @param garage    De grootte die de garage moet worden voor deze simulatie
      */
     public void initialize(int tickPause, int[] garage, double parkingFee){
-        garageLogic = new GarageLogic(garage[0], garage[1], garage[2]);
+        garageLogic = new GarageLogic(garage[0], garage[1], garage[2], parkingFee);
         this.tickPause = tickPause;
         this.parkingFee = parkingFee;
         garageLogic.tick();

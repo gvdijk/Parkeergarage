@@ -41,7 +41,7 @@ public class Simulator {
     }
 
     private void createFrame(){
-        screen.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        screen.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         screen.setResizable(false);
         Container contentPane = screen.getContentPane();
         simulatorPanel.setLayout(new BorderLayout());
