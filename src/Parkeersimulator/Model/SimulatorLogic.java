@@ -47,8 +47,8 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     int weekendArrivals = 160;      // gemiddelde hoeveelheid AdHocCars die in het weekend arriveren per uur
     int weekDayPassArrivals= 30;    // gemiddelde hoeveelheid ParkingPassCars die doordeweeks arriveren per uur
     int weekendPassArrivals = 5;    // gemiddelde hoeveelheid ParkingPassCars die in het weekend arriveren per uur
-    int weekDayReservations= 2;     // gemiddelde hoeveelheid CarReservations die doordeweeks gemaakt worden per uur
-    int weekendReservations = 8;    // gemiddelde hoeveelheid CarReservations die in het weekend gemaakt worden per uur
+    int weekDayReservations= 4;     // gemiddelde hoeveelheid CarReservations die doordeweeks gemaakt worden per uur
+    int weekendReservations = 15;    // gemiddelde hoeveelheid CarReservations die in het weekend gemaakt worden per uur
 
     private int[] hourlyArrivals = new int[60];     // de kwantiteit van aankomende AdHocCars voor dit uur
     private int[] hourlyPassArrivals = new int[60]; // de kwantiteit van aankomende ParkingPassCars voor dit uur
