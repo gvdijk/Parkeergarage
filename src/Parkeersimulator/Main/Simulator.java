@@ -3,25 +3,23 @@ package Parkeersimulator.Main;
 import Parkeersimulator.Controller.InitController;
 import Parkeersimulator.Controller.RunController;
 import Parkeersimulator.Model.SimulatorLogic;
-import Parkeersimulator.View.CarParkView;
-import Parkeersimulator.View.GraphView;
-import Parkeersimulator.View.ReservationView;
-import Parkeersimulator.View.TextView;
+import Parkeersimulator.View.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Queue;
 
 public class Simulator {
 
     private JPanel initPanel;
     private JPanel simulatorPanel;
     private JTabbedPane tabbedPane;
-
     private JFrame screen;
     private SimulatorLogic simulatorLogic;
     private CarParkView carParkView;
     private TextView textView;
     private GraphView graphView;
+    private QueueView queueView;
     private ReservationView reservationView;
     private RunController runController;
     private InitController initController;
@@ -36,6 +34,7 @@ public class Simulator {
         carParkView = new CarParkView(simulatorLogic);
         textView = new TextView(simulatorLogic);
         graphView = new GraphView(simulatorLogic);
+        queueView = new QueueView(simulatorLogic);
         reservationView = new ReservationView(simulatorLogic);
         runController = new RunController(simulatorLogic);
         initController = new InitController(simulatorLogic);
@@ -53,7 +52,7 @@ public class Simulator {
         initPanel.setBackground(new Color(51, 51, 51));
 
         tabbedPane.addTab("Cark Park View", carParkView);
-        tabbedPane.addTab("Queue Information", null);
+        tabbedPane.addTab("Queue View", queueView);
         tabbedPane.addTab("Text View", textView);
         tabbedPane.addTab("Graph View", graphView);
         tabbedPane.addTab("Reservation Information", reservationView);

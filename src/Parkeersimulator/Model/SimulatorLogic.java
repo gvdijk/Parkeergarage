@@ -281,7 +281,31 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     public int[] getCarCounts() { return carCounts; }
 
     /**
-     * Vorder de tijd van de simulatie met 1 minuut
+     * @return Geeft de hoeveelheid auto's in de rij bij de ingang
+     */
+    public CarQueue getEntranceCarQueue() {
+        return entranceCarQueue;
+    }
+
+    /**
+     * @return Geeft de hoeveelheid abonnementshouders in de rij bij de ingang
+     */
+    public CarQueue getEntrancePassQueue() {
+        return entrancePassQueue;
+    }
+
+    /**
+     * @return Geeft de hoeveelheid auto's in de rij bij de betaalautomaat
+     */
+    public CarQueue getPaymentCarQueue() { return paymentCarQueue; }
+
+    /**
+     * @return Geeft de hoeveelheid auto's in de rij bij de uitgang
+     */
+    public CarQueue getExitCarQueue() { return exitCarQueue; }
+
+    /**
+     * Vordert de tijd van de simulatie met 1 minuut
      */
     private void advanceTime(){
         // Advance the time by one minute.
@@ -338,6 +362,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
                 }
             }
         }
+
         Iterator<ReservationCar> carIt = reservationCarList.iterator();
         while (carIt.hasNext()) {
             ReservationCar car = carIt.next();

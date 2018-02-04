@@ -18,71 +18,181 @@
     <favorites_list name="Parkeergarage" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Simulator.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Parkeersimulator/Main/Simulator.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="334">
-              <caret line="46" column="71" lean-forward="true" selection-start-line="46" selection-start-column="71" selection-end-line="46" selection-end-column="71" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SimulatorLogic.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Parkeersimulator/Model/SimulatorLogic.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="320">
-              <caret line="128" column="69" lean-forward="false" selection-start-line="128" selection-start-column="69" selection-end-line="128" selection-end-column="69" />
-              <folding>
-                <element signature="e#4953#4954#0" expanded="true" />
-                <element signature="e#4978#4979#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GarageLogic.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Parkeersimulator/Model/GarageLogic.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="470">
-              <caret line="264" column="26" lean-forward="true" selection-start-line="264" selection-start-column="26" selection-end-line="264" selection-end-column="26" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GraphView.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Parkeersimulator/View/GraphView.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="172" column="73" lean-forward="true" selection-start-line="172" selection-start-column="73" selection-end-line="172" selection-end-column="73" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TextView.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Parkeersimulator/View/TextView.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="708">
-              <caret line="53" column="107" lean-forward="false" selection-start-line="53" selection-start-column="107" selection-end-line="53" selection-end-column="107" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RunController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Parkeersimulator/Controller/RunController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-74">
-              <caret line="41" column="18" lean-forward="false" selection-start-line="41" selection-start-column="18" selection-end-line="41" selection-end-column="18" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <splitter split-orientation="horizontal" split-proportion="0.44619983">
+      <split-first>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+          <file leaf-file-name="Simulator.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/Parkeersimulator/Main/Simulator.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="-63">
+                  <caret line="28" column="52" lean-forward="true" selection-start-line="28" selection-start-column="52" selection-end-line="28" selection-end-column="52" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="SimulatorLogic.java" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/Parkeersimulator/Model/SimulatorLogic.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="7899">
+                  <caret line="668" column="18" lean-forward="true" selection-start-line="668" selection-start-column="18" selection-end-line="668" selection-end-column="18" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="SimulatorRunner.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/Parkeersimulator/Runner/SimulatorRunner.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="126">
+                  <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="GraphView.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/Parkeersimulator/View/GraphView.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="3465">
+                  <caret line="182" column="1" lean-forward="true" selection-start-line="182" selection-start-column="1" selection-end-line="182" selection-end-column="1" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="ReservationView.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/Parkeersimulator/View/ReservationView.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="1932">
+                  <caret line="105" column="13" lean-forward="true" selection-start-line="105" selection-start-column="13" selection-end-line="105" selection-end-column="13" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="TextView.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/Parkeersimulator/View/TextView.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="1176">
+                  <caret line="56" column="71" lean-forward="false" selection-start-line="56" selection-start-column="71" selection-end-line="56" selection-end-column="71" />
+                  <folding>
+                    <element signature="imports" expanded="true" />
+                    <element signature="e#2720#2721#0" expanded="true" />
+                    <element signature="e#2753#2754#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="RunController.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/Parkeersimulator/Controller/RunController.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="0">
+                  <caret line="46" column="18" lean-forward="false" selection-start-line="46" selection-start-column="18" selection-end-line="46" selection-end-column="18" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="InitController.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/Parkeersimulator/Controller/InitController.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="-147">
+                  <caret line="314" column="78" lean-forward="false" selection-start-line="314" selection-start-column="78" selection-end-line="314" selection-end-column="78" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="AbstractController.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/Parkeersimulator/Controller/AbstractController.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="105">
+                  <caret line="6" column="22" lean-forward="false" selection-start-line="6" selection-start-column="22" selection-end-line="6" selection-end-column="22" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="SimulatorLogic-1.class" pinned="false" current-in-tab="false">
+            <entry file="file://$USER_HOME$/AppData/Local/Temp/SimulatorLogic-1.class">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="1029">
+                  <caret line="54" column="5" lean-forward="true" selection-start-line="54" selection-start-column="5" selection-end-line="54" selection-end-column="5" />
+                  <folding>
+                    <marker date="1517774554859" expanded="false" signature="0:104" ph="/.../" />
+                    <marker date="1517774554859" expanded="true" signature="1145:1152" ph="{}" />
+                    <marker date="1517774554859" expanded="true" signature="1178:1290" ph="{...}" />
+                    <marker date="1517774554859" expanded="false" signature="1315:1326" ph=" { " />
+                    <marker date="1517774554859" expanded="false" signature="1343:1349" ph=" }" />
+                    <marker date="1517774554859" expanded="true" signature="1373:1480" ph="{...}" />
+                    <marker date="1517774554859" expanded="true" signature="1514:2087" ph="{...}" />
+                    <marker date="1517774554859" expanded="false" signature="2128:2139" ph=" { " />
+                    <marker date="1517774554859" expanded="false" signature="2163:2169" ph=" }" />
+                    <marker date="1517774554859" expanded="false" signature="2202:2213" ph=" { " />
+                    <marker date="1517774554859" expanded="false" signature="2237:2243" ph=" }" />
+                    <marker date="1517774554859" expanded="false" signature="2286:2297" ph=" { " />
+                    <marker date="1517774554859" expanded="false" signature="2326:2332" ph=" }" />
+                    <marker date="1517774554859" expanded="false" signature="2376:2387" ph=" { " />
+                    <marker date="1517774554859" expanded="false" signature="2417:2423" ph=" }" />
+                    <marker date="1517774554859" expanded="false" signature="2465:2476" ph=" { " />
+                    <marker date="1517774554859" expanded="false" signature="2504:2510" ph=" }" />
+                    <marker date="1517774554859" expanded="false" signature="2549:2560" ph=" { " />
+                    <marker date="1517774554859" expanded="false" signature="2585:2591" ph=" }" />
+                    <marker date="1517774554859" expanded="false" signature="2619:2630" ph=" { " />
+                    <marker date="1517774554859" expanded="false" signature="2649:2655" ph=" }" />
+                    <marker date="1517774554859" expanded="false" signature="2681:2692" ph=" { " />
+                    <marker date="1517774554859" expanded="false" signature="2709:2715" ph=" }" />
+                    <marker date="1517774554859" expanded="false" signature="2740:2751" ph=" { " />
+                    <marker date="1517774554859" expanded="false" signature="2767:2773" ph=" }" />
+                    <marker date="1517774554859" expanded="true" signature="2806:3102" ph="{...}" />
+                    <marker date="1517774554859" expanded="true" signature="3138:3275" ph="{...}" />
+                    <marker date="1517774554859" expanded="true" signature="3307:3402" ph="{...}" />
+                    <marker date="1517774554859" expanded="true" signature="3436:3777" ph="{...}" />
+                    <marker date="1517774554859" expanded="true" signature="3825:4144" ph="{...}" />
+                    <marker date="1517774554859" expanded="true" signature="4182:4523" ph="{...}" />
+                    <marker date="1517774554859" expanded="true" signature="4555:4761" ph="{...}" />
+                    <marker date="1517774554859" expanded="true" signature="4794:4944" ph="{...}" />
+                    <marker date="1517774554859" expanded="true" signature="5018:6451" ph="{...}" />
+                    <marker date="1517774554859" expanded="true" signature="6501:6744" ph="{...}" />
+                    <marker date="1517774554859" expanded="true" signature="6810:7448" ph="{...}" />
+                    <marker date="1517774554859" expanded="true" signature="7490:7593" ph="{...}" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
+          <file leaf-file-name="QueueView.java" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/Parkeersimulator/View/QueueView.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="2163">
+                  <caret line="111" column="49" lean-forward="true" selection-start-line="111" selection-start-column="49" selection-end-line="111" selection-end-column="49" />
+                  <folding>
+                    <element signature="e#6148#6149#0" expanded="true" />
+                    <element signature="e#6209#6210#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="AbstractView.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/Parkeersimulator/View/AbstractView.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="42">
+                  <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -99,6 +209,8 @@
       <find>System</find>
       <find>3</find>
       <find>Center_ali</find>
+      <find>reservationsThisHour</find>
+      <find>ad_hoc</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -137,18 +249,19 @@
         <option value="$PROJECT_DIR$/src/Parkeersimulator/Model/AbstractModel.java" />
         <option value="$PROJECT_DIR$/src/Parkeersimulator/Controller/ViewController.java" />
         <option value="$PROJECT_DIR$/src/Parkeersimulator/View/GraphView.java" />
-        <option value="$PROJECT_DIR$/src/Parkeersimulator/Main/Simulator.java" />
         <option value="$PROJECT_DIR$/src/Parkeersimulator/View/CarParkView.java" />
         <option value="$PROJECT_DIR$/src/Parkeersimulator/View/TextView.java" />
         <option value="$PROJECT_DIR$/src/Parkeersimulator/Controller/RunController.java" />
-        <option value="$PROJECT_DIR$/src/Parkeersimulator/Model/SimulatorLogic.java" />
         <option value="$PROJECT_DIR$/src/Parkeersimulator/Controller/InitController.java" />
+        <option value="$PROJECT_DIR$/src/Parkeersimulator/Main/Simulator.java" />
+        <option value="$PROJECT_DIR$/src/Parkeersimulator/Model/SimulatorLogic.java" />
+        <option value="$PROJECT_DIR$/src/Parkeersimulator/View/QueueView.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="164" />
-    <option name="y" value="-18" />
+    <option name="x" value="2592" />
+    <option name="y" value="46" />
     <option name="width" value="1936" />
     <option name="height" value="1096" />
   </component>
@@ -170,8 +283,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -229,8 +341,9 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="AndroidView" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -410,23 +523,23 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="2391" y="-9" width="2418" height="1318" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934782" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32873806" sideWeight="0.49791667" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32868353" sideWeight="0.49791667" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32131496" sideWeight="0.503125" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32873806" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32868353" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32131496" sideWeight="0.496875" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20104167" sideWeight="0.4655914" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16353545" sideWeight="0.4655914" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -440,6 +553,34 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32873806" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
+    <layout-to-restore>
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32131496" sideWeight="0.503125" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39872748" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934782" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32873806" sideWeight="0.49791667" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32868353" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32131496" sideWeight="0.496875" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1618275" sideWeight="0.4655914" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32873806" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20149253" sideWeight="0.5344086" order="5" side_tool="true" content_ui="tabs" />
+    </layout-to-restore>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
@@ -459,9 +600,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/SimulatorView.java" />
-    <entry file="file://$PROJECT_DIR$/src/Car.java" />
-    <entry file="file://$PROJECT_DIR$/src/CarQueue.java" />
     <entry file="file://$PROJECT_DIR$/src/Location.java" />
     <entry file="file://$PROJECT_DIR$/src/ParkingPassCar.java" />
     <entry file="file://$PROJECT_DIR$/src/Simulator.java" />
@@ -481,31 +619,9 @@
     <entry file="jar://E:/Programs/BlueJ/jdk/src.zip!/java/awt/Component.java" />
     <entry file="jar://E:/Programs/BlueJ/jdk/src.zip!/java/awt/EventQueue.java" />
     <entry file="jar://E:/Programs/BlueJ/jdk/src.zip!/java/awt/EventDispatchThread.java" />
-    <entry file="file://$PROJECT_DIR$/src/Parkeersimulator/Runner/SimulatorRunner.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files (x86)/BlueJ/jdk/src.zip!/java/io/PrintStream.java" />
-    <entry file="file://$PROJECT_DIR$/src/Parkeersimulator/View/AbstractView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="5" column="22" lean-forward="false" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files (x86)/BlueJ/jdk/src.zip!/java/awt/Component.java" />
     <entry file="file://$PROJECT_DIR$/src/Parkeersimulator/Model/ReservationQueue.java" />
-    <entry file="file://$PROJECT_DIR$/src/Parkeersimulator/Controller/AbstractController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="6" column="22" lean-forward="false" selection-start-line="6" selection-start-column="22" selection-end-line="6" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Parkeersimulator/Model/AdHocCar.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
@@ -554,7 +670,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
           <caret line="20" column="5" lean-forward="false" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -562,7 +677,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
           <caret line="13" column="7" lean-forward="false" selection-start-line="13" selection-start-column="7" selection-end-line="13" selection-end-column="89" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -570,9 +684,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="578">
           <caret line="36" column="22" lean-forward="false" selection-start-line="36" selection-start-column="22" selection-end-line="36" selection-end-column="22" />
-          <folding>
-            <element signature="e#709#710#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -600,69 +711,152 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar://E:/Programs/BlueJ/jdk/src.zip!/java/util/function/Predicate.java" />
     <entry file="file://$PROJECT_DIR$/src/Parkeersimulator/Model/GarageLogic.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="470">
-          <caret line="264" column="26" lean-forward="true" selection-start-line="264" selection-start-column="26" selection-end-line="264" selection-end-column="26" />
+        <state relative-caret-position="5376">
+          <caret line="262" column="5" lean-forward="false" selection-start-line="262" selection-start-column="5" selection-end-line="262" selection-end-column="5" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/SimulatorLogic-1.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1029">
+          <caret line="54" column="5" lean-forward="true" selection-start-line="54" selection-start-column="5" selection-end-line="54" selection-end-column="5" />
+          <folding>
+            <marker date="1517774554859" expanded="false" signature="0:104" ph="/.../" />
+            <marker date="1517774554859" expanded="true" signature="1145:1152" ph="{}" />
+            <marker date="1517774554859" expanded="true" signature="1178:1290" ph="{...}" />
+            <marker date="1517774554859" expanded="false" signature="1315:1326" ph=" { " />
+            <marker date="1517774554859" expanded="false" signature="1343:1349" ph=" }" />
+            <marker date="1517774554859" expanded="true" signature="1373:1480" ph="{...}" />
+            <marker date="1517774554859" expanded="true" signature="1514:2087" ph="{...}" />
+            <marker date="1517774554859" expanded="false" signature="2128:2139" ph=" { " />
+            <marker date="1517774554859" expanded="false" signature="2163:2169" ph=" }" />
+            <marker date="1517774554859" expanded="false" signature="2202:2213" ph=" { " />
+            <marker date="1517774554859" expanded="false" signature="2237:2243" ph=" }" />
+            <marker date="1517774554859" expanded="false" signature="2286:2297" ph=" { " />
+            <marker date="1517774554859" expanded="false" signature="2326:2332" ph=" }" />
+            <marker date="1517774554859" expanded="false" signature="2376:2387" ph=" { " />
+            <marker date="1517774554859" expanded="false" signature="2417:2423" ph=" }" />
+            <marker date="1517774554859" expanded="false" signature="2465:2476" ph=" { " />
+            <marker date="1517774554859" expanded="false" signature="2504:2510" ph=" }" />
+            <marker date="1517774554859" expanded="false" signature="2549:2560" ph=" { " />
+            <marker date="1517774554859" expanded="false" signature="2585:2591" ph=" }" />
+            <marker date="1517774554859" expanded="false" signature="2619:2630" ph=" { " />
+            <marker date="1517774554859" expanded="false" signature="2649:2655" ph=" }" />
+            <marker date="1517774554859" expanded="false" signature="2681:2692" ph=" { " />
+            <marker date="1517774554859" expanded="false" signature="2709:2715" ph=" }" />
+            <marker date="1517774554859" expanded="false" signature="2740:2751" ph=" { " />
+            <marker date="1517774554859" expanded="false" signature="2767:2773" ph=" }" />
+            <marker date="1517774554859" expanded="true" signature="2806:3102" ph="{...}" />
+            <marker date="1517774554859" expanded="true" signature="3138:3275" ph="{...}" />
+            <marker date="1517774554859" expanded="true" signature="3307:3402" ph="{...}" />
+            <marker date="1517774554859" expanded="true" signature="3436:3777" ph="{...}" />
+            <marker date="1517774554859" expanded="true" signature="3825:4144" ph="{...}" />
+            <marker date="1517774554859" expanded="true" signature="4182:4523" ph="{...}" />
+            <marker date="1517774554859" expanded="true" signature="4555:4761" ph="{...}" />
+            <marker date="1517774554859" expanded="true" signature="4794:4944" ph="{...}" />
+            <marker date="1517774554859" expanded="true" signature="5018:6451" ph="{...}" />
+            <marker date="1517774554859" expanded="true" signature="6501:6744" ph="{...}" />
+            <marker date="1517774554859" expanded="true" signature="6810:7448" ph="{...}" />
+            <marker date="1517774554859" expanded="true" signature="7490:7593" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Parkeersimulator/View/TextView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1176">
+          <caret line="56" column="71" lean-forward="false" selection-start-line="56" selection-start-column="71" selection-end-line="56" selection-end-column="71" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2720#2721#0" expanded="true" />
+            <element signature="e#2753#2754#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Parkeersimulator/Controller/RunController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-74">
-          <caret line="41" column="18" lean-forward="false" selection-start-line="41" selection-start-column="18" selection-end-line="41" selection-end-column="18" />
+        <state relative-caret-position="0">
+          <caret line="46" column="18" lean-forward="false" selection-start-line="46" selection-start-column="18" selection-end-line="46" selection-end-column="18" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="jar://E:/Programs/BlueJ/jdk/src.zip!/java/util/function/Predicate.java">
+    <entry file="file://$PROJECT_DIR$/src/Parkeersimulator/Controller/InitController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="48" column="12" lean-forward="false" selection-start-line="48" selection-start-column="12" selection-end-line="48" selection-end-column="12" />
+        <state relative-caret-position="-147">
+          <caret line="314" column="78" lean-forward="false" selection-start-line="314" selection-start-column="78" selection-end-line="314" selection-end-column="78" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Parkeersimulator/View/GraphView.java">
+    <entry file="file://$PROJECT_DIR$/src/Parkeersimulator/Controller/AbstractController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="172" column="73" lean-forward="true" selection-start-line="172" selection-start-column="73" selection-end-line="172" selection-end-column="73" />
+        <state relative-caret-position="105">
+          <caret line="6" column="22" lean-forward="false" selection-start-line="6" selection-start-column="22" selection-end-line="6" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Parkeersimulator/View/AbstractView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="42">
+          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Parkeersimulator/Runner/SimulatorRunner.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Parkeersimulator/Main/Simulator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="334">
-          <caret line="46" column="71" lean-forward="true" selection-start-line="46" selection-start-column="71" selection-end-line="46" selection-end-column="71" />
+        <state relative-caret-position="-63">
+          <caret line="28" column="52" lean-forward="true" selection-start-line="28" selection-start-column="52" selection-end-line="28" selection-end-column="52" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Parkeersimulator/View/ReservationView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1932">
+          <caret line="105" column="13" lean-forward="true" selection-start-line="105" selection-start-column="13" selection-end-line="105" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Parkeersimulator/View/GraphView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3465">
+          <caret line="182" column="1" lean-forward="true" selection-start-line="182" selection-start-column="1" selection-end-line="182" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Parkeersimulator/View/QueueView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2163">
+          <caret line="111" column="49" lean-forward="true" selection-start-line="111" selection-start-column="49" selection-end-line="111" selection-end-column="49" />
+          <folding>
+            <element signature="e#6148#6149#0" expanded="true" />
+            <element signature="e#6209#6210#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Parkeersimulator/Model/SimulatorLogic.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="320">
-          <caret line="128" column="69" lean-forward="false" selection-start-line="128" selection-start-column="69" selection-end-line="128" selection-end-column="69" />
-          <folding>
-            <element signature="e#4953#4954#0" expanded="true" />
-            <element signature="e#4978#4979#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Parkeersimulator/Controller/InitController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5270">
-          <caret line="314" column="78" lean-forward="false" selection-start-line="314" selection-start-column="78" selection-end-line="314" selection-end-column="78" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Parkeersimulator/View/TextView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="708">
-          <caret line="53" column="107" lean-forward="false" selection-start-line="53" selection-start-column="107" selection-end-line="53" selection-end-column="107" />
+        <state relative-caret-position="7899">
+          <caret line="668" column="18" lean-forward="true" selection-start-line="668" selection-start-column="18" selection-end-line="668" selection-end-column="18" />
           <folding />
         </state>
       </provider>
