@@ -32,7 +32,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
 
     private int tickPause;     // pauze tussen ticks in milliseconden
     private int currentTick;    // huidige tick
-    private int maxTicks = 10080;   // maximale hoeveelheid ticks om 1 week te simuleren
+    private int maxTicks = 10079;   // maximale hoeveelheid ticks om 1 week te simuleren
 
     private int totalEarnings;
     private int dayValue;
