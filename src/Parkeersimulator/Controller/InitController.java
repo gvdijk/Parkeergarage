@@ -18,14 +18,22 @@ public class InitController extends AbstractController implements ActionListener
     private JSpinner garageRows;
     private JSpinner garagePlaces;
     private JSpinner parkingFee;
+    private JSpinner reservationFee;
     private JSpinner reservationTime;
+    private JSpinner enterSpeed;
+    private JSpinner paymentSpeed;
+    private JSpinner exitSpeed;
 
     private JPanel tickPausePanel;
     private JPanel garageSpinnerPanel;
     private JPanel garageLabelPanel;
     private JPanel garageSettings;
     private JPanel parkingFeePanel;
+    private JPanel reservationFeePanel;
     private JPanel reservationPanel;
+    private JPanel entraceSpinnerPanel;
+    private JPanel entranceLabelPanel;
+    private JPanel entranceSettings;
 
     private JButton start;
 
@@ -49,11 +57,42 @@ public class InitController extends AbstractController implements ActionListener
 
         //JPanel die de tekst en het invoerveld voor de simulatiepauze rangschikt
         tickPausePanel = new JPanel();
+        tickPausePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        //Invoervelden voor de snelheden van het binnenkomen en weggaat
+        enterSpeed = new JSpinner();
+        paymentSpeed = new JSpinner();
+        exitSpeed = new JSpinner();
+
+        //JPanel die de invoervelden voor de in en uitgangen rangschikt
+        entraceSpinnerPanel = new JPanel();
+
+        //Text voor de in en uitgang instellingen
+        JLabel entranceLabel = new JLabel("Ingang breedte (auto's per minuut): ");
+        entranceLabel.setForeground(Color.lightGray);
+        JLabel paymentLabel = new JLabel("Betaalplek breedte (auto's per minuut): ");
+        paymentLabel.setForeground(Color.lightGray);
+        JLabel exitLabel = new JLabel("Uitgang breedte (auto's per minuut): ");
+        exitLabel.setForeground(Color.lightGray);
+
+        //JPanel die alle tekst voor de in en uitgangen rangschikt
+        entranceLabelPanel = new JPanel();
+        entranceLabelPanel.setBackground(new Color(51, 51, 51));
+        entranceLabelPanel.setLayout(new BoxLayout(entranceLabelPanel, BoxLayout.Y_AXIS));
+        entranceLabelPanel.add(entranceLabel);
+        entranceLabelPanel.add(Box.createRigidArea(new Dimension(0, 5)));
+        entranceLabelPanel.add(paymentLabel);
+        entranceLabelPanel.add(Box.createRigidArea(new Dimension(0, 5)));
+        entranceLabelPanel.add(exitLabel);
+
+        //JPanel die alle labels en invoervelden voor de in en uitgangen rangschikt
+        entranceSettings = new JPanel();
+        entranceSettings.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         //Invoervelden voor de grootte van de garage
-        garageFloors = new JSpinner(new SpinnerNumberModel());
-        garageRows = new JSpinner(new SpinnerNumberModel());
-        garagePlaces = new JSpinner(new SpinnerNumberModel());
+        garageFloors = new JSpinner();
+        garageRows = new JSpinner();
+        garagePlaces = new JSpinner();
 
         //JPanel die de invoervelden van de garage rangschikt
         garageSpinnerPanel = new JPanel();
@@ -76,8 +115,9 @@ public class InitController extends AbstractController implements ActionListener
         garageLabelPanel.add(Box.createRigidArea(new Dimension(0, 5)));
         garageLabelPanel.add(placesLabel);
 
-        //JPanel die de labels en spinners voor de garageinstellingen rangschikt
+        //JPanel die de labels en invoervelden voor de garageinstellingen rangschikt
         garageSettings = new JPanel();
+        garageSettings.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         //Invoerveld voor de prijs van het parkeren
         parkingFee = new JSpinner();
@@ -86,11 +126,22 @@ public class InitController extends AbstractController implements ActionListener
         JLabel parkingFeeLabel = new JLabel("Prijs per 20 minuten parkeren: ");
         parkingFeeLabel.setForeground(Color.lightGray);
 
-        //JPanel die de labels en spinner voor de parkeer prijs rangschikt
+        //JPanel die de labels en spinner voor de parkeerprijs rangschikt
         parkingFeePanel = new JPanel();
         parkingFeePanel.add(parkingFeeLabel);
-        parkingFeePanel.add(parkingFee);
-        parkingFeePanel.setBackground(new Color(51, 51, 51));
+        parkingFeePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        //Tekst voor de kosten van reserveren
+        JLabel reservationFeeText = new JLabel("Eenmalige kosten per reservering: ");
+        reservationFeeText.setForeground(Color.lightGray);
+
+        //Invoerveld voor de kosten van reserveren
+        reservationFee = new JSpinner();
+
+        //JPanel die de labels en spinner voor de reserveerkosten rangschikt
+        reservationFeePanel = new JPanel();
+        reservationFeePanel.add(reservationFeeText);
+        reservationFeePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         //Textvak dat een errorbericht laat zien als de ingevoerde waardes niet kloppen
         errorMessage = new JLabel();
@@ -107,8 +158,7 @@ public class InitController extends AbstractController implements ActionListener
         //JPanel die de labels en spinner voor de reserveertijd rangschikt
         reservationPanel = new JPanel();
         reservationPanel.add(reservationLabel);
-        reservationPanel.add(reservationTime);
-        reservationPanel.setBackground(new Color(51, 51, 51));
+        reservationPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         //Knop om de simulatie aan te maken met de ingevoerde waardes
         start = new JButton("Start");
@@ -117,19 +167,23 @@ public class InitController extends AbstractController implements ActionListener
 
         createControllerLayout();
 
-        //Alle componenten aan de classe toevoegen en zichtbaar maken
+        //Alle componenten aan de class toevoegen en zichtbaar maken
         add(title);
-        add(Box.createRigidArea(new Dimension(0, 40)));
+        add(Box.createRigidArea(new Dimension(0, 30)));
         add(tickPausePanel);
-        add(Box.createRigidArea(new Dimension(0, 40)));
+        add(Box.createRigidArea(new Dimension(0, 30)));
         add(garageSettings);
-        add(Box.createRigidArea(new Dimension(0, 40)));
+        add(Box.createRigidArea(new Dimension(0, 30)));
+        add(entranceSettings);
+        add(Box.createRigidArea(new Dimension(0, 30)));
         add(parkingFeePanel);
-        add(Box.createRigidArea(new Dimension(0, 40)));
+        add(Box.createRigidArea(new Dimension(0, 5)));
+        add(reservationFeePanel);
+        add(Box.createRigidArea(new Dimension(0, 30)));
         add(reservationPanel);
-        add(Box.createRigidArea(new Dimension(0, 40)));
+        add(Box.createRigidArea(new Dimension(0, 30)));
         add(errorMessage);
-        add(Box.createRigidArea(new Dimension(0, 40)));
+        add(Box.createRigidArea(new Dimension(0, 30)));
         add(start);
     }
 
@@ -150,15 +204,38 @@ public class InitController extends AbstractController implements ActionListener
         tickPausePanel.setBackground(new Color(51, 51, 51));
         tickPausePanel.add(tickPauseLabel);
         tickPausePanel.add(tickPause);
-        tickPausePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        enterSpeed.setValue(3);
+        Dimension enterDim = enterSpeed.getPreferredSize();
+        enterDim.width = 50;
+        enterSpeed.setPreferredSize(enterDim);
+        enterSpeed.getEditor().getComponent(0).setBackground(new Color(51, 51, 51));
+        enterSpeed.getEditor().getComponent(0).setForeground(Color.lightGray);
+        paymentSpeed.setValue(7);
+        paymentSpeed.getEditor().getComponent(0).setBackground(new Color(51, 51, 51));
+        paymentSpeed.getEditor().getComponent(0).setForeground(Color.lightGray);
+        exitSpeed.setValue(5);
+        exitSpeed.getEditor().getComponent(0).setBackground(new Color(51, 51, 51));
+        exitSpeed.getEditor().getComponent(0).setForeground(Color.lightGray);
+
+        entraceSpinnerPanel.setLayout(new BoxLayout(entraceSpinnerPanel, BoxLayout.Y_AXIS));
+        entraceSpinnerPanel.add(enterSpeed);
+        entraceSpinnerPanel.add(paymentSpeed);
+        entraceSpinnerPanel.add(exitSpeed);
+
+        entranceSettings.add(entranceLabelPanel);
+        entranceSettings.add(entraceSpinnerPanel);
+        entranceSettings.setBackground(new Color(51, 51, 51));
 
         garageFloors.setValue(3);
+        Dimension garageDim = garageFloors.getPreferredSize();
+        garageDim.width = 50;
+        garageFloors.setPreferredSize(garageDim);
         garageFloors.getEditor().getComponent(0).setBackground(new Color(51, 51, 51));
         garageFloors.getEditor().getComponent(0).setForeground(Color.lightGray);
         garageRows.setValue(6);
         garageRows.getEditor().getComponent(0).setBackground(new Color(51, 51, 51));
         garageRows.getEditor().getComponent(0).setForeground(Color.lightGray);
-
         garagePlaces.setValue(30);
         garagePlaces.getEditor().getComponent(0).setBackground(new Color(51, 51, 51));
         garagePlaces.getEditor().getComponent(0).setForeground(Color.lightGray);
@@ -171,7 +248,6 @@ public class InitController extends AbstractController implements ActionListener
         garageSettings.add(garageLabelPanel);
         garageSettings.add(garageSpinnerPanel);
         garageSettings.setBackground(new Color(51, 51, 51));
-        garageSettings.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         SpinnerNumberModel s = new SpinnerNumberModel();
         s.setValue(1.00);
@@ -179,13 +255,28 @@ public class InitController extends AbstractController implements ActionListener
         parkingFee.setModel(s);
         parkingFee.getEditor().getComponent(0).setBackground(new Color(51, 51, 51));
         parkingFee.getEditor().getComponent(0).setForeground(Color.lightGray);
-        Dimension d = parkingFee.getPreferredSize();
-        d.width = 50;
-        parkingFee.setPreferredSize(d);
+        Dimension parkingDim = parkingFee.getPreferredSize();
+        parkingDim.width = 50;
+        parkingFee.setPreferredSize(parkingDim);
+
+        SpinnerNumberModel r = new SpinnerNumberModel();
+        r.setValue(3.00);
+        r.setStepSize(0.10);
+        reservationFee.setModel(r);
+        reservationFee.setPreferredSize(parkingDim);
+        reservationFee.getEditor().getComponent(0).setBackground(new Color(51, 51, 51));
+        reservationFee.getEditor().getComponent(0).setForeground(Color.lightGray);
 
         reservationTime.setValue(15);
         reservationTime.getEditor().getComponent(0).setBackground(new Color(51, 51, 51));
         reservationTime.getEditor().getComponent(0).setForeground(Color.lightGray);
+
+        reservationPanel.add(reservationTime);
+        reservationPanel.setBackground(new Color(51, 51, 51));
+        parkingFeePanel.add(parkingFee);
+        parkingFeePanel.setBackground(new Color(51, 51, 51));
+        reservationFeePanel.setBackground(new Color(51, 51, 51));
+        reservationFeePanel.add(reservationFee);
     }
 
     /**
@@ -201,11 +292,16 @@ public class InitController extends AbstractController implements ActionListener
                                      (int)garageRows.getValue(),
                                      (int)garagePlaces.getValue()
             };
-            double fee = (double) parkingFee.getValue();
+            int[] speeds = new int[]{(int)enterSpeed.getValue(),
+                                     (int)paymentSpeed.getValue(),
+                                     (int)exitSpeed.getValue()
+            };
+            double parkFee = (double) parkingFee.getValue();
+            double reserveFee = (double) reservationFee.getValue();
             int time = (int) reservationTime.getValue();
 
-            if (!checkInput(tick, garage, fee, time)){
-                simulatorLogic.initialize(tick, garage, fee, time);
+            if (!checkInput(tick, garage, speeds, parkFee, reserveFee, time)){
+                simulatorLogic.initialize(tick, garage, speeds, parkFee, reserveFee, time);
                 simulatorLogic.showInitPanel(false);
             }
         }
@@ -216,11 +312,12 @@ public class InitController extends AbstractController implements ActionListener
      *
      * @param tick  De pauze tussen ticks
      * @param garage    De grootte van de garage
-     * @param fee   De prijs per kaartje
+     * @param speeds    De grootte van alle ingangen, uitgangen en betaalrijen
+     * @param parkFee   De prijs per kaartje
      * @param time De tijd waarop een plek van tevoren gereserveerd wordt
      * @return
      */
-    private boolean checkInput(int tick, int[] garage, double fee, int time){
+    private boolean checkInput(int tick, int[] garage, int[] speeds, double parkFee, double reservationFee, int time){
         errorMessage.setText("");
         boolean error = false;
 
@@ -240,8 +337,24 @@ public class InitController extends AbstractController implements ActionListener
             errorMessage.setText("Garage plekken moet tussen 1 en 40 liggen");
             error = true;
         }
-        if (fee < 0){
+        if (speeds[0] < 1){
+            errorMessage.setText("Ingang breedte kan geen 0 of kleiner zijn ");
+            error = true;
+        }
+        if (speeds[1] < 1){
+            errorMessage.setText("Betaling breedte kan geen 0 of kleiner zijn ");
+            error = true;
+        }
+        if (speeds[2] < 1){
+            errorMessage.setText("Uitgang breedte kan geen 0 of kleiner zijn ");
+            error = true;
+        }
+        if (parkFee < 0){
             errorMessage.setText("Kaartjes kunnen geen negatieve prijs hebben");
+            error = true;
+        }
+        if (reservationFee < 0){
+            errorMessage.setText("Reserveringen kunnen geen negatieve prijs hebben");
             error = true;
         }
         if (time < 0 || time > 45){

@@ -37,6 +37,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     private double dayValue;       // Verdiensten per simulatiedag
     private double moneyDue;       // Geld dat nog binnen zou komen als iedereen weg zou rijden
     private double parkingFee;     // Bedrag dat betaald moet worden per 20 minuten parkeren
+    private double reservationFee; // Bedrag dat eenmalig betaald word bij het reserveren van een plek
 
     private int normalCars;         // Aantal normale auto's in de parkeergarage
     private int passCars;           // Aantal pashouders in de parkeergarage
@@ -50,20 +51,20 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     private int reservationsThisHour;   // hoeveelheid reserveringen die er dit uur waren
     private int reservationTime;        // hoeveelheid tijd dat een plek van tevoren gereserveerd wordt
 
-    int weekDayArrivals= 80;        // gemiddelde hoeveelheid AdHocCars die doordeweeks arriveren per uur
-    int weekendArrivals = 160;      // gemiddelde hoeveelheid AdHocCars die in het weekend arriveren per uur
-    int weekDayPassArrivals= 30;    // gemiddelde hoeveelheid ParkingPassCars die doordeweeks arriveren per uur
-    int weekendPassArrivals = 5;    // gemiddelde hoeveelheid ParkingPassCars die in het weekend arriveren per uur
-    int weekDayReservations= 4;     // gemiddelde hoeveelheid CarReservations die doordeweeks gemaakt worden per uur
-    int weekendReservations = 15;   // gemiddelde hoeveelheid CarReservations die in het weekend gemaakt worden per uur
+    private int weekDayArrivals= 80;        // gemiddelde hoeveelheid AdHocCars die doordeweeks arriveren per uur
+    private int weekendArrivals = 160;      // gemiddelde hoeveelheid AdHocCars die in het weekend arriveren per uur
+    private int weekDayPassArrivals= 30;    // gemiddelde hoeveelheid ParkingPassCars die doordeweeks arriveren per uur
+    private int weekendPassArrivals = 5;    // gemiddelde hoeveelheid ParkingPassCars die in het weekend arriveren per uur
+    private int weekDayReservations= 4;     // gemiddelde hoeveelheid CarReservations die doordeweeks gemaakt worden per uur
+    private int weekendReservations = 15;   // gemiddelde hoeveelheid CarReservations die in het weekend gemaakt worden per uur
 
     private int[] hourlyArrivals = new int[60];     // de kwantiteit van aankomende AdHocCars voor dit uur
     private int[] hourlyPassArrivals = new int[60]; // de kwantiteit van aankomende ParkingPassCars voor dit uur
     private int[] hourlyReservations = new int[60]; // de kwantiteit van toegevoegde CarReservations voor dit uur
 
-    int enterSpeed = 3;     // de hoeveelheid Cars die naar binnen kunnen per minuut per ingang
-    int paymentSpeed = 7;   // de hoeveelheid Cars die kunnen betalen per minuut
-    int exitSpeed = 5;      // de hoeveelheid Cars die naar buiten kunned per minuut per uitgang
+    private int enterSpeed;     // de hoeveelheid Cars die naar binnen kunnen per minuut per ingang
+    private int paymentSpeed;   // de hoeveelheid Cars die kunnen betalen per minuut
+    private int exitSpeed;      // de hoeveelheid Cars die naar buiten kunned per minuut per uitgang
 
     private boolean schouwburg = false; // of de schouwburg binnenkort opent en reserveringen gefixeert op die tijd moeten worden
 
@@ -125,11 +126,17 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
      *
      * @param tickPause De pauze in milliseconden die na elke simulatiestap gewacht wordt
      * @param garage    De grootte die de garage moet worden voor deze simulatie
+     * @param speeds    De grootte van de enterspeed, paymentspeed en exitspeed
      * @param parkingFee De prijs die betaald wordt per 20 minuten parkeren
+     * @param reservationFee De kosten van het reserveren van een plek
      * @param reservationTime De tijd die een plek vantevoren gereserveerd mag worden
      */
-    public void initialize(int tickPause, int[] garage, double parkingFee, int reservationTime){
+    public void initialize(int tickPause, int[] garage, int[]speeds, double parkingFee, double reservationFee, int reservationTime){
         garageLogic = new GarageLogic(garage[0], garage[1], garage[2], parkingFee);
+        enterSpeed = speeds[0];
+        paymentSpeed = speeds[1];
+        exitSpeed = speeds[2];
+        this.reservationFee = reservationFee;
         this.reservationTime = reservationTime;
         this.tickPause = tickPause;
         this.parkingFee = parkingFee;
@@ -155,8 +162,8 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
      * @param times een integer voor hoevaak de simulatie moet ticken.
      */
     public void tick(boolean pause, int times) {
-        if (canRun){
-            for (int i = 0; i < times; i++){
+        for (int i = 0; i < times; i++){
+            if (canRun){
                 advanceTime();
                 checkPassReservations();
                 handleExit();
@@ -176,7 +183,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
                 tickReservations();
                 handleEntrance();
                 currentTick++;
-                if (currentTick >= maxTicks){
+                if (currentTick > maxTicks){
                     pause();
                     canRun = false;
                 }
@@ -355,6 +362,10 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
         if (car.getStayMinutes() % 20 > 0){ feeTimes++; }
 
         double paymentAmount = feeTimes * parkingFee;
+
+        if (car instanceof ReservationCar){
+            paymentAmount += reservationFee;
+        }
 
         totalEarnings += paymentAmount;
         dayValue += paymentAmount;

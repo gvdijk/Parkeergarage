@@ -32,11 +32,11 @@
       <file leaf-file-name="SimulatorLogic.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Parkeersimulator/Model/SimulatorLogic.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-863">
-              <caret line="50" column="103" lean-forward="false" selection-start-line="50" selection-start-column="103" selection-end-line="50" selection-end-column="103" />
+            <state relative-caret-position="320">
+              <caret line="128" column="69" lean-forward="false" selection-start-line="128" selection-start-column="69" selection-end-line="128" selection-end-column="69" />
               <folding>
-                <element signature="e#4790#4791#0" expanded="true" />
-                <element signature="e#4815#4816#0" expanded="true" />
+                <element signature="e#4953#4954#0" expanded="true" />
+                <element signature="e#4978#4979#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -55,28 +55,18 @@
       <file leaf-file-name="GraphView.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Parkeersimulator/View/GraphView.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="107" column="0" lean-forward="true" selection-start-line="107" selection-start-column="0" selection-end-line="107" selection-end-column="0" />
+            <state relative-caret-position="374">
+              <caret line="172" column="73" lean-forward="true" selection-start-line="172" selection-start-column="73" selection-end-line="172" selection-end-column="73" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TextView.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="TextView.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Parkeersimulator/View/TextView.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="708">
               <caret line="53" column="107" lean-forward="false" selection-start-line="53" selection-start-column="107" selection-end-line="53" selection-end-column="107" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="InitController.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Parkeersimulator/Controller/InitController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1320">
-              <caret line="247" column="80" lean-forward="true" selection-start-line="247" selection-start-column="80" selection-end-line="247" selection-end-column="80" />
               <folding />
             </state>
           </provider>
@@ -107,6 +97,8 @@
       <find>tick</find>
       <find>System.out.println</find>
       <find>System</find>
+      <find>3</find>
+      <find>Center_ali</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -467,7 +459,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/AdHocCar.java" />
     <entry file="file://$PROJECT_DIR$/src/SimulatorView.java" />
     <entry file="file://$PROJECT_DIR$/src/Car.java" />
     <entry file="file://$PROJECT_DIR$/src/CarQueue.java" />
@@ -609,18 +600,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Parkeersimulator/View/GraphView.java">
+    <entry file="file://$PROJECT_DIR$/src/Parkeersimulator/Model/GarageLogic.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="107" column="0" lean-forward="true" selection-start-line="107" selection-start-column="0" selection-end-line="107" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Parkeersimulator/View/TextView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="708">
-          <caret line="53" column="107" lean-forward="false" selection-start-line="53" selection-start-column="107" selection-end-line="53" selection-end-column="107" />
+        <state relative-caret-position="470">
+          <caret line="264" column="26" lean-forward="true" selection-start-line="264" selection-start-column="26" selection-end-line="264" selection-end-column="26" />
           <folding />
         </state>
       </provider>
@@ -633,6 +616,22 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar://E:/Programs/BlueJ/jdk/src.zip!/java/util/function/Predicate.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="48" column="12" lean-forward="false" selection-start-line="48" selection-start-column="12" selection-end-line="48" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Parkeersimulator/View/GraphView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="172" column="73" lean-forward="true" selection-start-line="172" selection-start-column="73" selection-end-line="172" selection-end-column="73" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Parkeersimulator/Main/Simulator.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="334">
@@ -641,29 +640,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Parkeersimulator/Model/GarageLogic.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="470">
-          <caret line="264" column="26" lean-forward="true" selection-start-line="264" selection-start-column="26" selection-end-line="264" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Parkeersimulator/Model/SimulatorLogic.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-863">
-          <caret line="50" column="103" lean-forward="false" selection-start-line="50" selection-start-column="103" selection-end-line="50" selection-end-column="103" />
+        <state relative-caret-position="320">
+          <caret line="128" column="69" lean-forward="false" selection-start-line="128" selection-start-column="69" selection-end-line="128" selection-end-column="69" />
           <folding>
-            <element signature="e#4790#4791#0" expanded="true" />
-            <element signature="e#4815#4816#0" expanded="true" />
+            <element signature="e#4953#4954#0" expanded="true" />
+            <element signature="e#4978#4979#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Parkeersimulator/Controller/InitController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1320">
-          <caret line="247" column="80" lean-forward="true" selection-start-line="247" selection-start-column="80" selection-end-line="247" selection-end-column="80" />
+        <state relative-caret-position="5270">
+          <caret line="314" column="78" lean-forward="false" selection-start-line="314" selection-start-column="78" selection-end-line="314" selection-end-column="78" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Parkeersimulator/View/TextView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="708">
+          <caret line="53" column="107" lean-forward="false" selection-start-line="53" selection-start-column="107" selection-end-line="53" selection-end-column="107" />
           <folding />
         </state>
       </provider>
