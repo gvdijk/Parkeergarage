@@ -50,10 +50,10 @@ public class Simulator {
         initPanel.setBackground(new Color(51, 51, 51));
 
         tabbedPane.addTab("Cark Park View", carParkView);
-        tabbedPane.addTab("View 2", null);
+        tabbedPane.addTab("Queue Information", null);
         tabbedPane.addTab("Text View", textView);
         tabbedPane.addTab("Graph View", graphView);
-        tabbedPane.addTab("Queue Information", null);
+        tabbedPane.addTab("Reservation Information", null);
 
         simulatorPanel.add(tabbedPane, BorderLayout.CENTER);
         simulatorPanel.add(runController, BorderLayout.SOUTH);
