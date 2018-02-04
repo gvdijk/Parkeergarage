@@ -8,6 +8,8 @@ public class ReservationCar extends Car {
     private Color color;
     private int minutesToGo;
     private CarReservation reservation;
+    private boolean isTooLate = false;
+    private boolean isTooEarly = false;
 
     /**
      * Constructor voor objecten van klasse PassReservation.
@@ -26,13 +28,25 @@ public class ReservationCar extends Car {
         int inconsistency = ThreadLocalRandom.current().nextInt(-60, 30);
         if (inconsistency < -30) {
             this.color = new Color(255, 212, 41);
+            isTooLate = true;
         } else if (inconsistency > 15) {
             this.color = new Color(244, 159, 27);
+            isTooEarly = true;
         } else {
             this.color = new Color(70, 207, 96);
         }
         this.minutesToGo = reservation.getMinutesToGo() + inconsistency;
     }
+
+    /**
+     * @return of deze ReservationCar te vroeg aankomt.
+     */
+    public boolean isTooEarly() { return isTooEarly; }
+
+    /**
+     * @return of deze ReservationCar te laat aankomt.
+     */
+    public boolean isTooLate() { return isTooLate; }
 
     /**
      * @return de Color van deze ReservationCar.

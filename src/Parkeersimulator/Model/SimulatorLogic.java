@@ -44,6 +44,11 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     private int[] carCounts;        // Totaal aantal auto's van elk soort tijdens de simulator
     private int[] carPercentages;   // Array met de percentageverdeling van de auto's
 
+    private int onTimeRes;
+    private int tooLateRes;
+    private int tooEarlyRes;
+    private int reservationsThisHour;
+
     int weekDayArrivals= 80;        // gemiddelde hoeveelheid AdHocCars die doordeweeks arriveren per uur
     int weekendArrivals = 160;      // gemiddelde hoeveelheid AdHocCars die in het weekend arriveren per uur
     int weekDayPassArrivals= 30;    // gemiddelde hoeveelheid ParkingPassCars die doordeweeks arriveren per uur
@@ -184,6 +189,26 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     public GarageLogic getGarageLogic() { return garageLogic; }
 
     /**
+     * @return de hoeveelheid ReservationCars die tot nu toe op tijd waren.
+     */
+    public int getOnTimeRes() { return onTimeRes; }
+
+    /**
+     * @return de hoeveelheid ReservationCars die tot nu toe te vroeg waren.
+     */
+    public int getTooEarlyRes() { return tooEarlyRes; }
+
+    /**
+     * @return de hoeveelheid ReservationCars die tot nu toe te laat waren.
+     */
+    public int getTooLateRes() { return tooLateRes; }
+
+    /**
+     * @return de hoeveelheid CarReservations die dit uur zijn toegevoegd.
+     */
+    public int getReservationsThisHour() { return reservationsThisHour; }
+
+    /**
      * @return de huidige minuut van dit uur.
      */
     public int getMinute(){ return minute; }
@@ -284,6 +309,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
      * Verwijder een CarReservation als de bijbehorende ReservationCar te vroeg aankomt.
      */
     private void tickReservations() {
+        if (minute == 1) { reservationsThisHour = 0; }
         Iterator<CarReservation> resIt = carReservationList.iterator();
         while (resIt.hasNext()) {
             CarReservation reservation = resIt.next();
@@ -291,6 +317,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
             if (reservation.getMinutesToGo() < 15) {
                 if (garageLogic.setReservation(reservation)) {
                     resIt.remove();
+                    reservationsThisHour++;
                 }
             }
         }
@@ -299,7 +326,9 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
             ReservationCar car = carIt.next();
             car.tick();
             if (car.getMinutesToGo() <= 0) {
-                carReservationList.removeIf(reservation -> car.getReservation() == reservation);
+                if (carReservationList.removeIf(reservation -> car.getReservation() == reservation)) {
+                    reservationsThisHour++;
+                }
                 entrancePassQueue.addCar(car);
                 carIt.remove();
             }
@@ -434,6 +463,10 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
                 Location loc = car.getReservedLocation() != null ? car.getReservedLocation() : garageLogic.getFirstFreeLocation(false);
                 if (loc != null) {
                     queue.removeCar();
+                    tooLateRes += car.isTooLate() ? 1 : 0;
+                    tooEarlyRes += car.isTooEarly() ? 1 : 0;
+                    onTimeRes += (car.isTooLate() || car.isTooEarly()) ? 0 : 1;
+                    reservationsThisHour += car.isTooEarly() ? 1 : 0;
                     garageLogic.setCarAt(loc, car);
                     garageLogic.removeReservationAt(loc);
                     updateCarCount(true, car);
@@ -565,7 +598,6 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
         for (int i = arr.length - 1; i > 0; i--)
         {
             int index = random.nextInt(i + 1);
-            // Simple swap
             int a = arr[index];
             arr[index] = arr[i];
             arr[i] = a;
