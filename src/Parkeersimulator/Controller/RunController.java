@@ -45,26 +45,39 @@ public class RunController extends AbstractController implements ActionListener{
     @Override
     public void actionPerformed (ActionEvent e) {
         if (e.getSource() == run){
-            if (run.getText().equals("Pause")) {
-                run.setText("Run");
-                simulatorLogic.pause();
-            }else{
-                run.setText("Pause");
-                simulatorLogic.start();
-            }
+            pressedPause();
         }
 
-        if (e.getSource() == minute){ simulatorLogic.tick(false, 1); }
+        if (e.getSource() == minute){
+            if (run.getText().equals("Pause")) {pressedPause();}
+            simulatorLogic.tick(false, 1);
+        }
 
-        if (e.getSource() == hour){ simulatorLogic.tick(false, 60); }
+        if (e.getSource() == hour){
+            if (run.getText().equals("Pause")) {pressedPause();}
+            simulatorLogic.tick(false, 60);
+        }
 
-        if (e.getSource() == day){ simulatorLogic.tick(false, 1440); }
+        if (e.getSource() == day){
+            if (run.getText().equals("Pause")) {pressedPause();}
+            simulatorLogic.tick(false, 1440);
+        }
 
         if (e.getSource() == reset) {
             simulatorLogic.pause();
             run.setText("Run");
             simulatorLogic.reset();
             simulatorLogic.showInitPanel(true);
+        }
+    }
+
+    private void pressedPause(){
+        if (run.getText().equals("Pause")) {
+            run.setText("Run");
+            simulatorLogic.pause();
+        }else{
+            run.setText("Pause");
+            simulatorLogic.start();
         }
     }
 }

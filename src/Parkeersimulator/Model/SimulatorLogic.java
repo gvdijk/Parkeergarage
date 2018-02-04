@@ -23,6 +23,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     private GarageLogic garageLogic;
 
     private boolean run; // of de simulatie momenteel draait
+    private boolean canRun; // of de simulatie zijn einde heeft bereikt of niet
 
     private int day;    // huidige dag in de week
     private int hour;   // huidige uur op de dag
@@ -32,7 +33,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     private int currentTick;        // huidige tick
     private int maxTicks = 10079;   // maximale hoeveelheid ticks om 1 week te simuleren
 
-    private HashMap<Integer, Integer> dayEarnings;  // HashMap met de verdiensten per dag erin
+    private int[] dayEarnings;  // Array met de verdiensten per dag erin
     private int totalEarnings;  // Totaal bedrag verdient tijdens de simulatie
     private int dayValue;       // Verdiensten per simulatiedag
     private int moneyDue;       // Geld dat nog binnen zou komen als iedereen weg zou rijden
@@ -70,7 +71,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
         entrancePassQueue = new CarQueue();
         paymentCarQueue = new CarQueue();
         exitCarQueue = new CarQueue();
-        dayEarnings = new HashMap<>();
+        dayEarnings = new int[7];
         carPercentages = new int[3];
         carCounts = new int[3];
         reset();
@@ -97,6 +98,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
      * Reset alle waardes en objecten van de simulatie zodat een nieuwe simulatie kan worden gemaakt
      */
     public void reset() {
+        canRun = true;
         entranceCarQueue.clearQueue();
         entrancePassQueue.clearQueue();
         paymentCarQueue.clearQueue();
@@ -141,30 +143,31 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
      * @param times een integer voor hoevaak de simulatie moet ticken.
      */
     public void tick(boolean pause, int times) {
-        for (int i = 0; i < times; i++){
-            advanceTime();
-            checkPassReservations();
-            handleExit();
-            garageLogic.tick();
-            updateEarnings();
-            updateCarPercentages();
-            moneyDue = garageLogic.getMoneyDue();
-            updateViews();
-            // Pause.
-            if (pause){
-                try {
-                    Thread.sleep(tickPause);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+        if (canRun){
+            for (int i = 0; i < times; i++){
+                advanceTime();
+                checkPassReservations();
+                handleExit();
+                garageLogic.tick();
+                updateEarnings();
+                updateCarPercentages();
+                moneyDue = garageLogic.getMoneyDue();
+                updateViews();
+                // Pause.
+                if (pause){
+                    try {
+                        Thread.sleep(tickPause);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
-            }
-            tickReservations();
-            handleEntrance();
-            currentTick++;
-            if (currentTick == maxTicks){
-                pause();
-                currentTick = 0;
-                reset();
+                tickReservations();
+                handleEntrance();
+                currentTick++;
+                if (currentTick >= maxTicks){
+                    pause();
+                    canRun = false;
+                }
             }
         }
     }
@@ -231,7 +234,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     /**
      * @return  HashMap van alle bedragen die per dag verdiend zijn
      */
-    public HashMap<Integer, Integer> getDayEarnings() { return dayEarnings; }
+    public int[] getDayEarnings() { return dayEarnings; }
 
     /**
      * @return De totale telling van de auto's in de garage tijdens de simulatie
@@ -326,7 +329,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
      */
     private void updateEarnings(){
         if (hour == 23 && minute == 59) {
-            dayEarnings.put(day, dayValue);
+            dayEarnings[day] = dayValue;
             dayValue = 0;
         }
     }
@@ -336,7 +339,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
      */
     private void resetEarnings(){
         for (int i=0; i < 7; i++){
-            dayEarnings.put(i, 0);
+            dayEarnings[i] =  0;
         }
         totalEarnings = 0;
         dayValue = 0;

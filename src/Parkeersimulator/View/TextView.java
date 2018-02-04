@@ -88,12 +88,12 @@ public class TextView extends AbstractView {
 
     private void setDayEarnings(){
         dayEarnings.setText ("<html>Earnings per day:<br/>" +
-                "<br/>Monday: €" + simulatorLogic.getDayEarnings().get(0) + ",-" +
-                "<br/>Tuesday: €" + simulatorLogic.getDayEarnings().get(1) + ",-" +
-                "<br/>Wednesday: €" + simulatorLogic.getDayEarnings().get(2) + ",-" +
-                "<br/>Thursday: €" + simulatorLogic.getDayEarnings().get(3) + ",-" +
-                "<br/>Friday: €" + simulatorLogic.getDayEarnings().get(4) + ",-" +
-                "<br/>Saturday: €" + simulatorLogic.getDayEarnings().get(5) + ",-" +
-                "<br/>Sunday: €" + simulatorLogic.getDayEarnings().get(6) + ",-</html>");
+                "<br/>Monday: €" + simulatorLogic.getDayEarnings()[0] + ",-" +
+                "<br/>Tuesday: €" + simulatorLogic.getDayEarnings()[1] + ",-" +
+                "<br/>Wednesday: €" + simulatorLogic.getDayEarnings()[2] + ",-" +
+                "<br/>Thursday: €" + simulatorLogic.getDayEarnings()[3] + ",-" +
+                "<br/>Friday: €" + simulatorLogic.getDayEarnings()[4] + ",-" +
+                "<br/>Saturday: €" + simulatorLogic.getDayEarnings()[5] + ",-" +
+                "<br/>Sunday: €" + simulatorLogic.getDayEarnings()[6] + ",-</html>");
     }
 }

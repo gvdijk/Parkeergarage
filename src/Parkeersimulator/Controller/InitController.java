@@ -15,6 +15,7 @@ public class InitController extends AbstractController implements ActionListener
     private JSpinner garageFloors;
     private JSpinner garageRows;
     private JSpinner garagePlaces;
+    private JLabel errorMessage;
     private JButton start;
 
     /**
@@ -36,7 +37,8 @@ public class InitController extends AbstractController implements ActionListener
         title.setFont(new Font("Courier", Font.BOLD, 20));
 
         //Invoerveld voor het instellen van de simulatiepauze
-        tickPause = new JSpinner(new SpinnerNumberModel(100, 1, 200, 1));
+        tickPause = new JSpinner(new SpinnerNumberModel());
+        tickPause.setValue(50);
         tickPause.getEditor().getComponent(0).setBackground(new Color(51, 51, 51));
         tickPause.getEditor().getComponent(0).setForeground(Color.lightGray);
         JLabel tickPauseLabel = new JLabel("Pauze per simulatie minuut (milliseconde): ");
@@ -50,13 +52,16 @@ public class InitController extends AbstractController implements ActionListener
         tickPausePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         //Invoervelden voor de grootte van de garage
-        garageFloors = new JSpinner(new SpinnerNumberModel(3, 1, 4, 1));
+        garageFloors = new JSpinner(new SpinnerNumberModel());
+        garageFloors.setValue(3);
         garageFloors.getEditor().getComponent(0).setBackground(new Color(51, 51, 51));
         garageFloors.getEditor().getComponent(0).setForeground(Color.lightGray);
-        garageRows = new JSpinner(new SpinnerNumberModel(6, 1, 8, 1));
+        garageRows = new JSpinner(new SpinnerNumberModel());
+        garageRows.setValue(6);
         garageRows.getEditor().getComponent(0).setBackground(new Color(51, 51, 51));
         garageRows.getEditor().getComponent(0).setForeground(Color.lightGray);
-        garagePlaces = new JSpinner(new SpinnerNumberModel(30, 1, 40, 1));
+        garagePlaces = new JSpinner(new SpinnerNumberModel());
+        garagePlaces.setValue(30);
         garagePlaces.getEditor().getComponent(0).setBackground(new Color(51, 51, 51));
         garagePlaces.getEditor().getComponent(0).setForeground(Color.lightGray);
 
@@ -92,6 +97,11 @@ public class InitController extends AbstractController implements ActionListener
         garageSettings.setBackground(new Color(51, 51, 51));
         garageSettings.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+        //Textvak dat een errorbericht laat zien als de ingevoerde waardes niet kloppen
+        errorMessage = new JLabel();
+        errorMessage.setForeground(Color.red);
+        errorMessage.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         //Knop om de simulatie aan te maken met de ingevoerde waardes
         start = new JButton("Start");
         start.addActionListener(this);
@@ -103,6 +113,8 @@ public class InitController extends AbstractController implements ActionListener
         add(tickPausePanel);
         add(Box.createRigidArea(new Dimension(0, 40)));
         add(garageSettings);
+        add(Box.createRigidArea(new Dimension(0, 40)));
+        add(errorMessage);
         add(Box.createRigidArea(new Dimension(0, 40)));
         add(start);
     }
@@ -121,8 +133,34 @@ public class InitController extends AbstractController implements ActionListener
                                      (int)garagePlaces.getValue()
             };
 
-            simulatorLogic.initialize(tick, garage);
-            simulatorLogic.showInitPanel(false);
+            if (!checkInput(tick, garage)){
+                simulatorLogic.initialize(tick, garage);
+                simulatorLogic.showInitPanel(false);
+            }
         }
+    }
+
+    private boolean checkInput(int tick, int[] garage){
+        errorMessage.setText("");
+        boolean error = false;
+
+        if (tick < 1 || tick > 200){
+            errorMessage.setText("Pauze tussen ticks moet tussen 1 en 200 liggen");
+            error = true;
+        }
+        if (garage[0] < 1 || garage[0] > 4){
+            errorMessage.setText("Garage verdiepingen moet tussen 1 en 4 liggen");
+            error = true;
+        }
+        if (garage[1] < 1 || garage[1] > 8){
+            errorMessage.setText("Garage rijen moet tussen 1 en 8 liggen");
+            error = true;
+        }
+        if (garage[2] < 1 || garage[2] > 40){
+            errorMessage.setText("Garage plekken moet tussen 1 en 40 liggen");
+            error = true;
+        }
+
+        return error;
     }
 }

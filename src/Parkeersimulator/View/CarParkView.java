@@ -93,7 +93,7 @@ public class CarParkView extends AbstractView {
             Location location = locationPrimary.getPlace() > locationSecondary.getPlace() ? locationSecondary : locationPrimary;
             graphics.setColor(new Color(229, 229, 229));
             graphics.fillRect(
-                    location.getFloor() * 260 + (1 + (int)Math.floor(location.getRow() * 0.5)) * 75 + (location.getRow() % 2) * 20 + 8,
+                    location.getFloor() * 360 + (1 + (int)Math.floor(location.getRow() * 0.5)) * 75 + (location.getRow() % 2) * 20 + 8,
                     60 + location.getPlace() * 10 + 3,
                     4,
                     14);
@@ -106,7 +106,7 @@ public class CarParkView extends AbstractView {
     private void drawPlace(Graphics graphics, Location location, Color color) {
         graphics.setColor(color);
         graphics.fillRect(
-                location.getFloor() * 260 + (1 + (int)Math.floor(location.getRow() * 0.5)) * 75 + (location.getRow() % 2) * 20,
+                location.getFloor() * 360 + (1 + (int)Math.floor(location.getRow() * 0.5)) * 75 + (location.getRow() % 2) * 20,
                 60 + location.getPlace() * 10,
                 20 - 1,
                 10 - 1);
