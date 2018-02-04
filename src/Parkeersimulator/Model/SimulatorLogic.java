@@ -48,6 +48,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     private int tooLateRes;     // totale hoeveelheid reserveringen die te laat waren
     private int tooEarlyRes;    // totale hoeveelheid reserveringen die te vroeg waren
     private int reservationsThisHour;   // hoeveelheid reserveringen die er dit uur waren
+    private int reservationTime;        // hoeveelheid tijd dat een plek van tevoren gereserveerd wordt
 
     int weekDayArrivals= 80;        // gemiddelde hoeveelheid AdHocCars die doordeweeks arriveren per uur
     int weekendArrivals = 160;      // gemiddelde hoeveelheid AdHocCars die in het weekend arriveren per uur
@@ -124,9 +125,12 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
      *
      * @param tickPause De pauze in milliseconden die na elke simulatiestap gewacht wordt
      * @param garage    De grootte die de garage moet worden voor deze simulatie
+     * @param parkingFee De prijs die betaald wordt per 20 minuten parkeren
+     * @param reservationTime De tijd die een plek vantevoren gereserveerd mag worden
      */
-    public void initialize(int tickPause, int[] garage, double parkingFee){
+    public void initialize(int tickPause, int[] garage, double parkingFee, int reservationTime){
         garageLogic = new GarageLogic(garage[0], garage[1], garage[2], parkingFee);
+        this.reservationTime = reservationTime;
         this.tickPause = tickPause;
         this.parkingFee = parkingFee;
         garageLogic.tick();
@@ -320,7 +324,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
         while (resIt.hasNext()) {
             CarReservation reservation = resIt.next();
             reservation.tick();
-            if (reservation.getMinutesToGo() < 15) {
+            if (reservation.getMinutesToGo() < reservationTime) {
                 if (garageLogic.setReservation(reservation)) {
                     resIt.remove();
                     reservationsThisHour++;

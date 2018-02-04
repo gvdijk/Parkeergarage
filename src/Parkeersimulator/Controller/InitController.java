@@ -18,12 +18,14 @@ public class InitController extends AbstractController implements ActionListener
     private JSpinner garageRows;
     private JSpinner garagePlaces;
     private JSpinner parkingFee;
+    private JSpinner reservationTime;
 
     private JPanel tickPausePanel;
     private JPanel garageSpinnerPanel;
     private JPanel garageLabelPanel;
     private JPanel garageSettings;
     private JPanel parkingFeePanel;
+    private JPanel reservationPanel;
 
     private JButton start;
 
@@ -88,11 +90,25 @@ public class InitController extends AbstractController implements ActionListener
         parkingFeePanel = new JPanel();
         parkingFeePanel.add(parkingFeeLabel);
         parkingFeePanel.add(parkingFee);
+        parkingFeePanel.setBackground(new Color(51, 51, 51));
 
         //Textvak dat een errorbericht laat zien als de ingevoerde waardes niet kloppen
         errorMessage = new JLabel();
         errorMessage.setForeground(Color.red);
         errorMessage.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        //Tekst voor de tijd waarop men van tevoren mag reserveren
+        JLabel reservationLabel = new JLabel("Tijd voor aankomst dat plek word gereserveerd: ");
+        reservationLabel.setForeground(Color.lightGray);
+
+        //Invoerveld voor de tijd waarop men van tevoren mag reserveren
+        reservationTime = new JSpinner();
+
+        //JPanel die de labels en spinner voor de reserveertijd rangschikt
+        reservationPanel = new JPanel();
+        reservationPanel.add(reservationLabel);
+        reservationPanel.add(reservationTime);
+        reservationPanel.setBackground(new Color(51, 51, 51));
 
         //Knop om de simulatie aan te maken met de ingevoerde waardes
         start = new JButton("Start");
@@ -109,6 +125,8 @@ public class InitController extends AbstractController implements ActionListener
         add(garageSettings);
         add(Box.createRigidArea(new Dimension(0, 40)));
         add(parkingFeePanel);
+        add(Box.createRigidArea(new Dimension(0, 40)));
+        add(reservationPanel);
         add(Box.createRigidArea(new Dimension(0, 40)));
         add(errorMessage);
         add(Box.createRigidArea(new Dimension(0, 40)));
@@ -165,7 +183,9 @@ public class InitController extends AbstractController implements ActionListener
         d.width = 50;
         parkingFee.setPreferredSize(d);
 
-        parkingFeePanel.setBackground(new Color(51, 51, 51));
+        reservationTime.setValue(15);
+        reservationTime.getEditor().getComponent(0).setBackground(new Color(51, 51, 51));
+        reservationTime.getEditor().getComponent(0).setForeground(Color.lightGray);
     }
 
     /**
@@ -182,15 +202,25 @@ public class InitController extends AbstractController implements ActionListener
                                      (int)garagePlaces.getValue()
             };
             double fee = (double) parkingFee.getValue();
+            int time = (int) reservationTime.getValue();
 
-            if (!checkInput(tick, garage, fee)){
-                simulatorLogic.initialize(tick, garage, fee);
+            if (!checkInput(tick, garage, fee, time)){
+                simulatorLogic.initialize(tick, garage, fee, time);
                 simulatorLogic.showInitPanel(false);
             }
         }
     }
 
-    private boolean checkInput(int tick, int[] garage, double fee){
+    /**
+     * Checkt of de ingevulde waardes wel voldoen aan de minimum en maximum inputs
+     *
+     * @param tick  De pauze tussen ticks
+     * @param garage    De grootte van de garage
+     * @param fee   De prijs per kaartje
+     * @param time De tijd waarop een plek van tevoren gereserveerd wordt
+     * @return
+     */
+    private boolean checkInput(int tick, int[] garage, double fee, int time){
         errorMessage.setText("");
         boolean error = false;
 
@@ -212,6 +242,10 @@ public class InitController extends AbstractController implements ActionListener
         }
         if (fee < 0){
             errorMessage.setText("Kaartjes kunnen geen negatieve prijs hebben");
+            error = true;
+        }
+        if (time < 0 || time > 45){
+            errorMessage.setText("Tijd van tevoren moet tussen 0 en 45 liggen");
             error = true;
         }
 
