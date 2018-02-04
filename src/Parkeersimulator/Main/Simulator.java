@@ -5,6 +5,7 @@ import Parkeersimulator.Controller.RunController;
 import Parkeersimulator.Model.SimulatorLogic;
 import Parkeersimulator.View.CarParkView;
 import Parkeersimulator.View.GraphView;
+import Parkeersimulator.View.ReservationView;
 import Parkeersimulator.View.TextView;
 
 import javax.swing.*;
@@ -21,6 +22,7 @@ public class Simulator {
     private CarParkView carParkView;
     private TextView textView;
     private GraphView graphView;
+    private ReservationView reservationView;
     private RunController runController;
     private InitController initController;
 
@@ -34,6 +36,7 @@ public class Simulator {
         carParkView = new CarParkView(simulatorLogic);
         textView = new TextView(simulatorLogic);
         graphView = new GraphView(simulatorLogic);
+        reservationView = new ReservationView(simulatorLogic);
         runController = new RunController(simulatorLogic);
         initController = new InitController(simulatorLogic);
 
@@ -53,7 +56,7 @@ public class Simulator {
         tabbedPane.addTab("Queue Information", null);
         tabbedPane.addTab("Text View", textView);
         tabbedPane.addTab("Graph View", graphView);
-        tabbedPane.addTab("Reservation Information", null);
+        tabbedPane.addTab("Reservation Information", reservationView);
 
         simulatorPanel.add(tabbedPane, BorderLayout.CENTER);
         simulatorPanel.add(runController, BorderLayout.SOUTH);
