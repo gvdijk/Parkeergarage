@@ -44,10 +44,10 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     private int[] carCounts;        // Totaal aantal auto's van elk soort tijdens de simulator
     private int[] carPercentages;   // Array met de percentageverdeling van de auto's
 
-    private int onTimeRes;
-    private int tooLateRes;
-    private int tooEarlyRes;
-    private int reservationsThisHour;
+    private int onTimeRes;      // totale hoeveelheid reserveringen die op tijd waren
+    private int tooLateRes;     // totale hoeveelheid reserveringen die te laat waren
+    private int tooEarlyRes;    // totale hoeveelheid reserveringen die te vroeg waren
+    private int reservationsThisHour;   // hoeveelheid reserveringen die er dit uur waren
 
     int weekDayArrivals= 80;        // gemiddelde hoeveelheid AdHocCars die doordeweeks arriveren per uur
     int weekendArrivals = 160;      // gemiddelde hoeveelheid AdHocCars die in het weekend arriveren per uur
@@ -111,6 +111,9 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
         day = 0;
         hour = 0;
         minute = 0;
+        onTimeRes = 0;
+        tooLateRes = 0;
+        tooEarlyRes = 0;
         resetCarCount();
         resetEarnings();
         resetCarPercentages();
@@ -554,14 +557,14 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
             if (day >= 4 && day <= 5 && hour >= 16 && hour <= 17 ||
                     day == 6 && hour >=10 && hour <= 12) {
                 schouwburg = true;
-                if (target == hourlyReservations) { averageNumberOfCarsPerHour += 100; }
+                if (target == hourlyReservations) { averageNumberOfCarsPerHour += 60; }
             } else { schouwburg = false; }
 
             // Extra autos voor de schouwburgvoorstellingen
             if ((day >= 4 && day <= 5 && hour >= 18 && hour <= 19 ||
                     day == 6 && hour >=12 && hour <= 14) &&
                     target == hourlyArrivals) {
-                averageNumberOfCarsPerHour += 150;
+                averageNumberOfCarsPerHour += 100;
             }
 
             // Extra abbonementshouders in de ochtendspits
