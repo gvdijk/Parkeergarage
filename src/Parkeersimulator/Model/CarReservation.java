@@ -7,7 +7,6 @@ import java.util.concurrent.ThreadLocalRandom;
 public class CarReservation extends Reservation {
     private static final Color COLOR = new Color(28, 108, 43);
     private int minutesToGo;
-    private SimulatorLogic logic;
 
     /**
      * Constructor voor objecten van klasse CarReservation.
@@ -15,8 +14,8 @@ public class CarReservation extends Reservation {
      * Maakt een ReservationCar aan die correspondeert met deze CarReservation.
      * Voegt deze ReservationCar toe aan de lijst in SimulatorLogic.
      */
-    public CarReservation() {
-        minutesToGo = (int) (60 + ThreadLocalRandom.current().nextFloat() * 4 * 60);
+    public CarReservation(boolean schouwburg) {
+        minutesToGo = schouwburg ? (int) (120 + ThreadLocalRandom.current().nextFloat() * 45) : (int) (60 + ThreadLocalRandom.current().nextFloat() * 4 * 60);
     }
 
     /**

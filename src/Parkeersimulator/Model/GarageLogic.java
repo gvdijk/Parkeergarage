@@ -25,7 +25,7 @@ public class GarageLogic {
     /**
      * Zet alle gereserveerde plekken voor pashouders.
      */
-    private void setPassReservations(int floors, int rows, int places) {
+    public void setPassReservations(int floors, int rows, int places) {
         // Zorg ervoor dat de ingevoerde waardes kleiner of gelijk zijn aan de groottes van de parkeergarage
         floors = floors > numberOfFloors ? numberOfFloors : floors;
         rows = rows > numberOfRows ? numberOfRows : rows;

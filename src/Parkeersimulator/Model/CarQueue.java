@@ -10,6 +10,10 @@ public class CarQueue {
         return queue.add(car);
     }
 
+    public Car checkCar() {
+        return queue.peek();
+    }
+
     public Car removeCar() {
         return queue.poll();
     }

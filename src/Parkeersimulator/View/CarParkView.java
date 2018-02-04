@@ -109,6 +109,6 @@ public class CarParkView extends AbstractView {
                 location.getFloor() * 260 + (1 + (int)Math.floor(location.getRow() * 0.5)) * 75 + (location.getRow() % 2) * 20,
                 60 + location.getPlace() * 10,
                 20 - 1,
-                10 - 1); // TODO use dynamic size or constants
+                10 - 1);
     }
 }
