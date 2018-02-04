@@ -17,22 +17,16 @@ public class TextView extends AbstractView {
 
         this.setBackground(new Color(51, 51, 51));
 
-        //setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        currentTime = new JLabel("<html>Current day: " + convertDay(simulatorLogic.getDay()) +
-                "<br/>Current hour: " + simulatorLogic.getHour() +
-                "<br/>Current minute: " + simulatorLogic.getMinute());
+        currentTime = new JLabel();
         currentTime.setForeground(Color.lightGray);
-        dayEarnings = new JLabel("");
+        dayEarnings = new JLabel();
         dayEarnings.setForeground(Color.lightGray);
         setDayEarnings();
-        earnings = new JLabel("<html>Money due from parked cars: €" + simulatorLogic.getMoneyDue() + ",-<br/>" +
-                "<br/>Total Earnings: €" + simulatorLogic.getTotalEarnings() + ",-");
+        earnings = new JLabel();
         earnings.setForeground(Color.lightGray);
-        currentCars = new JLabel("<html>Current cars in the garage:<br/>" +
-                "<br/>Normal cars: " + simulatorLogic.getNormalCars() +
-                "<br/>Cars with a parking pass: " + simulatorLogic.getPassCars() +
-                "<br/>Cars that reserved a spot: " + simulatorLogic.getReservationCars());
+        currentCars = new JLabel();
         currentCars.setForeground(Color.lightGray);
         currentCarPercentages = new JLabel();
         currentCarPercentages.setForeground(Color.lightGray);
@@ -46,7 +40,6 @@ public class TextView extends AbstractView {
         add(currentCars);
         add(Box.createRigidArea(new Dimension(0, 40)));
         add(currentCarPercentages);
-        setVisible(false);
     }
 
     @Override

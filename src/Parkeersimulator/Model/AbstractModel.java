@@ -30,15 +30,6 @@ public abstract class AbstractModel {
         }
     }
 
-    public void setVisibleView(String view){
-        for (AbstractView v : views) {
-            v.setVisible(false);
-            if (v.getName().equals(view)){
-                v.setVisible(true);
-            }
-        }
-    }
-
     public void showInitPanel(boolean show){
         if (show) {
             initPanel.setVisible(true);

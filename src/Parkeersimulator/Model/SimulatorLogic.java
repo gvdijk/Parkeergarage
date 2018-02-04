@@ -1,7 +1,5 @@
 package Parkeersimulator.Model;
 
-import Parkeersimulator.Main.Simulator;
-
 import java.util.ArrayList;
 import javax.swing.*;
 import java.util.HashMap;
@@ -34,16 +32,16 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     private int currentTick;    // huidige tick
     private int maxTicks = 10080;   // maximale hoeveelheid ticks om 1 week te simuleren
 
-    private int totalEarnings;
-    private int dayValue;
-    private HashMap<Integer, Integer> dayEarnings;
-    private int moneyDue;
-    private int parkingFee = 1;
+    private int totalEarnings;      //Totaal bedrag verdient tijdens de simulatie
+    private int dayValue;       //Verdiensten per simulatiedag
+    private HashMap<Integer, Integer> dayEarnings;      //HashMap met de verdiensten per dag erin
+    private int moneyDue;       //Geld dat nog binnen zou komen als iedereen weg zou rijden
+    private int parkingFee = 1;     //Bedrag dat betaald moet worden per 20 minuten parkeren
 
-    private int normalCars;
-    private int passCars;
-    private int reservationCars;
-    private int[] carPercentages;
+    private int normalCars;     //Aantal normale auto's in de parkeergarage
+    private int passCars;       //Aantal pashouders in de parkeergarage
+    private int reservationCars;        //Aantal auto's met een reservatie
+    private int[] carPercentages;       //Array met de percentageverdeling van de auto's
 
     int weekDayArrivals= 80;        // gemiddelde hoeveelheid AdHocCars die doordeweeks arriveren per uur
     int weekendArrivals = 160;      // gemiddelde hoeveelheid AdHocCars die in het weekend arriveren per uur
@@ -56,7 +54,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     private int[] hourlyPassArrivals = new int[60]; // de kwantiteit van aankomende ParkingPassCars voor dit uur
     private int[] hourlyReservations = new int[60]; // de kwantiteit van toegevoegde CarReservations voor dit uur
 
-    int enterSpeed = 3;     // de hoeveelheid Cars die naar binnen kunned per minuut per ingang
+    int enterSpeed = 3;     // de hoeveelheid Cars die naar binnen kunnen per minuut per ingang
     int paymentSpeed = 7;   // de hoeveelheid Cars die kunnen betalen per minuut
     int exitSpeed = 5;      // de hoeveelheid Cars die naar buiten kunned per minuut per uitgang
 
@@ -92,6 +90,9 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
         run=false;
     }
 
+    /**
+     * Reset alle waardes en objecten van de simulatie zodat een nieuwe simulatie kan worden gemaakt
+     */
     public void reset() {
         entranceCarQueue.clearQueue();
         entrancePassQueue.clearQueue();
@@ -106,6 +107,12 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
         resetCarPercentages();
     }
 
+    /**
+     * Zet de nieuwe waardes voor de variabelen en objecten voor de aankomende simulatie
+     *
+     * @param tickPause De pauze in milliseconden die na elke simulatiestap gewacht wordt
+     * @param garage    De grootte die de garage moet worden voor deze simulatie
+     */
     public void initialize(int tickPause, int[] garage){
         garageLogic = new GarageLogic(garage[0], garage[1], garage[2]);
         this.tickPause = tickPause;
@@ -178,21 +185,40 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
      */
     public int getDay(){ return day; }
 
+    /**
+     * @return De normale auto's die op het moment in de parkeergarage staan
+     */
     public int getNormalCars() { return normalCars; }
 
+    /**
+     * @return  De pashouders die op het moment in de parkeergarage staan
+     */
     public int getPassCars() { return passCars; }
 
+    /**
+     * @return  De auto's met een reservatie die op het moment in de parkeergarage staan
+     */
     public int getReservationCars() { return reservationCars; }
 
+    /**
+     * @return  Array met de percentageverdeling van de huidige auto's in de garage
+     */
     public int[] getCarPercentages() { return carPercentages; }
 
+    /**
+     * @return  Totaalbedrag verdient aan parkeergeld
+     */
     public int getTotalEarnings() { return totalEarnings; }
 
+    /**
+     * @return  Geld dat nog binnen moet komen van geparkeerde auto's
+     */
     public int getMoneyDue() { return moneyDue; }
 
+    /**
+     * @return  HashMap van alle bedragen die per dag verdiend zijn
+     */
     public HashMap<Integer, Integer> getDayEarnings() { return dayEarnings; }
-
-    public Simulator getSimulator() { return simulator; }
 
     /**
      * Vorder de tijd van de simulatie met 1 minuut
@@ -270,6 +296,11 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
         }
     }
 
+    /**
+     * Berekent hoeveel geld een auto moet betalen bij het wegrijden
+     *
+     * @param car De auto die moet betalen
+     */
     private void handlePayment(Car car){
         int feeTimes = (int) Math.floor(car.getStayMinutes() / 20);
         if (car.getStayMinutes() % 20 > 0){ feeTimes++; }
@@ -280,6 +311,9 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
         dayValue += paymentAmount;
     }
 
+    /**
+     * Voegt de winst van elke dag toe aan de array die dit bijhoudt
+     */
     private void updateEarnings(){
         if (hour == 23 && minute == 59) {
             dayEarnings.put(day, dayValue);
@@ -287,6 +321,9 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
         }
     }
 
+    /**
+     * Zet alle variabelen die met winst temaken hebben terug naar 0
+     */
     private void resetEarnings(){
         for (int i=0; i < 7; i++){
             dayEarnings.put(i, 0);
@@ -296,6 +333,12 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
         moneyDue = 0;
     }
 
+    /**
+     * Bepaalt welk soort auto is binnengekomen en houdt het bij in variabelen
+     *
+     * @param increment Boolean die bepaald of de functie moet optellen of aftrekken
+     * @param car Het auto-object om te bepalen welk soort auto het is
+     */
     private void updateCarCount(boolean increment, Car car){
         if (car instanceof AdHocCar){
             if (increment){ normalCars++; }
@@ -309,6 +352,9 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
         }
     }
 
+    /**
+     * Update de percentageverdeling van de huidige auto's in de garage
+     */
     private void updateCarPercentages(){
         int totalCars = normalCars + passCars + reservationCars;
 
@@ -322,12 +368,18 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
         }
     }
 
+    /**
+     * Reset de percentageverdeling van de auto's
+     */
     private void resetCarPercentages(){
         for (int i=0; i < 3; i++){
             carPercentages[i] = 0;
         }
     }
 
+    /**
+     * Reset de auto's die momenteel in de parkeergarage staan
+     */
     private void resetCarCount(){
         normalCars = 0;
         passCars = 0;
