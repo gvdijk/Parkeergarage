@@ -11,6 +11,7 @@ public class RunController extends AbstractController implements ActionListener{
     private JButton minute;
     private JButton hour;
     private JButton day;
+    private JButton week;
     private JButton reset;
 
     public RunController(SimulatorLogic simulatorLogic){
@@ -28,6 +29,9 @@ public class RunController extends AbstractController implements ActionListener{
         day = new JButton("+1 day");
         day.addActionListener(this);
 
+        week = new JButton("Skip to end");
+        week.addActionListener(this);
+
         reset = new JButton("Reset");
         reset.addActionListener(this);
 
@@ -35,6 +39,7 @@ public class RunController extends AbstractController implements ActionListener{
         add(minute);
         add(hour);
         add(day);
+        add(week);
         add(reset);
 
         this.setBackground(new Color(59, 69, 89));
@@ -61,6 +66,11 @@ public class RunController extends AbstractController implements ActionListener{
         if (e.getSource() == day){
             if (run.getText().equals("Pause")) {pressedPause();}
             simulatorLogic.tick(false, 1440);
+        }
+
+        if (e.getSource() == week){
+            if (run.getText().equals("Pause")) {pressedPause();}
+            simulatorLogic.tick(false, 10079);
         }
 
         if (e.getSource() == reset) {

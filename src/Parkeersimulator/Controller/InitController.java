@@ -38,7 +38,7 @@ public class InitController extends AbstractController implements ActionListener
 
         //Invoerveld voor het instellen van de simulatiepauze
         tickPause = new JSpinner(new SpinnerNumberModel());
-        tickPause.setValue(50);
+        tickPause.setValue(100);
         tickPause.getEditor().getComponent(0).setBackground(new Color(51, 51, 51));
         tickPause.getEditor().getComponent(0).setForeground(Color.lightGray);
         JLabel tickPauseLabel = new JLabel("Pauze per simulatie minuut (milliseconde): ");
