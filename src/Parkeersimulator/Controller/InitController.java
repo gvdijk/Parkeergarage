@@ -11,11 +11,20 @@ import java.awt.event.ActionListener;
  */
 public class InitController extends AbstractController implements ActionListener {
     private JLabel title;
+    private JLabel errorMessage;
+
     private JSpinner tickPause;
     private JSpinner garageFloors;
     private JSpinner garageRows;
     private JSpinner garagePlaces;
-    private JLabel errorMessage;
+    private JSpinner parkingFee;
+
+    private JPanel tickPausePanel;
+    private JPanel garageSpinnerPanel;
+    private JPanel garageLabelPanel;
+    private JPanel garageSettings;
+    private JPanel parkingFeePanel;
+
     private JButton start;
 
     /**
@@ -32,45 +41,20 @@ public class InitController extends AbstractController implements ActionListener
 
         //Titel object voor boven aan het scherm
         title = new JLabel("Parkeergarage simulatie software v0.9 ofzo");
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
-        title.setForeground(Color.lightGray);
-        title.setFont(new Font("Courier", Font.BOLD, 20));
 
         //Invoerveld voor het instellen van de simulatiepauze
         tickPause = new JSpinner(new SpinnerNumberModel());
-        tickPause.setValue(100);
-        tickPause.getEditor().getComponent(0).setBackground(new Color(51, 51, 51));
-        tickPause.getEditor().getComponent(0).setForeground(Color.lightGray);
-        JLabel tickPauseLabel = new JLabel("Pauze per simulatie minuut (milliseconde): ");
-        tickPauseLabel.setForeground(Color.lightGray);
 
         //JPanel die de tekst en het invoerveld voor de simulatiepauze rangschikt
-        JPanel tickPausePanel = new JPanel();
-        tickPausePanel.setBackground(new Color(51, 51, 51));
-        tickPausePanel.add(tickPauseLabel);
-        tickPausePanel.add(tickPause);
-        tickPausePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        tickPausePanel = new JPanel();
 
         //Invoervelden voor de grootte van de garage
         garageFloors = new JSpinner(new SpinnerNumberModel());
-        garageFloors.setValue(3);
-        garageFloors.getEditor().getComponent(0).setBackground(new Color(51, 51, 51));
-        garageFloors.getEditor().getComponent(0).setForeground(Color.lightGray);
         garageRows = new JSpinner(new SpinnerNumberModel());
-        garageRows.setValue(6);
-        garageRows.getEditor().getComponent(0).setBackground(new Color(51, 51, 51));
-        garageRows.getEditor().getComponent(0).setForeground(Color.lightGray);
         garagePlaces = new JSpinner(new SpinnerNumberModel());
-        garagePlaces.setValue(30);
-        garagePlaces.getEditor().getComponent(0).setBackground(new Color(51, 51, 51));
-        garagePlaces.getEditor().getComponent(0).setForeground(Color.lightGray);
 
         //JPanel die de invoervelden van de garage rangschikt
-        JPanel garageSpinnerPanel = new JPanel();
-        garageSpinnerPanel.setLayout(new BoxLayout(garageSpinnerPanel, BoxLayout.Y_AXIS));
-        garageSpinnerPanel.add(garageFloors);
-        garageSpinnerPanel.add(garageRows);
-        garageSpinnerPanel.add(garagePlaces);
+        garageSpinnerPanel = new JPanel();
 
         //Text voor de garageinstellingen
         JLabel floorLabel = new JLabel("Aantal verdiepingen: ");
@@ -81,7 +65,7 @@ public class InitController extends AbstractController implements ActionListener
         placesLabel.setForeground(Color.lightGray);
 
         //JPanel die alle text voor de instellingen rangschikt
-        JPanel garageLabelPanel = new JPanel();
+        garageLabelPanel = new JPanel();
         garageLabelPanel.setBackground(new Color(51, 51, 51));
         garageLabelPanel.setLayout(new BoxLayout(garageLabelPanel, BoxLayout.Y_AXIS));
         garageLabelPanel.add(floorLabel);
@@ -91,11 +75,19 @@ public class InitController extends AbstractController implements ActionListener
         garageLabelPanel.add(placesLabel);
 
         //JPanel die de labels en spinners voor de garageinstellingen rangschikt
-        JPanel garageSettings = new JPanel();
-        garageSettings.add(garageLabelPanel);
-        garageSettings.add(garageSpinnerPanel);
-        garageSettings.setBackground(new Color(51, 51, 51));
-        garageSettings.setAlignmentX(Component.CENTER_ALIGNMENT);
+        garageSettings = new JPanel();
+
+        //Invoerveld voor de prijs van het parkeren
+        parkingFee = new JSpinner();
+
+        //Text voor de prijs van het parkeren
+        JLabel parkingFeeLabel = new JLabel("Prijs per 20 minuten parkeren: ");
+        parkingFeeLabel.setForeground(Color.lightGray);
+
+        //JPanel die de labels en spinner voor de parkeer prijs rangschikt
+        parkingFeePanel = new JPanel();
+        parkingFeePanel.add(parkingFeeLabel);
+        parkingFeePanel.add(parkingFee);
 
         //Textvak dat een errorbericht laat zien als de ingevoerde waardes niet kloppen
         errorMessage = new JLabel();
@@ -107,6 +99,8 @@ public class InitController extends AbstractController implements ActionListener
         start.addActionListener(this);
         start.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+        createControllerLayout();
+
         //Alle componenten aan de classe toevoegen en zichtbaar maken
         add(title);
         add(Box.createRigidArea(new Dimension(0, 40)));
@@ -114,9 +108,64 @@ public class InitController extends AbstractController implements ActionListener
         add(Box.createRigidArea(new Dimension(0, 40)));
         add(garageSettings);
         add(Box.createRigidArea(new Dimension(0, 40)));
+        add(parkingFeePanel);
+        add(Box.createRigidArea(new Dimension(0, 40)));
         add(errorMessage);
         add(Box.createRigidArea(new Dimension(0, 40)));
         add(start);
+    }
+
+    /**
+     * Stelt alle kleuren, groottes en waarden in per variable en rangschikt ze op het scherm
+     */
+    private void createControllerLayout(){
+        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        title.setForeground(Color.lightGray);
+        title.setFont(new Font("Courier", Font.BOLD, 20));
+
+        tickPause.setValue(100);
+        tickPause.getEditor().getComponent(0).setBackground(new Color(51, 51, 51));
+        tickPause.getEditor().getComponent(0).setForeground(Color.lightGray);
+        JLabel tickPauseLabel = new JLabel("Pauze per simulatie minuut (milliseconde): ");
+        tickPauseLabel.setForeground(Color.lightGray);
+
+        tickPausePanel.setBackground(new Color(51, 51, 51));
+        tickPausePanel.add(tickPauseLabel);
+        tickPausePanel.add(tickPause);
+        tickPausePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        garageFloors.setValue(3);
+        garageFloors.getEditor().getComponent(0).setBackground(new Color(51, 51, 51));
+        garageFloors.getEditor().getComponent(0).setForeground(Color.lightGray);
+        garageRows.setValue(6);
+        garageRows.getEditor().getComponent(0).setBackground(new Color(51, 51, 51));
+        garageRows.getEditor().getComponent(0).setForeground(Color.lightGray);
+
+        garagePlaces.setValue(30);
+        garagePlaces.getEditor().getComponent(0).setBackground(new Color(51, 51, 51));
+        garagePlaces.getEditor().getComponent(0).setForeground(Color.lightGray);
+
+        garageSpinnerPanel.setLayout(new BoxLayout(garageSpinnerPanel, BoxLayout.Y_AXIS));
+        garageSpinnerPanel.add(garageFloors);
+        garageSpinnerPanel.add(garageRows);
+        garageSpinnerPanel.add(garagePlaces);
+
+        garageSettings.add(garageLabelPanel);
+        garageSettings.add(garageSpinnerPanel);
+        garageSettings.setBackground(new Color(51, 51, 51));
+        garageSettings.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        SpinnerNumberModel s = new SpinnerNumberModel();
+        s.setValue(1.00);
+        s.setStepSize(0.10);
+        parkingFee.setModel(s);
+        parkingFee.getEditor().getComponent(0).setBackground(new Color(51, 51, 51));
+        parkingFee.getEditor().getComponent(0).setForeground(Color.lightGray);
+        Dimension d = parkingFee.getPreferredSize();
+        d.width = 50;
+        parkingFee.setPreferredSize(d);
+
+        parkingFeePanel.setBackground(new Color(51, 51, 51));
     }
 
     /**
@@ -132,15 +181,16 @@ public class InitController extends AbstractController implements ActionListener
                                      (int)garageRows.getValue(),
                                      (int)garagePlaces.getValue()
             };
+            double fee = (double) parkingFee.getValue();
 
-            if (!checkInput(tick, garage)){
-                simulatorLogic.initialize(tick, garage);
+            if (!checkInput(tick, garage, fee)){
+                simulatorLogic.initialize(tick, garage, fee);
                 simulatorLogic.showInitPanel(false);
             }
         }
     }
 
-    private boolean checkInput(int tick, int[] garage){
+    private boolean checkInput(int tick, int[] garage, double fee){
         errorMessage.setText("");
         boolean error = false;
 
@@ -158,6 +208,10 @@ public class InitController extends AbstractController implements ActionListener
         }
         if (garage[2] < 1 || garage[2] > 40){
             errorMessage.setText("Garage plekken moet tussen 1 en 40 liggen");
+            error = true;
+        }
+        if (fee < 0){
+            errorMessage.setText("Kaartjes kunnen geen negatieve prijs hebben");
             error = true;
         }
 

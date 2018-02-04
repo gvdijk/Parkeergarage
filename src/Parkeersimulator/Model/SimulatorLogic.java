@@ -2,7 +2,6 @@ package Parkeersimulator.Model;
 
 import java.util.ArrayList;
 import javax.swing.*;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Random;
 
@@ -33,11 +32,11 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     private int currentTick;        // huidige tick
     private int maxTicks = 10079;   // maximale hoeveelheid ticks om 1 week te simuleren
 
-    private int[] dayEarnings;  // Array met de verdiensten per dag erin
-    private int totalEarnings;  // Totaal bedrag verdient tijdens de simulatie
-    private int dayValue;       // Verdiensten per simulatiedag
-    private int moneyDue;       // Geld dat nog binnen zou komen als iedereen weg zou rijden
-    private int parkingFee = 1; // Bedrag dat betaald moet worden per 20 minuten parkeren
+    private double[] dayEarnings;  // Array met de verdiensten per dag erin
+    private double totalEarnings;  // Totaal bedrag verdient tijdens de simulatie
+    private double dayValue;       // Verdiensten per simulatiedag
+    private double moneyDue;       // Geld dat nog binnen zou komen als iedereen weg zou rijden
+    private double parkingFee;     // Bedrag dat betaald moet worden per 20 minuten parkeren
 
     private int normalCars;         // Aantal normale auto's in de parkeergarage
     private int passCars;           // Aantal pashouders in de parkeergarage
@@ -76,7 +75,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
         entrancePassQueue = new CarQueue();
         paymentCarQueue = new CarQueue();
         exitCarQueue = new CarQueue();
-        dayEarnings = new int[7];
+        dayEarnings = new double[7];
         carPercentages = new int[3];
         carCounts = new int[3];
         reset();
@@ -123,9 +122,10 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
      * @param tickPause De pauze in milliseconden die na elke simulatiestap gewacht wordt
      * @param garage    De grootte die de garage moet worden voor deze simulatie
      */
-    public void initialize(int tickPause, int[] garage){
-        garageLogic = new GarageLogic(garage[0], garage[1], garage[2]);
+    public void initialize(int tickPause, int[] garage, double parkingFee){
+        garageLogic = new GarageLogic(garage[0], garage[1], garage[2], parkingFee);
         this.tickPause = tickPause;
+        this.parkingFee = parkingFee;
         garageLogic.tick();
         updateViews();
     }
@@ -249,17 +249,17 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     /**
      * @return  Totaalbedrag verdient aan parkeergeld
      */
-    public int getTotalEarnings() { return totalEarnings; }
+    public double getTotalEarnings() { return totalEarnings; }
 
     /**
      * @return  Geld dat nog binnen moet komen van geparkeerde auto's
      */
-    public int getMoneyDue() { return moneyDue; }
+    public double getMoneyDue() { return moneyDue; }
 
     /**
      * @return  HashMap van alle bedragen die per dag verdiend zijn
      */
-    public int[] getDayEarnings() { return dayEarnings; }
+    public double[] getDayEarnings() { return dayEarnings; }
 
     /**
      * @return De totale telling van de auto's in de garage tijdens de simulatie
@@ -347,7 +347,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
         int feeTimes = (int) Math.floor(car.getStayMinutes() / 20);
         if (car.getStayMinutes() % 20 > 0){ feeTimes++; }
 
-        int paymentAmount = feeTimes * parkingFee;
+        double paymentAmount = feeTimes * parkingFee;
 
         totalEarnings += paymentAmount;
         dayValue += paymentAmount;
