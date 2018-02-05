@@ -50,7 +50,7 @@ public class InitController extends AbstractController implements ActionListener
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
         //Titel object voor boven aan het scherm
-        title = new JLabel("Parkeergarage simulatie software v0.9 ofzo");
+        title = new JLabel("Parkeergarage simulatie software v1.0");
 
         //Invoerveld voor het instellen van de simulatiepauze
         tickPause = new JSpinner(new SpinnerNumberModel());

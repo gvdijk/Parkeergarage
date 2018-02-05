@@ -124,6 +124,8 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
         resetCarCount();
         resetEarnings();
         resetCarPercentages();
+        carReservationList.clear();
+        reservationCarList.clear();
     }
 
     /**
@@ -202,10 +204,10 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
      */
     private void setPassReservations() {
         if (day == 0 && hour == 5 && minute == 0) {
-            garageLogic.setPassReservations(1, garageLogic.getNumberOfRows(), garageLogic.getNumberOfPlaces());
+            garageLogic.setPassReservations(1, garageLogic.getNumberOfRows(), garageLogic.getNumberOfPlaces(), false);
         }
         if (day == 4 && hour == 17 && minute == 0) {
-            garageLogic.setPassReservations(1, 2, garageLogic.getNumberOfPlaces());
+            garageLogic.setPassReservations(1, garageLogic.getNumberOfRows(), garageLogic.getNumberOfPlaces(), true);
         }
     }
 
@@ -669,7 +671,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     	switch(type) {
     	case AD_HOC: 
             for (int i = 0; i < numberOfCars; i++) {
-                if (entranceCarQueue.carsInQueue() < 50) {
+                if (entranceCarQueue.carsInQueue() < 15) {
                     entranceCarQueue.addCar(new AdHocCar());
                 } else {
                     carsThatLeft++;

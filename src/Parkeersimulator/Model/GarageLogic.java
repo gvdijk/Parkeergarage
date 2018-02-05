@@ -22,18 +22,19 @@ public class GarageLogic {
         this.numberOfPlaces = numberOfPlaces;
         cars = new Car[numberOfFloors][numberOfRows][numberOfPlaces];
         reservations = new Reservation[numberOfFloors][numberOfRows][numberOfPlaces];
-        setPassReservations(1,numberOfRows, numberOfPlaces);
+        setPassReservations(1, numberOfRows, numberOfPlaces, false);
     }
 
     /**
      * Zet alle gereserveerde plekken voor pashouders.
      */
-    public void setPassReservations(int floors, int rows, int places) {
+    public void setPassReservations(int floors, int rows, int places, boolean weekend) {
         // Zorg ervoor dat de ingevoerde waardes kleiner of gelijk zijn aan de groottes van de parkeergarage
         floors = floors > numberOfFloors ? numberOfFloors : floors;
         rows = rows > numberOfRows ? numberOfRows : rows;
         places = places > numberOfPlaces ? numberOfPlaces : places;
-        rows /= floors == 1 ? 2 : 1;
+        rows /= numberOfFloors == 1 ? 2 : 1;
+        places /= weekend ? 2 : 1;
 
         // Verwijder alle oude gereserveerde plekken
         for (int floor = 0; floor < numberOfFloors; floor++) {
