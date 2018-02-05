@@ -5,6 +5,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.text.DecimalFormat;
 
+/**
+ * Geeft alle belangrijke data uit de simulator weer in textvorm
+ */
 public class TextView extends AbstractView {
 
     private JLabel currentTime;
@@ -15,14 +18,20 @@ public class TextView extends AbstractView {
     private JLabel currentQueues;
     private DecimalFormat f;
 
+    /**
+     * Maakt nieuwe instanties van alle tekstvelden die gebruikt worden
+     *
+     * @param simulatorLogic    De simulatorlogic die alle schermen beheert
+     */
     public TextView (SimulatorLogic simulatorLogic) {
         super (simulatorLogic);
 
         this.setBackground(new Color(51, 51, 51));
 
-        setLayout(new FlowLayout(FlowLayout.CENTER, 60, 5));
+        setLayout(new FlowLayout(FlowLayout.LEFT, 60, 5));
 
         f = new DecimalFormat("#.##");
+
         currentTime = new JLabel();
         currentTime.setForeground(Color.lightGray);
         dayEarnings = new JLabel();
@@ -37,6 +46,7 @@ public class TextView extends AbstractView {
         currentQueues = new JLabel();
         currentQueues.setForeground(Color.lightGray);
 
+        add(Box.createRigidArea(new Dimension(0, 450)));
         add(currentTime);
         add(dayEarnings);
         add(earnings);
@@ -45,6 +55,9 @@ public class TextView extends AbstractView {
         add(currentQueues);
     }
 
+    /**
+     * Update alle textvelden op het scherm elke tick
+     */
     @Override
     public void updateView() {
         currentTime.setText("<html>Current day: " + convertDay(simulatorLogic.getDay()) +
@@ -64,15 +77,16 @@ public class TextView extends AbstractView {
         currentQueues.setText("<html>Current cars in queue: <br/>" +
                 "<br/>Entrance queue: " + simulatorLogic.getEntranceCarQueue().carsInQueue() +
                 "<br/>Parking pass queue: " + simulatorLogic.getEntranceCarQueue().carsInQueue() +
-                "<br/>Exit queue: <br/>" + simulatorLogic.getExitCarQueue().carsInQueue() +
-                "<br/>Cars that left the queue: " + simulatorLogic.getCarsThatLeft());
+                "<br/>Exit queue: " + simulatorLogic.getExitCarQueue().carsInQueue() +
+                "<br/><br/>Cars that left the queue: " + simulatorLogic.getCarsThatLeft());
     }
 
-    @Override
-    public String getName() {
-        return "TextView";
-    }
-
+    /**
+     * Convert de huidige dag van een integer value naar een dagnaam in String formaat
+     *
+     * @param dayInt    De integer representatie van de huidige dag
+     * @return  De String representatie van de huidige dag
+     */
     private String convertDay (int dayInt){
         String dayString = "";
         switch (dayInt){
@@ -94,6 +108,9 @@ public class TextView extends AbstractView {
         return dayString;
     }
 
+    /**
+     * Update alle text voor het dayearnings textveld
+     */
     private void setDayEarnings(){
         dayEarnings.setText ("<html>Earnings per day:<br/>" +
                 "<br/>Monday: €" + f.format(simulatorLogic.getDayEarnings()[0]) + "-" +

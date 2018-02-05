@@ -37,9 +37,6 @@ public class QueueView extends AbstractView {
         queueLineChartPanel.update();
     }
 
-    @Override
-    public String getName() { return "QueueView";}
-
     private class QueuePieChartPanel extends JFXPanel {
         private ObservableList<PieChart.Data> data = FXCollections.observableArrayList();
         private PieChart pieChart;

@@ -13,6 +13,11 @@ public class RunController extends AbstractController implements ActionListener{
     private JButton day;
     private JButton reset;
 
+    /**
+     * Maakt een nieuw object aan voor alle buttons
+     *
+     * @param simulatorLogic De simulatorlogic die alle schermen beheert
+     */
     public RunController(SimulatorLogic simulatorLogic){
         super(simulatorLogic);
 
@@ -42,6 +47,11 @@ public class RunController extends AbstractController implements ActionListener{
         setVisible(true);
     }
 
+    /**
+     * Verwerkt gebruiker acties en roept de juiste functies aan gebaseerd op de geklikte knop
+     *
+     * @param e De actie die door de gebruiker gepleegd is
+     */
     @Override
     public void actionPerformed (ActionEvent e) {
         if (e.getSource() == run){
@@ -71,6 +81,9 @@ public class RunController extends AbstractController implements ActionListener{
         }
     }
 
+    /**
+     * Bepaald of de pauze knop of de run knop gebruikt moet worden na een click
+     */
     private void pressedPause(){
         if (run.getText().equals("Pause")) {
             run.setText("Run");

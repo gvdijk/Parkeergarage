@@ -5,6 +5,9 @@ import javax.swing.*;
 import java.util.Iterator;
 import java.util.Random;
 
+/**
+ * Verantwoordelijk voor alle logica achter het simulator model
+ */
 public class SimulatorLogic extends AbstractModel implements Runnable{
 
 	private static final String AD_HOC = "1";   // identificatie voor AdHocCars
@@ -173,7 +176,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
             }
             if (canRun){
                 advanceTime();
-                checkPassReservations();
+                setPassReservations();
                 handleExit();
                 garageLogic.tick();
                 updateEarnings();
@@ -194,7 +197,10 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
         }
     }
 
-    private void checkPassReservations() {
+    /**
+     * Verandert de gereserveerde plekken voor pashouders gebaseerd op de tijd
+     */
+    private void setPassReservations() {
         if (day == 0 && hour == 5 && minute == 0) {
             garageLogic.setPassReservations(1, garageLogic.getNumberOfRows(), garageLogic.getNumberOfPlaces());
         }

@@ -262,6 +262,11 @@ public class GarageLogic {
         return floor >= 0 && floor < numberOfFloors && row >= 0 && row <= numberOfRows && place >= 0 && place <= numberOfPlaces;
     }
 
+    /**
+     * Berekent voor elke auto in de garage wat ze moeten gaan betalen als ze wegrijden
+     *
+     * @return  Het geldbedrag dat verdient zou worden als alle auto's in de garage nu zouden betalen
+     */
     public double getMoneyDue(){
         double money = 0;
         for (int floor = 0; floor < numberOfFloors; floor++) {

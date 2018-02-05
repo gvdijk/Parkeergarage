@@ -38,11 +38,6 @@ public class ReservationView extends AbstractView {
         reservationsLineChartPanel.update();
     }
 
-    @Override
-    public String getName() {
-        return "ReservationView";
-    }
-
     private class OnTimePieChartPanel extends JFXPanel {
         private ObservableList<PieChart.Data> data = FXCollections.observableArrayList();
         private PieChart pieChart;

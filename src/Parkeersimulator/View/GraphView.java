@@ -42,11 +42,6 @@ public class GraphView extends AbstractView {
         carsAreaChartPanel.update();
     }
 
-    @Override
-    public String getName() {
-        return "GraphView";
-    }
-
     private class CarsPieChartPanel extends JFXPanel {
         private ObservableList<PieChart.Data> data = FXCollections.observableArrayList();
         private PieChart pieChart;
