@@ -2,6 +2,7 @@ package Parkeersimulator.View;
 
 import Parkeersimulator.Model.*;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -10,12 +11,18 @@ public class CarParkView extends AbstractView {
     private Dimension size;
     private Image carParkImage;
 
+    private JLabel currentTime;
+
     /**
      * Constructor for objects of class CarPark
      */
     public CarParkView(SimulatorLogic simulatorLogic) {
         super (simulatorLogic);
         size = new Dimension(0, 0);
+        currentTime = new JLabel();
+        currentTime.setForeground(Color.lightGray);
+
+       add(currentTime);
     }
 
     @Override
@@ -52,6 +59,7 @@ public class CarParkView extends AbstractView {
     @Override
     public void updateView() {
         // Create a new car park image if the size has changed.
+        updateTime();
         if (!size.equals(getSize())) {
             size = getSize();
             carParkImage = createImage(size.width, size.height);
@@ -83,6 +91,10 @@ public class CarParkView extends AbstractView {
         repaint();
     }
 
+    private void updateTime(){
+        currentTime.setText(convertDay(simulatorLogic.getDay()) + ", " + simulatorLogic.getHour() + ":" + simulatorLogic.getMinute());
+    }
+
     /**
      * Paint a line over two places to indicate a double parked car.
      */
@@ -110,5 +122,26 @@ public class CarParkView extends AbstractView {
                 60 + location.getPlace() * 10,
                 20 - 1,
                 10 - 1);
+    }
+
+    private String convertDay (int dayInt){
+        String dayString = "";
+        switch (dayInt){
+            case 0:  dayString = "Monday";
+                break;
+            case 1:  dayString = "Tuesday";
+                break;
+            case 2:  dayString = "Wednesday";
+                break;
+            case 3:  dayString = "Thursday";
+                break;
+            case 4:  dayString = "Friday";
+                break;
+            case 5:  dayString = "Saturday";
+                break;
+            case 6:  dayString = "Sunday";
+                break;
+        }
+        return dayString;
     }
 }

@@ -12,6 +12,7 @@ public class TextView extends AbstractView {
     private JLabel earnings;
     private JLabel currentCars;
     private JLabel currentCarPercentages;
+    private JLabel currentQueues;
     private DecimalFormat f;
 
     public TextView (SimulatorLogic simulatorLogic) {
@@ -19,7 +20,7 @@ public class TextView extends AbstractView {
 
         this.setBackground(new Color(51, 51, 51));
 
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setLayout(new FlowLayout(FlowLayout.CENTER, 60, 5));
 
         f = new DecimalFormat("#.##");
         currentTime = new JLabel();
@@ -33,16 +34,15 @@ public class TextView extends AbstractView {
         currentCars.setForeground(Color.lightGray);
         currentCarPercentages = new JLabel();
         currentCarPercentages.setForeground(Color.lightGray);
+        currentQueues = new JLabel();
+        currentQueues.setForeground(Color.lightGray);
 
         add(currentTime);
-        add(Box.createRigidArea(new Dimension(0, 40)));
         add(dayEarnings);
-        add(Box.createRigidArea(new Dimension(0, 10)));
         add(earnings);
-        add(Box.createRigidArea(new Dimension(0, 40)));
         add(currentCars);
-        add(Box.createRigidArea(new Dimension(0, 40)));
         add(currentCarPercentages);
+        add(currentQueues);
     }
 
     @Override
@@ -61,6 +61,11 @@ public class TextView extends AbstractView {
                 "<br/>Normal cars: " + simulatorLogic.getCarPercentages()[0] + "%" +
                 "<br/>Parking pass cars: " + simulatorLogic.getCarPercentages()[1] + "%" +
                 "<br/>Reserved spot cars: " + simulatorLogic.getCarPercentages()[2] + "%");
+        currentQueues.setText("<html>Current cars in queue: <br/>" +
+                "<br/>Entrance queue: " + simulatorLogic.getEntranceCarQueue().carsInQueue() +
+                "<br/>Parking pass queue: " + simulatorLogic.getEntranceCarQueue().carsInQueue() +
+                "<br/>Exit queue: <br/>" + simulatorLogic.getExitCarQueue().carsInQueue() +
+                "<br/>Cars that left the queue: " + simulatorLogic.getCarsThatLeft());
     }
 
     @Override

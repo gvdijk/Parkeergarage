@@ -42,6 +42,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     private int normalCars;         // Aantal normale auto's in de parkeergarage
     private int passCars;           // Aantal pashouders in de parkeergarage
     private int reservationCars;    // Aantal auto's met een reservatie
+    private int carsThatLeft;       // Aantal auto's dat is weggereden uit de rijen
     private int[] carCounts;        // Totaal aantal auto's van elk soort tijdens de simulator
     private int[] carPercentages;   // Array met de percentageverdeling van de auto's
 
@@ -109,6 +110,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
         entrancePassQueue.clearQueue();
         paymentCarQueue.clearQueue();
         exitCarQueue.clearQueue();
+        carsThatLeft = 0;
         currentTick = 0;
         day = 0;
         hour = 0;
@@ -158,11 +160,17 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     /**
      * Zet de simulatie 1 tick (oftewel, 1 minuut) vooruit.
      * Pauseer de simulatie voor een kort ogenblik.
+     *
      * @param pause Een boolean die bepaald of de tick pauzeert of niet
      * @param times een integer voor hoevaak de simulatie moet ticken.
      */
     public void tick(boolean pause, int times) {
         for (int i = 0; i < times; i++){
+            currentTick++;
+            if (currentTick > maxTicks){
+                pause();
+                canRun = false;
+            }
             if (canRun){
                 advanceTime();
                 checkPassReservations();
@@ -182,11 +190,6 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
                 }
                 tickReservations();
                 handleEntrance();
-                currentTick++;
-                if (currentTick > maxTicks){
-                    pause();
-                    canRun = false;
-                }
             }
         }
     }
@@ -276,11 +279,6 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
     public double[] getDayEarnings() { return dayEarnings; }
 
     /**
-     * @return De totale telling van de auto's in de garage tijdens de simulatie
-     */
-    public int[] getCarCounts() { return carCounts; }
-
-    /**
      * @return Geeft de hoeveelheid auto's in de rij bij de ingang
      */
     public CarQueue getEntranceCarQueue() {
@@ -303,6 +301,11 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
      * @return Geeft de hoeveelheid auto's in de rij bij de uitgang
      */
     public CarQueue getExitCarQueue() { return exitCarQueue; }
+
+    /**
+     * @return Geeft de hoeveelheid auto's terug die weg zijn gereden uit de queue's
+     */
+    public int getCarsThatLeft() { return carsThatLeft; }
 
     /**
      * Vordert de tijd van de simulatie met 1 minuut
@@ -663,7 +666,7 @@ public class SimulatorLogic extends AbstractModel implements Runnable{
                 if (entranceCarQueue.carsInQueue() < 50) {
                     entranceCarQueue.addCar(new AdHocCar());
                 } else {
-                    //TODO missed car statistic
+                    carsThatLeft++;
                 }
             }
             break;
