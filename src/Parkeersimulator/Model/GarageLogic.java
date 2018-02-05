@@ -22,7 +22,7 @@ public class GarageLogic {
         this.numberOfPlaces = numberOfPlaces;
         cars = new Car[numberOfFloors][numberOfRows][numberOfPlaces];
         reservations = new Reservation[numberOfFloors][numberOfRows][numberOfPlaces];
-        setPassReservations(1,4, numberOfPlaces);
+        setPassReservations(1,numberOfRows, numberOfPlaces);
     }
 
     /**
@@ -33,6 +33,7 @@ public class GarageLogic {
         floors = floors > numberOfFloors ? numberOfFloors : floors;
         rows = rows > numberOfRows ? numberOfRows : rows;
         places = places > numberOfPlaces ? numberOfPlaces : places;
+        rows /= floors == 1 ? 2 : 1;
 
         // Verwijder alle oude gereserveerde plekken
         for (int floor = 0; floor < numberOfFloors; floor++) {
