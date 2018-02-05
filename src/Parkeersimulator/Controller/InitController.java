@@ -196,6 +196,9 @@ public class InitController extends AbstractController implements ActionListener
         title.setFont(new Font("Courier", Font.BOLD, 20));
 
         tickPause.setValue(100);
+        Dimension pauseDim = tickPause.getPreferredSize();
+        pauseDim.width = 50;
+        tickPause.setPreferredSize(pauseDim);
         tickPause.getEditor().getComponent(0).setBackground(new Color(51, 51, 51));
         tickPause.getEditor().getComponent(0).setForeground(Color.lightGray);
         JLabel tickPauseLabel = new JLabel("Pauze per simulatie minuut (milliseconde): ");
@@ -268,6 +271,9 @@ public class InitController extends AbstractController implements ActionListener
         reservationFee.getEditor().getComponent(0).setForeground(Color.lightGray);
 
         reservationTime.setValue(15);
+        Dimension reservationDim = reservationTime.getPreferredSize();
+        reservationDim.width = 50;
+        reservationTime.setPreferredSize(reservationDim);
         reservationTime.getEditor().getComponent(0).setBackground(new Color(51, 51, 51));
         reservationTime.getEditor().getComponent(0).setForeground(Color.lightGray);
 
